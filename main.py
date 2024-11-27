@@ -96,7 +96,7 @@ def initialize_world():
 
 def load_character_inventory(character_name):
     try:
-        with open('shared_data/paste.txt', 'r') as f:
+        with open('shared_data/inventory.txt', 'r') as f:
             data = json.load(f)
             inventory = {}
             char_items = data['inventories'].get(character_name, [])

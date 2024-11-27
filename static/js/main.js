@@ -14,7 +14,7 @@ async function startGame() {
     if (gameState.started) return;
     
     gameState.started = true;
-    gameState.phase = 'world'; // Changed from 'character' to 'world'
+    gameState.phase = 'world';
     
     document.getElementById('startGameBtn').disabled = true;
     document.getElementById('selectionPhase').classList.remove('hidden');
@@ -180,11 +180,7 @@ async function initializeGame() {
         
         document.getElementById('selectionPhase').classList.add('hidden');
         document.getElementById('userInput').disabled = false;
-        document.querySelectorAll('.button-group button').forEach(button => {
-            if (button.id !== 'startGameBtn') {
-                button.disabled = false;
-            }
-        });
+        document.getElementById('submitBtn').disabled = false;
         
         const story = `Welcome to ${gameState.world}! You are ${gameState.character.name} in ${gameState.town.name}, ${gameState.town.description}`;
         updateGameOutput(story);
@@ -205,36 +201,16 @@ function updateInventory(inventory) {
     gameState.inventory = inventory;
     
     Object.entries(inventory).forEach(([item, count]) => {
-        if (count > 0) {  // Only show items with count > 0
-            const itemElement = createInventoryItem(item, count);
+        if (count > 0) {
+            const itemElement = document.createElement('div');
+            itemElement.className = 'inventory-item';
+            itemElement.innerHTML = `
+                <span>${item}</span>
+                <span class="item-count">${count}</span>
+            `;
             slots.appendChild(itemElement);
         }
     });
-}
-
-function createInventoryItem(item, count) {
-    const div = document.createElement('div');
-    div.className = 'inventory-item';
-    div.draggable = true;
-    div.innerHTML = `
-        <span>${item}</span>
-        <span class="item-count">${count}</span>
-    `;
-    
-    div.addEventListener('dragstart', handleDragStart);
-    div.addEventListener('dragend', handleDragEnd);
-    return div;
-}
-
-function handleDragStart(e) {
-    e.target.classList.add('dragging');
-    document.getElementById('dropZone').classList.add('active');
-    e.dataTransfer.setData('text/plain', e.target.querySelector('span').textContent);
-}
-
-function handleDragEnd(e) {
-    e.target.classList.remove('dragging');
-    document.getElementById('dropZone').classList.remove('active');
 }
 
 async function submitAction() {
@@ -242,7 +218,6 @@ async function submitAction() {
     const action = input.value;
     if (!action.trim()) return;
     
-    // Add user's action to game output
     const output = document.getElementById('gameOutput');
     const userMessage = document.createElement('div');
     userMessage.className = 'message user-message';
@@ -258,7 +233,6 @@ async function submitAction() {
         
         const result = await response.json();
         
-        // Add game response
         const botMessage = document.createElement('div');
         botMessage.className = 'message bot-message';
         botMessage.textContent = result.response;
@@ -267,10 +241,7 @@ async function submitAction() {
         updateInventory(result.inventory);
         generateNewExamples(result.response);
         
-        // Clear input
         input.value = '';
-        
-        // Scroll to bottom
         output.scrollTop = output.scrollHeight;
     } catch (error) {
         console.error('Error:', error);
@@ -281,10 +252,9 @@ function generateNewExamples(context) {
     let examples = [
         'Explore further',
         'Talk to someone',
-        'Check inventory'
+        'Use inventory item'
     ];
     
-    // Add context-specific examples
     if (context.toLowerCase().includes('merchant') || context.toLowerCase().includes('market')) {
         examples = [
             'Buy items',
@@ -299,12 +269,22 @@ function generateNewExamples(context) {
         ];
     }
     
+    // Add inventory-based examples
+    Object.keys(gameState.inventory).forEach(item => {
+        if (item !== 'gold') {
+            examples.push(`Use ${item}`);
+        }
+    });
+    
+    // Keep only unique examples and limit to 5
+    examples = [...new Set(examples)].slice(0, 5);
+    
     updateExamples(examples);
 }
 
 function updateExamples(examples) {
     const container = document.getElementById('exampleActions');
-    container.innerHTML = '';
+    container.innerHTML = '<h4>Possible Actions:</h4>';
     
     examples.forEach(example => {
         const button = document.createElement('button');
@@ -328,48 +308,3 @@ function updateGameOutput(text) {
     output.appendChild(messageElement);
     output.scrollTop = output.scrollHeight;
 }
-
-function retryAction() {
-    if (gameState.history.length > 0) {
-        const lastAction = gameState.history[gameState.history.length - 1].action;
-        const input = document.getElementById('userInput');
-        input.value = lastAction;
-        submitAction();
-    }
-}
-
-function undoAction() {
-    if (gameState.history.length > 0) {
-        gameState.history.pop();
-        const output = document.getElementById('gameOutput');
-        output.removeChild(output.lastElementChild);
-        output.removeChild(output.lastElementChild);
-        
-        if (gameState.history.length > 0) {
-            const lastState = gameState.history[gameState.history.length - 1];
-            updateInventory(lastState.inventory);
-        }
-    }
-}
-
-function clearChat() {
-    document.getElementById('gameOutput').innerHTML = '';
-    gameState.history = [];
-    updateInventory(gameState.inventory);
-}
-
-// Initialize event listeners
-document.addEventListener('DOMContentLoaded', () => {
-    const dropZone = document.getElementById('userInput');
-    
-    dropZone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-    });
-    
-    dropZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        const item = e.dataTransfer.getData('text/plain');
-        dropZone.value = `Use ${item}`;
-        submitAction();
-    });
-});
