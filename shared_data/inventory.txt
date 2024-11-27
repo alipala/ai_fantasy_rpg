@@ -1,0 +1,179 @@
+{
+  "inventories": {
+    "Elara Asteria": [
+      "10 gold",
+      "Ancient language decoder tablet",
+      "Set of magnifying lenses",
+      "Notebook of rune studies",
+      "Leather-bound gloves"
+    ],
+    "Elara Embermist": [
+      "10 gold",
+      "Gleaming invention blueprint",
+      "Fireproof gloves",
+      "Tiny mechanical dragon",
+      "Enchanted wrench"
+    ],
+    "Elara Moonweaver": [
+      "10 gold",
+      "Moonlight-infused cloak",
+      "Crystal healing staff",
+      "Flask of glowing stardust",
+      "Book of calming incantations"
+    ],
+    "Elara Windsong": [
+      "10 gold",
+      "Wind-touched compass",
+      "Skyborne goggles",
+      "Map of aerial currents",
+      "Harness of silk threads"
+    ],
+    "Eluned Aria": [
+      "10 gold",
+      "Botanist's handbook",
+      "Set of rare plant seeds",
+      "Glowstone lantern",
+      "Bottle of soothing elixir"
+    ],
+    "Eluned Moonwhisper": [
+      "10 gold",
+      "Lunar pendant",
+      "Celestial globe",
+      "Book of prophecies",
+      "Silver-threaded robes"
+    ],
+    "Eluned Starweaver": [
+      "10 gold",
+      "Celestial ink pot",
+      "Starry night cape",
+      "Crystal-tipped wand",
+      "Scroll of cosmic charts"
+    ],
+    "Gorvoth Ironfurnace": [
+      "10 gold",
+      "Molten hammer",
+      "Heat-resistant shield",
+      "Set of rune-forged tongs",
+      "Glowing volcanic stone"
+    ],
+    "Kael Darksong": [
+      "10 gold",
+      "Explorer's map",
+      "Weathered journal",
+      "Set of excavation tools",
+      "Small offering stone"
+    ],
+    "Kael Rivenstone": [
+      "10 gold",
+      "Windsmith's toolkit",
+      "Weather vane prototype",
+      "Set of blueprints",
+      "Handcrafted wind chime"
+    ],
+    "Kael Starseeker": [
+      "10 gold",
+      "Glowing star chart",
+      "Exploration satchel",
+      "Small telescope",
+      "Engraved compass"
+    ],
+    "Kael Thunderforged": [
+      "10 gold",
+      "Storm-powered hammer",
+      "Electrical toolkit",
+      "Runic blueprint",
+      "Set of conductor rods"
+    ],
+    "Kaelin Darkforges": [
+      "10 gold",
+      "Forged blade prototype",
+      "Fire-etched armor piece",
+      "Heavy-duty tongs",
+      "Flame-powered bellows"
+    ],
+    "Kaelin Darkhaven": [
+      "10 gold",
+      "Runic appraisal lens",
+      "Obsidian shard",
+      "Artifact research journal",
+      "Mystic appraisal gloves"
+    ],
+    "Kaelin Stonefist": [
+      "10 gold",
+      "Geomancer's chisel",
+      "Chunk of rare ore",
+      "Notebook of geological sketches",
+      "Carved figurine of the Sage"
+    ],
+    "Kaid Rylan": [
+      "10 gold",
+      "Healer's herbs",
+      "Potion of vigor",
+      "Medical tools set",
+      "Worn leather boots"
+    ],
+    "Kaida Moonwhisper": [
+      "10 gold",
+      "Healing crystal",
+      "Moonbeam staff",
+      "Potion of radiance",
+      "Book of ancient healing chants"
+    ],
+    "Lyra Emberwing": [
+      "10 gold",
+      "Treasure map",
+      "Light cloak with flame patterns",
+      "Miniature gemstone pickaxe",
+      "Set of enchanted climbing hooks"
+    ],
+    "Lyra Flynn": [
+      "10 gold",
+      "Crystal tuning wand",
+      "Notebook of resonance sketches",
+      "Set of artisan's tools",
+      "Iridescent gemstone"
+    ],
+    "Lyra Frostwhisper": [
+      "10 gold",
+      "Illusionist's cloak",
+      "Book of ethereal performances",
+      "Set of reflective prisms",
+      "Mask of shifting shadows"
+    ],
+    "Lyra Moonwhisper": [
+      "10 gold",
+      "Crystal-tipped staff",
+      "Silver-embroidered robes",
+      "Scroll of ancient wisdom",
+      "Flask of moonlit water"
+    ],
+    "Lyra Stellaluna": [
+      "10 gold",
+      "Star-tipped quill",
+      "Celestial notebook",
+      "Astronomer's goggles",
+      "Set of star maps"
+    ],
+    "Lyra Stormsurge": [
+      "10 gold",
+      "Windboard",
+      "Goggles of the storm",
+      "Lightning rod",
+      "Set of stormproof gear"
+    ],
+    "Orion Brightshore": [
+      "10 gold",
+      "Toolbox of celestial gadgets",
+      "Polished mirror lens",
+      "Energy-infused crystal",
+      "Glowing blueprint of lenses"
+    ],
+    "Thrain Stonefist": [
+      "10 gold",
+      "Runed ceremonial hammer",
+      "Flame-patterned gloves",
+      "Notebook of wisdom tales",
+      "Set of fire-resistant armor"
+    ]
+  }
+}

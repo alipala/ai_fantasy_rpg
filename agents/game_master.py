@@ -33,13 +33,12 @@ class CustomTogetherModel(BaseChatModel):
     @property
     def _identifying_params(self) -> Dict[str, Any]:
         return {"model": self.model_name}
-    
+
 class GameMasterAgent:
-    try:
-        def __init__(self, api_key):
+    def __init__(self, api_key):
+        try:
             self.client = Together(api_key=api_key)
             self.chat_model = CustomTogetherModel(together_client=self.client)
-
             self.agent = Agent(
                 role='Game Master',
                 goal='Manage game flow and player interactions',
@@ -47,27 +46,55 @@ class GameMasterAgent:
                 allow_delegation=True,
                 llm=self.chat_model
             )
-    except Exception as e:
-        print(f"Error initializing agent: {str(e)}")
-        raise
+        except Exception as e:
+            print(f"Error initializing agent: {str(e)}")
+            raise
 
-    def process_action(self, action, game_state):
-        system_prompt = """You are an AI Game master. Your job is to write what 
-        happens next in a player's adventure game.
-        Instructions: 
-        - Write 1-3 sentences in response
-        - Use second person present tense
-        - Consider player's inventory and location
-        """
+    def process_action(self, action: str, game_state: GameState) -> str:
+        system_prompt = """You are an AI Game master. Generate the next story event based on:
+        1. Player's current location and surroundings
+        2. Available NPCs and their characteristics
+        3. Current inventory items
+        4. Recent action history
         
-        messages = [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": f"Current state: {game_state.to_string()}\nAction: {action}"}
-        ]
+        Keep responses engaging but concise (2-3 sentences).
+        Use second person present tense.
+        Include opportunities for inventory interaction.
+        If an item is used from inventory, indicate this with [USED_ITEM:item_name] at the start of the response."""
         
-        response = self.client.chat.completions.create(
-            model="meta-llama/Llama-3-70b-chat-hf",
-            messages=messages
-        )
+        context = f"""Current location: {game_state.current_location['name']}
+        Description: {game_state.current_location['description']}
+        Inventory: {game_state.inventory}
+        Recent history: {game_state.history[-3:] if game_state.history else 'None'}
+        Action: {action}"""
         
-        return response.choices[0].message.content
+        try:
+            # Check if action is using an item
+            item_used = None
+            if action.lower().startswith('use '):
+                item_name = action[4:].strip()
+                if item_name in game_state.inventory and game_state.inventory[item_name] > 0:
+                    game_state.inventory[item_name] -= 1
+                    if game_state.inventory[item_name] == 0:
+                        del game_state.inventory[item_name]
+                    item_used = item_name
+
+            messages = [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": context}
+            ]
+            
+            response = self.client.chat.completions.create(
+                model="meta-llama/Llama-3-70b-chat-hf",
+                messages=messages,
+                temperature=0.7
+            )
+            
+            result = response.choices[0].message.content
+            if item_used:
+                result = f"[USED_ITEM:{item_used}] {result}"
+            
+            return result
+        except Exception as e:
+            print(f"Error processing action: {str(e)}")
+            return "Something went wrong. Please try again."

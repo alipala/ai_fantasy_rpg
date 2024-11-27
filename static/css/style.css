@@ -1,28 +1,52 @@
 /* Base styles */
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 20px;
-    background-color: #f5f5f5;
-}
-
 .game-container {
     max-width: 800px;
     margin: 0 auto;
+    padding: 20px;
+    position: relative;
     background: white;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Selection Phase */
+.selection-phase {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.95);
     padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
+.floating-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.floating-button {
+    background: white;
+    border: 2px solid #1976d2;
+    border-radius: 10px;
+    padding: 15px;
+    min-width: 200px;
+    cursor: pointer;
+    transition: all 0.3s ease;
     text-align: center;
-    color: #333;
-    margin-bottom: 30px;
 }
 
-/* Chat container */
+.floating-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Chat Container */
 .chat-container {
     display: flex;
     flex-direction: column;
@@ -57,7 +81,7 @@ h1 {
     color: #333;
 }
 
-/* Inventory section */
+/* Inventory Section */
 .inventory-section {
     padding: 20px;
     background: #f8f9fa;
@@ -71,74 +95,104 @@ h1 {
     padding: 10px;
 }
 
-.inventory-slot {
+.inventory-item {
     background: white;
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 10px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
+    position: relative;
+    cursor: default;
+    user-select: none;
 }
 
-.inventory-slot:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-/* Input section */
-.input-section {
+.item-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #1976d2;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+/* Input Section */
+.input-wrapper {
+    position: relative;
 }
 
 #userInput {
+    width: 100%;
     padding: 12px;
     border: 2px solid #ddd;
     border-radius: 5px;
     font-size: 16px;
 }
 
+#userInput:disabled {
+    background: #f5f5f5;
+    cursor: not-allowed;
+}
+
+/* Button Styles */
 .button-group {
     display: flex;
     gap: 10px;
+    margin: 10px 0;
 }
 
-button {
+.primary-btn {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.2s ease;
-}
-
-.primary-btn {
     background: #1976d2;
     color: white;
 }
 
-.secondary-btn {
-    background: #f5f5f5;
-    color: #333;
+.primary-btn:hover:not(:disabled) {
+    background: #1565c0;
 }
 
-.example-btn {
-    background: #e3f2fd;
-    color: #1565c0;
-    font-size: 14px;
-    padding: 5px 10px;
+.primary-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
-button:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-}
-
-/* Examples section */
+/* Examples Section */
 .examples {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
-    align-items: center;
-    padding: 10px 0;
+    margin-top: 10px;
+}
+
+.examples h4 {
+    width: 100%;
+    margin: 0 0 10px 0;
+    color: #1976d2;
+}
+
+.example-button {
+    background: #e3f2fd;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+.example-button:hover {
+    background: #bbdefb;
+}
+
+/* Utility Classes */
+.hidden {
+    display: none;
 }
