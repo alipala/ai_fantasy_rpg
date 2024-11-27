@@ -9,3 +9,4 @@ venv/
 *.sqlite
 game_logs.jsonl
 node_modules/
+structure.txt
