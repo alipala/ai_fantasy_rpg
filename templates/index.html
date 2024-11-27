@@ -10,34 +10,55 @@
     <div class="game-container">
         <h1>Fantasy RPG Adventure</h1>
         
-        <div class="chat-container">
-            <div id="gameOutput" class="game-output">
-                <!-- Chat messages will appear here -->
+        <div id="selectionPhase" class="selection-phase hidden">
+            <div id="worldSelect" class="world-select hidden">
+                <h2>Choose Your World</h2>
+                <div id="worldList" class="floating-buttons"></div>
             </div>
+            
+            <div id="kingdomSelect" class="kingdom-select hidden">
+                <h2>Choose Your Kingdom</h2>
+                <div id="kingdomList" class="floating-buttons"></div>
+            </div>
+            
+            <div id="townSelect" class="town-select hidden">
+                <h2>Choose Your Town</h2>
+                <div id="townList" class="floating-buttons"></div>
+            </div>
+            
+            <div id="characterSelect" class="character-select hidden">
+                <h2>Choose Your Character</h2>
+                <div id="characterList" class="floating-buttons"></div>
+            </div>
+        </div>
+        
+        <div class="chat-container">
+            <div id="gameOutput" class="game-output"></div>
             
             <div class="inventory-section">
                 <h3>Inventory</h3>
-                <div id="inventorySlots" class="inventory-slots">
-                    <!-- Inventory items will appear here -->
-                </div>
+                <div id="inventorySlots" class="inventory-slots"></div>
             </div>
             
             <div class="input-section">
-                <input type="text" id="userInput" placeholder="What do you do next?" />
+                <div id="userInputWrapper" class="input-wrapper">
+                    <input type="text" id="userInput" placeholder="What would you like to do?" disabled>
+                    <div id="dropZone" class="drop-zone">Drop items here to use them</div>
+                </div>
+                
                 <div class="button-group">
-                    <button onclick="submitAction()" class="primary-btn">Submit</button>
-                    <button onclick="retryAction()" class="secondary-btn">Retry</button>
-                    <button onclick="undoAction()" class="secondary-btn">Undo</button>
-                    <button onclick="clearChat()" class="secondary-btn">Clear</button>
+                    <button id="startGameBtn" onclick="startGame()" class="primary-btn">Start Game</button>
+                    <button id="submitBtn" onclick="submitAction()" class="primary-btn" disabled>Submit</button>
+                    <button id="retryBtn" onclick="retryAction()" class="secondary-btn" disabled>Retry</button>
+                    <button id="undoBtn" onclick="undoAction()" class="secondary-btn" disabled>Undo</button>
+                    <button id="clearBtn" onclick="clearChat()" class="secondary-btn" disabled>Clear</button>
                 </div>
-                <div class="examples">
-                    <span>Examples:</span>
-                    <button onclick="useExample('Look around')" class="example-btn">Look around</button>
-                    <button onclick="useExample('Continue the story')" class="example-btn">Continue the story</button>
-                </div>
+                
+                <div id="exampleActions" class="examples"></div>
             </div>
         </div>
     </div>
+    
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
