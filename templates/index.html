@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy RPG Adventure</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Fantasy RPG Adventure</h1>
+        
+        <div class="chat-container">
+            <div id="gameOutput" class="game-output">
+                <!-- Chat messages will appear here -->
+            </div>
+            
+            <div class="inventory-section">
+                <h3>Inventory</h3>
+                <div id="inventorySlots" class="inventory-slots">
+                    <!-- Inventory items will appear here -->
+                </div>
+            </div>
+            
+            <div class="input-section">
+                <input type="text" id="userInput" placeholder="What do you do next?" />
+                <div class="button-group">
+                    <button onclick="submitAction()" class="primary-btn">Submit</button>
+                    <button onclick="retryAction()" class="secondary-btn">Retry</button>
+                    <button onclick="undoAction()" class="secondary-btn">Undo</button>
+                    <button onclick="clearChat()" class="secondary-btn">Clear</button>
+                </div>
+                <div class="examples">
+                    <span>Examples:</span>
+                    <button onclick="useExample('Look around')" class="example-btn">Look around</button>
+                    <button onclick="useExample('Continue the story')" class="example-btn">Continue the story</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
