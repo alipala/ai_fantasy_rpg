@@ -209,6 +209,11 @@ function updateInventory(inventory) {
                 <span class="item-count">${count}</span>
             `;
             slots.appendChild(itemElement);
+            
+            // Add "Use [item]" to possible actions if not already present
+            if (!gameState.examples.includes(`Use ${item}`)) {
+                gameState.examples.push(`Use ${item}`);
+            }
         }
     });
 }
@@ -233,11 +238,19 @@ async function submitAction() {
         
         const result = await response.json();
         
+        // Check if an item was used
+        if (result.response.startsWith('[USED_ITEM:')) {
+            const endBracket = result.response.indexOf(']');
+            const itemUsed = result.response.substring(11, endBracket);
+            result.response = result.response.substring(endBracket + 2);
+        }
+        
         const botMessage = document.createElement('div');
         botMessage.className = 'message bot-message';
         botMessage.textContent = result.response;
         output.appendChild(botMessage);
         
+        // Update inventory with new state
         updateInventory(result.inventory);
         generateNewExamples(result.response);
         
