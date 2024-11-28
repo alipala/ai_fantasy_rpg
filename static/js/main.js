@@ -65,10 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Screen Management Functions
 function showScreen(screenId) {
-    // Hide all screens
+    // Hide all screens first
     document.querySelectorAll('.selection-screen').forEach(screen => {
         screen.classList.remove('visible');
-        void screen.offsetWidth; // Trigger reflow
+        screen.classList.add('hidden');
     });
     
     // Show selected screen with animation
@@ -77,30 +77,46 @@ function showScreen(screenId) {
         screen.classList.remove('hidden');
         void screen.offsetWidth; // Trigger reflow
         screen.classList.add('visible');
-        updateBackButton();
+        updateBackButton(screenId);
     }
 }
 
-function updateBackButton() {
+function updateBackButton(currentScreenId) {
     const backButton = document.getElementById('backButton');
-    const screens = ['characterSelect', 'townSelect', 'kingdomSelect', 'worldSelect'];
-    const currentIndex = screens.indexOf(gameState.currentScreen);
     
-    if (currentIndex > 0) {
-        backButton.classList.remove('hidden');
-    } else {
+    // Only show back button after world selection
+    if (currentScreenId === 'worldSelect') {
         backButton.classList.add('hidden');
+    } else {
+        backButton.classList.remove('hidden');
     }
 }
 
 function goBack() {
-    const screens = ['characterSelect', 'townSelect', 'kingdomSelect', 'worldSelect'];
-    const currentIndex = screens.indexOf(gameState.currentScreen);
-    
-    if (currentIndex > 0) {
-        const previousScreen = screens[currentIndex - 1];
-        gameState.currentScreen = previousScreen;
-        showScreen(previousScreen);
+    switch(gameState.currentScreen) {
+        case 'kingdomSelect':
+            // Go back to world selection
+            gameState.currentScreen = 'worldSelect';
+            gameState.kingdom = null;
+            showScreen('worldSelect');
+            startGame(); // Reload world selection
+            break;
+            
+        case 'townSelect':
+            // Go back to kingdom selection
+            gameState.currentScreen = 'kingdomSelect';
+            gameState.town = null;
+            showScreen('kingdomSelect');
+            displayKingdoms(); // Reload kingdoms
+            break;
+            
+        case 'characterSelect':
+            // Go back to town selection
+            gameState.currentScreen = 'townSelect';
+            gameState.character = null;
+            showScreen('townSelect');
+            displayTowns(gameState.kingdom);
+            break;
     }
 }
 
@@ -117,12 +133,16 @@ async function startGame() {
 
 function displayWorlds(data) {
     const worldList = document.getElementById('worldList');
-    worldList.innerHTML = `
-        <button class="selection-button" onclick="selectWorld('${data.name}')">
-            <h3>${data.name}</h3>
-            <p>${data.description.substring(0, 100)}...</p>
-        </button>
+    worldList.innerHTML = '';
+    
+    const button = document.createElement('button');
+    button.className = 'selection-button';
+    button.innerHTML = `
+        <h3>${data.name}</h3>
+        <p>${data.description.substring(0, 100)}...</p>
     `;
+    button.addEventListener('click', () => selectWorld(data.name));
+    worldList.appendChild(button);
 }
 
 async function selectWorld(worldName) {
