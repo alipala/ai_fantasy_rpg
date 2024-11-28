@@ -5,62 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fantasy RPG Adventure</title>
     <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="game-container">
-        <h1>Fantasy RPG Adventure</h1>
+    <!-- Initial Start Screen -->
+    <div id="startScreen" class="start-screen">
+        <button id="initialStartBtn" class="start-button">
+            Start Adventure
+        </button>
+    </div>
 
-        <div id="selectionPhase" class="selection-phase hidden">
-            <div id="worldSelect" class="world-select hidden">
-                <h2>Choose Your World</h2>
-                <div id="worldList" class="floating-buttons">
-                </div>
-            </div>
+    <!-- Selection Phase -->
+    <div id="selectionPhase" class="selection-phase hidden">
+        <button id="backButton" class="back-button hidden">
+            ← Back
+        </button>
 
-            <div id="kingdomSelect" class="kingdom-select hidden">
-                <h2>Choose Your Kingdom</h2>
-                <div id="kingdomList" class="floating-buttons">
-                </div>
-            </div>
-
-            <div id="townSelect" class="town-select hidden">
-                <h2>Choose Your Town</h2>
-                <div id="townList" class="floating-buttons">
-                </div>
-            </div>
-
-            <div id="characterSelect" class="character-select hidden">
-                <h2>Choose Your Character</h2>
-                <div id="characterList" class="floating-buttons">
-                </div>
-            </div>
+        <div id="worldSelect" class="selection-screen hidden">
+            <h2>Choose Your World</h2>
+            <div id="worldList" class="selection-list"></div>
         </div>
 
-        <div class="chat-container">
-            <div id="gameOutput" class="game-output">
-            </div>
+        <div id="kingdomSelect" class="selection-screen hidden">
+            <h2>Choose Your Kingdom</h2>
+            <div id="kingdomList" class="selection-list"></div>
+        </div>
 
-            <div class="inventory-section">
-                <h3>Inventory</h3>
-                <div id="inventorySlots" class="inventory-slots">
-                </div>
-            </div>
+        <div id="townSelect" class="selection-screen hidden">
+            <h2>Choose Your Town</h2>
+            <div id="townList" class="selection-list"></div>
+        </div>
 
-            <div class="input-section">
-                <div id="userInputWrapper" class="input-wrapper">
-                    <input type="text" id="userInput" placeholder="What would you like to do?" disabled>
-                </div>
-
-                <div class="button-group">
-                    <button id="startGameBtn" class="primary-btn" onclick="startGame()">Start Game</button>
-                    <button id="submitBtn" class="primary-btn" onclick="submitAction()" disabled>Submit</button>
-                </div>
-
-                <div id="exampleActions" class="examples">
-                </div>
-            </div>
+        <div id="characterSelect" class="selection-screen hidden">
+            <h2>Choose Your Character</h2>
+            <div id="characterList" class="selection-list"></div>
         </div>
     </div>
+
+    <!-- Game Container -->
+    <div id="gameContainer" class="game-container hidden">
+        <div class="messages" id="gameOutput"></div>
+        
+        <div class="sidebar">
+            <div class="inventory-section">
+                <h3>Inventory</h3>
+                <div id="inventorySlots" class="inventory-slots"></div>
+            </div>
+
+            <div id="exampleActions" class="examples">
+                <h4>Possible Actions</h4>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <input type="text" id="userInput" placeholder="What would you like to do?" disabled>
+            <button id="submitBtn" class="action-button" onclick="submitAction()" disabled>Send</button>
+        </div>
+    </div>
+
     <script src="/static/js/main.js"></script>
 </body>
 </html>
