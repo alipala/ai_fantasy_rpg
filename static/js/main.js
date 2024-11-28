@@ -1,63 +1,135 @@
 let gameState = {
-    started: false,
-    phase: 'initial',
-    character: null,
+    currentScreen: 'start',
     world: null,
     kingdom: null,
     town: null,
+    character: null,
     inventory: {},
     history: [],
     examples: []
 };
 
+// Initial Setup and Event Listeners
+document.addEventListener('DOMContentLoaded', () => {
+    // Start button listener
+    document.getElementById('initialStartBtn').addEventListener('click', () => {
+        const startScreen = document.getElementById('startScreen');
+        const selectionPhase = document.getElementById('selectionPhase');
+
+        startScreen.classList.add('fade-out');
+        setTimeout(() => {
+            // Hide start screen and show selection phase
+            startScreen.classList.add('hidden');
+            selectionPhase.classList.remove('hidden');
+            
+            // Trigger reflow
+            void selectionPhase.offsetWidth;
+            
+            // Make selection phase visible
+            selectionPhase.classList.add('visible');
+            
+            // Show world selection screen
+            gameState.currentScreen = 'worldSelect';
+            showScreen('worldSelect');
+            startGame();
+        }, 300);
+    });
+
+    // Back button listener
+    document.getElementById('backButton').addEventListener('click', goBack);
+
+    // Submit button click listener
+    document.getElementById('submitBtn').addEventListener('click', submitAction);
+
+    // Enter key for input
+    document.getElementById('userInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            submitAction();
+        }
+    });
+
+    // Send button animations
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.addEventListener('mousedown', function() {
+        this.style.transform = 'scale(0.95)';
+    });
+
+    submitBtn.addEventListener('mouseup', function() {
+        this.style.transform = 'scale(1)';
+    });
+
+    submitBtn.addEventListener('mouseleave', function() {
+        this.style.transform = 'scale(1)';
+    });
+});
+
+// Screen Management Functions
+function showScreen(screenId) {
+    // Hide all screens
+    document.querySelectorAll('.selection-screen').forEach(screen => {
+        screen.classList.remove('visible');
+        void screen.offsetWidth; // Trigger reflow
+    });
+    
+    // Show selected screen with animation
+    const screen = document.getElementById(screenId);
+    if (screen) {
+        screen.classList.remove('hidden');
+        void screen.offsetWidth; // Trigger reflow
+        screen.classList.add('visible');
+        updateBackButton();
+    }
+}
+
+function updateBackButton() {
+    const backButton = document.getElementById('backButton');
+    const screens = ['characterSelect', 'townSelect', 'kingdomSelect', 'worldSelect'];
+    const currentIndex = screens.indexOf(gameState.currentScreen);
+    
+    if (currentIndex > 0) {
+        backButton.classList.remove('hidden');
+    } else {
+        backButton.classList.add('hidden');
+    }
+}
+
+function goBack() {
+    const screens = ['characterSelect', 'townSelect', 'kingdomSelect', 'worldSelect'];
+    const currentIndex = screens.indexOf(gameState.currentScreen);
+    
+    if (currentIndex > 0) {
+        const previousScreen = screens[currentIndex - 1];
+        gameState.currentScreen = previousScreen;
+        showScreen(previousScreen);
+    }
+}
+
+// Game Initialization Functions
 async function startGame() {
-    if (gameState.started) return;
-    
-    gameState.started = true;
-    gameState.phase = 'world';
-    
-    document.getElementById('startGameBtn').disabled = true;
-    document.getElementById('selectionPhase').classList.remove('hidden');
-    document.getElementById('worldSelect').classList.remove('hidden');
-    
     try {
         const response = await fetch('/world-info');
         const data = await response.json();
         displayWorlds(data);
-        updateExamples([
-            'Select a world to begin',
-            'Learn about Kyropeia',
-            'Read world descriptions'
-        ]);
     } catch (error) {
         console.error('Error fetching game data:', error);
-        updateGameOutput('Error starting game. Please try again.');
     }
 }
 
 function displayWorlds(data) {
     const worldList = document.getElementById('worldList');
     worldList.innerHTML = `
-        <button class="floating-button" onclick="selectWorld('${data.name}')">
+        <button class="selection-button" onclick="selectWorld('${data.name}')">
             <h3>${data.name}</h3>
             <p>${data.description.substring(0, 100)}...</p>
         </button>
     `;
 }
 
-function selectWorld(worldName) {
+async function selectWorld(worldName) {
     gameState.world = worldName;
-    gameState.phase = 'kingdom';
-    
-    document.getElementById('worldSelect').classList.add('hidden');
-    document.getElementById('kingdomSelect').classList.remove('hidden');
-    
-    displayKingdoms();
-    updateExamples([
-        'Choose a kingdom',
-        'Read kingdom histories',
-        'Compare kingdoms'
-    ]);
+    gameState.currentScreen = 'kingdomSelect';
+    showScreen('kingdomSelect');
+    await displayKingdoms();
 }
 
 async function displayKingdoms() {
@@ -70,7 +142,7 @@ async function displayKingdoms() {
         
         Object.values(data.kingdoms).forEach(kingdom => {
             const button = document.createElement('button');
-            button.className = 'floating-button';
+            button.className = 'selection-button';
             button.innerHTML = `
                 <h3>${kingdom.name}</h3>
                 <p>${kingdom.description.substring(0, 100)}...</p>
@@ -83,27 +155,20 @@ async function displayKingdoms() {
     }
 }
 
-async function selectKingdom(kingdom) {
+function selectKingdom(kingdom) {
     gameState.kingdom = kingdom;
-    gameState.phase = 'town';
-    
+    gameState.currentScreen = 'townSelect';
+    showScreen('townSelect');
     displayTowns(kingdom);
-    updateExamples([
-        'Choose a town',
-        'Read town descriptions',
-        'Learn about locations'
-    ]);
 }
 
 function displayTowns(kingdom) {
     const townList = document.getElementById('townList');
     townList.innerHTML = '';
-    document.getElementById('kingdomSelect').classList.add('hidden');
-    document.getElementById('townSelect').classList.remove('hidden');
     
     Object.values(kingdom.towns).forEach(town => {
         const button = document.createElement('button');
-        button.className = 'floating-button';
+        button.className = 'selection-button';
         button.innerHTML = `
             <h3>${town.name}</h3>
             <p>${town.description.substring(0, 100)}...</p>
@@ -115,25 +180,18 @@ function displayTowns(kingdom) {
 
 function selectTown(town) {
     gameState.town = town;
-    gameState.phase = 'character';
-    
+    gameState.currentScreen = 'characterSelect';
+    showScreen('characterSelect');
     displayCharacters(town);
-    updateExamples([
-        'Choose a character',
-        'Read character stories',
-        'Learn about NPCs'
-    ]);
 }
 
 function displayCharacters(town) {
     const characterList = document.getElementById('characterList');
     characterList.innerHTML = '';
-    document.getElementById('townSelect').classList.add('hidden');
-    document.getElementById('characterSelect').classList.remove('hidden');
     
     Object.values(town.npcs).forEach(char => {
         const button = document.createElement('button');
-        button.className = 'floating-button';
+        button.className = 'selection-button';
         button.innerHTML = `
             <h3>${char.name}</h3>
             <p>${char.description.substring(0, 100)}...</p>
@@ -153,17 +211,15 @@ async function selectCharacter(character) {
             body: JSON.stringify({ character: character.name })
         });
         const data = await response.json();
-        updateInventory(data.inventory);
         
-        document.getElementById('characterSelect').classList.add('hidden');
-        await initializeGame();
-        
+        // Initialize game with loaded inventory
+        await initializeGame(data.inventory);
     } catch (error) {
         console.error('Error loading inventory:', error);
     }
 }
 
-async function initializeGame() {
+async function initializeGame(inventory) {
     try {
         const response = await fetch('/start-game', {
             method: 'POST',
@@ -176,15 +232,28 @@ async function initializeGame() {
         });
         
         const data = await response.json();
-        updateInventory(data.inventory);
         
-        document.getElementById('selectionPhase').classList.add('hidden');
+        // Transition to game screen
+        document.getElementById('selectionPhase').classList.add('fade-out');
+        setTimeout(() => {
+            document.getElementById('selectionPhase').classList.add('hidden');
+            const gameContainer = document.getElementById('gameContainer');
+            gameContainer.classList.remove('hidden');
+            setTimeout(() => {
+                gameContainer.classList.add('visible');
+            }, 50);
+        }, 300);
+        
+        // Initialize game state
+        updateInventory(inventory);
         document.getElementById('userInput').disabled = false;
         document.getElementById('submitBtn').disabled = false;
         
+        // Display initial story
         const story = `Welcome to ${gameState.world}! You are ${gameState.character.name} in ${gameState.town.name}, ${gameState.town.description}`;
         updateGameOutput(story);
         
+        // Set initial possible actions
         updateExamples([
             'Look around',
             'Talk to locals',
@@ -192,6 +261,60 @@ async function initializeGame() {
         ]);
     } catch (error) {
         console.error('Error initializing game:', error);
+    }
+}
+
+// Game Interaction Functions
+async function submitAction() {
+    const input = document.getElementById('userInput');
+    const action = input.value.trim();
+    if (!action) return;
+    
+    // Disable input and button while processing
+    input.disabled = true;
+    document.getElementById('submitBtn').disabled = true;
+    
+    // Add user's action to game output
+    const userMessage = document.createElement('div');
+    userMessage.className = 'message user-message';
+    userMessage.textContent = action;
+    document.getElementById('gameOutput').appendChild(userMessage);
+    
+    try {
+        const response = await fetch('/action', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action })
+        });
+        
+        const result = await response.json();
+        
+        // Add game response
+        const botMessage = document.createElement('div');
+        botMessage.className = 'message bot-message';
+        botMessage.textContent = result.response;
+        document.getElementById('gameOutput').appendChild(botMessage);
+        
+        // Update game state
+        updateInventory(result.inventory);
+        generateNewExamples(result.response);
+        
+        // Clear input and scroll to bottom
+        input.value = '';
+        document.getElementById('gameOutput').scrollTop = document.getElementById('gameOutput').scrollHeight;
+    } catch (error) {
+        console.error('Error:', error);
+        
+        // Show error message to user
+        const errorMessage = document.createElement('div');
+        errorMessage.className = 'message bot-message';
+        errorMessage.textContent = 'Sorry, something went wrong. Please try again.';
+        document.getElementById('gameOutput').appendChild(errorMessage);
+    } finally {
+        // Re-enable input and button
+        input.disabled = false;
+        document.getElementById('submitBtn').disabled = false;
+        input.focus();
     }
 }
 
@@ -209,56 +332,8 @@ function updateInventory(inventory) {
                 <span class="item-count">${count}</span>
             `;
             slots.appendChild(itemElement);
-            
-            // Add "Use [item]" to possible actions if not already present
-            if (!gameState.examples.includes(`Use ${item}`)) {
-                gameState.examples.push(`Use ${item}`);
-            }
         }
     });
-}
-
-async function submitAction() {
-    const input = document.getElementById('userInput');
-    const action = input.value;
-    if (!action.trim()) return;
-    
-    const output = document.getElementById('gameOutput');
-    const userMessage = document.createElement('div');
-    userMessage.className = 'message user-message';
-    userMessage.textContent = action;
-    output.appendChild(userMessage);
-    
-    try {
-        const response = await fetch('/action', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action })
-        });
-        
-        const result = await response.json();
-        
-        // Check if an item was used
-        if (result.response.startsWith('[USED_ITEM:')) {
-            const endBracket = result.response.indexOf(']');
-            const itemUsed = result.response.substring(11, endBracket);
-            result.response = result.response.substring(endBracket + 2);
-        }
-        
-        const botMessage = document.createElement('div');
-        botMessage.className = 'message bot-message';
-        botMessage.textContent = result.response;
-        output.appendChild(botMessage);
-        
-        // Update inventory with new state
-        updateInventory(result.inventory);
-        generateNewExamples(result.response);
-        
-        input.value = '';
-        output.scrollTop = output.scrollHeight;
-    } catch (error) {
-        console.error('Error:', error);
-    }
 }
 
 function generateNewExamples(context) {
@@ -268,6 +343,7 @@ function generateNewExamples(context) {
         'Use inventory item'
     ];
     
+    // Add context-specific examples
     if (context.toLowerCase().includes('merchant') || context.toLowerCase().includes('market')) {
         examples = [
             'Buy items',
@@ -291,7 +367,6 @@ function generateNewExamples(context) {
     
     // Keep only unique examples and limit to 5
     examples = [...new Set(examples)].slice(0, 5);
-    
     updateExamples(examples);
 }
 
