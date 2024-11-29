@@ -73,11 +73,18 @@ class GameMasterAgent:
             item_used = None
             if action.lower().startswith('use '):
                 item_name = action[4:].strip()
-                if item_name in game_state.inventory and game_state.inventory[item_name] > 0:
-                    game_state.inventory[item_name] -= 1
-                    if game_state.inventory[item_name] == 0:
-                        del game_state.inventory[item_name]
-                    item_used = item_name
+                # Case-insensitive item matching
+                matching_item = None
+                for inventory_item in game_state.inventory:
+                    if inventory_item.lower() == item_name.lower():
+                        matching_item = inventory_item
+                        break
+                        
+                if matching_item and game_state.inventory[matching_item] > 0:
+                    game_state.inventory[matching_item] -= 1
+                    if game_state.inventory[matching_item] == 0:
+                        del game_state.inventory[matching_item]
+                    item_used = matching_item
 
             messages = [
                 {"role": "system", "content": system_prompt},
@@ -91,6 +98,10 @@ class GameMasterAgent:
             )
             
             result = response.choices[0].message.content
+            # Remove any existing [USED_ITEM] tags from the AI response
+            result = result.replace(f"[USED_ITEM:{item_used}] ", "") if item_used else result
+            
+            # Add the [USED_ITEM] tag only once if an item was used
             if item_used:
                 result = f"[USED_ITEM:{item_used}] {result}"
             
