@@ -336,7 +336,7 @@ def generate_examples():
         general_actions = ["Look around", "Rest", "Check surroundings"]
         examples.add(random.choice(general_actions))
         
-        return jsonify({'examples': list(examples)[:5]})  # Return max 5 examples
+        return jsonify({'examples': list(examples)[:4]})  # Return max 4 examples
         
     except Exception as e:
         logging.error(f"Error generating examples: {e}")
