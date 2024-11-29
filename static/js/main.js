@@ -1,3 +1,4 @@
+
 let gameState = {
     currentScreen: 'start',
     world: null,
@@ -8,27 +9,30 @@ let gameState = {
     history: [],
     examples: []
 };
+console.log("DOM Content Loaded");
+
 
 // Initial Setup and Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
-    // Start button listener
-    document.getElementById('initialStartBtn').addEventListener('click', () => {
+    const startBtn = document.getElementById('initialStartBtn');
+    console.log("Start button found:", startBtn); // Debug log
+
+    startBtn.addEventListener('click', () => {
+        console.log("Start button clicked"); // Debug log
         const startScreen = document.getElementById('startScreen');
         const selectionPhase = document.getElementById('selectionPhase');
 
+        console.log("Start screen:", startScreen); // Debug log
+        console.log("Selection phase:", selectionPhase); // Debug log
+
         startScreen.classList.add('fade-out');
         setTimeout(() => {
-            // Hide start screen and show selection phase
             startScreen.classList.add('hidden');
             selectionPhase.classList.remove('hidden');
             
-            // Trigger reflow
             void selectionPhase.offsetWidth;
-            
-            // Make selection phase visible
             selectionPhase.classList.add('visible');
             
-            // Show world selection screen
             gameState.currentScreen = 'worldSelect';
             showScreen('worldSelect');
             startGame();
@@ -123,11 +127,16 @@ function goBack() {
 // Game Initialization Functions
 async function startGame() {
     try {
+        console.log("Starting game...");
         const response = await fetch('/world-info');
         const data = await response.json();
+        console.log("Raw world data:", data); // See exact data structure
         displayWorlds(data);
     } catch (error) {
-        console.error('Error fetching game data:', error);
+        console.error('Error details:', {
+            message: error.message,
+            stack: error.stack
+        });
     }
 }
 
@@ -135,44 +144,46 @@ function displayWorlds(data) {
     const worldList = document.getElementById('worldList');
     worldList.innerHTML = '';
     
-    const button = document.createElement('button');
-    button.className = 'selection-button';
-    button.innerHTML = `
-        <h3>${data.name}</h3>
-        <p>${data.description.substring(0, 100)}...</p>
-    `;
-    button.addEventListener('click', () => selectWorld(data.name));
-    worldList.appendChild(button);
-}
-
-async function selectWorld(worldName) {
-    gameState.world = worldName;
-    gameState.currentScreen = 'kingdomSelect';
-    showScreen('kingdomSelect');
-    await displayKingdoms();
-}
-
-async function displayKingdoms() {
-    try {
-        const response = await fetch('/world-info');
-        const data = await response.json();
-        
-        const kingdomList = document.getElementById('kingdomList');
-        kingdomList.innerHTML = '';
-        
-        Object.values(data.kingdoms).forEach(kingdom => {
+    // Check if data exists and has the worlds property
+    if (data && data.worlds) {
+        Object.values(data.worlds).forEach(world => {
             const button = document.createElement('button');
             button.className = 'selection-button';
             button.innerHTML = `
-                <h3>${kingdom.name}</h3>
-                <p>${kingdom.description.substring(0, 100)}...</p>
+                <h3>${world.name}</h3>
+                <p>${world.description ? world.description.substring(0, 100) : ''}...</p>
             `;
-            button.onclick = () => selectKingdom(kingdom);
-            kingdomList.appendChild(button);
+            button.addEventListener('click', () => selectWorld(world));
+            worldList.appendChild(button);
         });
-    } catch (error) {
-        console.error('Error fetching kingdoms:', error);
+    } else {
+        console.error('Invalid world data structure:', data);
+        worldList.innerHTML = '<p>Error loading worlds. Please try again.</p>';
     }
+}
+
+async function selectWorld(world) {
+    gameState.world = world.name;  // Store just the world name
+    gameState.currentScreen = 'kingdomSelect';
+    showScreen('kingdomSelect');
+    displayKingdoms(world.kingdoms);  // Pass kingdoms directly
+}
+
+function displayKingdoms(kingdoms) {
+    const kingdomList = document.getElementById('kingdomList');
+    kingdomList.innerHTML = '';
+    
+    // Since we're getting the kingdoms directly, no need to fetch again
+    Object.values(kingdoms).forEach(kingdom => {
+        const button = document.createElement('button');
+        button.className = 'selection-button';
+        button.innerHTML = `
+            <h3>${kingdom.name}</h3>
+            <p>${kingdom.description.substring(0, 100)}...</p>
+        `;
+        button.onclick = () => selectKingdom(kingdom);
+        kingdomList.appendChild(button);
+    });
 }
 
 function selectKingdom(kingdom) {
@@ -222,7 +233,7 @@ function displayCharacters(town) {
 }
 
 async function selectCharacter(character) {
-    gameState.character = character;
+    gameState.character = character.name;  // Store just the name
     
     try {
         const response = await fetch('/load-inventory', {
@@ -232,8 +243,11 @@ async function selectCharacter(character) {
         });
         const data = await response.json();
         
-        // Initialize game with loaded inventory
-        await initializeGame(data.inventory);
+        if (data.inventory) {
+            await initializeGame(data.inventory);
+        } else {
+            console.error('No inventory data received:', data);
+        }
     } catch (error) {
         console.error('Error loading inventory:', error);
     }
@@ -245,13 +259,17 @@ async function initializeGame(inventory) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                character: gameState.character.name,
+                character: gameState.character,
                 world: gameState.world,
                 kingdom: gameState.kingdom.name
             })
         });
         
         const data = await response.json();
+        
+        if (data.error) {
+            throw new Error(data.error);
+        }
         
         // Transition screens
         document.getElementById('selectionPhase').classList.add('fade-out');
@@ -271,7 +289,7 @@ async function initializeGame(inventory) {
         document.getElementById('submitBtn').disabled = false;
         
         // Display initial story
-        const story = `Welcome to ${gameState.world}! You are ${gameState.character.name} in ${gameState.town.name}. ${gameState.town.description}`;
+        const story = `Welcome to ${gameState.world}! You are ${gameState.character} in ${data.location.name}. ${data.location.description}`;
         const welcomeMessage = document.createElement('div');
         welcomeMessage.className = 'message bot-message';
         welcomeMessage.textContent = story;
@@ -296,7 +314,7 @@ async function initializeGame(inventory) {
         errorMessage.textContent = 'Failed to initialize game. Please refresh and try again.';
         document.getElementById('gameOutput').appendChild(errorMessage);
     }
- }
+}
 
 // Game Interaction Functions
 async function submitAction() {

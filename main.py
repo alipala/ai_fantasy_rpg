@@ -47,56 +47,64 @@ def load_world(filename):
         logging.error(f"Error decoding {filename}")
         return None
 
-def display_world_info(world):
-    """Display information about the created world."""
-    print("\n=== World Information ===")
-    print(f"World Name: {world['name']}")
-    print(f"Description: {world['description']}")
-    print("\nKingdoms:")
-    for kingdom_name, kingdom in world['kingdoms'].items():
-        print(f"\n- {kingdom_name}")
-        print(f"  Description: {kingdom['description'][:100]}...")
-        print("  Towns:")
-        for town_name, town in kingdom['towns'].items():
-            print(f"    - {town_name}")
-            print("    NPCs:")
-            for npc_name in town['npcs'].keys():
-                print(f"      * {npc_name}")
-    print("\n=== World Creation Complete ===")
+def display_worlds_info(worlds):
+    """Display information about the created worlds."""
+    print("\n=== Worlds Information ===")
+    for world_name, world in worlds.items():
+        print(f"\nWorld: {world_name}")
+        print(f"Description: {world['description']}")
+        print("\nKingdoms:")
+        for kingdom_name, kingdom in world['kingdoms'].items():
+            print(f"\n- {kingdom_name}")
+            print(f"  Description: {kingdom['description'][:100]}...")
+            print("  Towns:")
+            for town_name, town in kingdom['towns'].items():
+                print(f"    - {town_name}")
+                print("    NPCs:")
+                for npc_name in town['npcs'].keys():
+                    print(f"      * {npc_name}")
+    print("\n=== Worlds Creation Complete ===")
 
-def initialize_world():
-    """Initialize or load the game world."""
+def initialize_worlds():
+    """Initialize or load the game worlds."""
     world_file = 'shared_data/game_world.json'
     os.makedirs('shared_data', exist_ok=True)
 
+    # First try to load existing worlds
     if os.path.exists(world_file):
-        logging.info("Loading existing world...")
-        world = load_world(world_file)
-        if world:
-            logging.info("Existing world loaded successfully")
-            return world
+        logging.info("Loading existing worlds...")
+        try:
+            with open(world_file, 'r') as f:
+                worlds_data = json.load(f)
+                if 'worlds' in worlds_data:  # Check if it has the correct structure
+                    logging.info("Successfully loaded existing worlds")
+                    return worlds_data['worlds']
+        except Exception as e:
+            logging.error(f"Error loading worlds: {e}")
 
-    logging.info("Creating new world...")
+    # Only generate new worlds if loading fails
+    logging.info("Creating new worlds...")
     api_key = os.getenv('TOGETHER_API_KEY')
     if not api_key:
         logging.error("TOGETHER_API_KEY not found")
         raise ValueError("TOGETHER_API_KEY not found")
 
+    world_builder = WorldBuilderAgent(api_key)
     try:
-        world_builder = WorldBuilderAgent(api_key)
-        world = world_builder.build_complete_world(
-            concept="cities built on massive beasts known as Colossi"
-        )
-        save_world(world, world_file)
-        logging.info("New world created and saved successfully")
-        return world
+        worlds = world_builder.generate_worlds()  # Your world generation logic
+        
+        # Save the newly generated worlds
+        with open(world_file, 'w') as f:
+            json.dump({'worlds': worlds}, f, indent=2)
+            
+        return worlds
     except Exception as e:
-        logging.error(f"Error creating world: {e}")
+        logging.error(f"Error creating worlds: {e}")
         raise
 
 def load_character_inventory(character_name):
     try:
-        with open('shared_data/inventory.txt', 'r') as f:
+        with open('shared_data/inventory.json', 'r') as f:
             data = json.load(f)
             inventory = {}
             char_items = data['inventories'].get(character_name, [])
@@ -163,11 +171,16 @@ def generate_examples(response: str, location: dict) -> list:
     
     return examples[:3]  # Return top 3 examples
 
-# Initialize world and agents
+
+# Initialize worlds and agents
 try:
-    print("Initializing game world...")
-    world = initialize_world()
-    display_world_info(world)
+    print("Initializing game worlds...")
+    worlds = initialize_worlds()
+    if worlds:
+        logging.info(f"Loaded {len(worlds)} worlds")
+    else:
+        logging.error("Failed to load or generate worlds")
+        raise ValueError("No worlds available")
     
     logging.info("Initializing game agents...")
     api_key = os.getenv('TOGETHER_API_KEY')
@@ -213,23 +226,44 @@ def home():
 
 @app.route('/world-info')
 def world_info():
-    return jsonify(world)
-
+    world_file = 'shared_data/game_world.json'
+    try:
+        with open(world_file, 'r') as f:
+            worlds = json.load(f)
+            print("Serving worlds data:", worlds)  # Debug log
+            return jsonify(worlds)
+    except Exception as e:
+        logging.error(f"Error loading worlds: {e}")
+        return jsonify({'error': str(e)}), 500
+    
 @app.route('/start-game', methods=['POST'])
 def start_game():
     try:
         data = request.json
         character_name = data.get('character')
+        world_name = data.get('world')  # Now this is the world name
         kingdom_name = data.get('kingdom')
         
         # Load character inventory
         character_inventory = load_character_inventory(character_name)
         
+        # Find world data
+        world = None
+        with open('shared_data/game_world.json', 'r') as f:
+            worlds_data = json.load(f)
+            world = worlds_data['worlds'].get(world_name)
+        
+        if not world:
+            raise ValueError(f"World {world_name} not found")
+            
         # Find character's town or select random town
-        kingdom = world['kingdoms'][kingdom_name]
+        kingdom = world['kingdoms'].get(kingdom_name)
+        if not kingdom:
+            raise ValueError(f"Kingdom {kingdom_name} not found")
+            
         character_town = None
         for town in kingdom['towns'].values():
-            if character_name in town['npcs']:
+            if any(npc['name'] == character_name for npc in town['npcs'].values()):
                 character_town = town
                 break
         if not character_town:
@@ -254,6 +288,8 @@ def start_game():
         logging.error(f"Error starting game: {e}")
         return jsonify({'error': str(e)}), 500
 
+
+    
 @app.route('/load-inventory', methods=['POST'])
 def load_inventory():
     try:
