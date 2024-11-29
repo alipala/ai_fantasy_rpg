@@ -180,6 +180,29 @@ except Exception as e:
     logging.critical(f"Critical error during initialization: {str(e)}")
     raise
 
+def extract_keywords(text):
+    """Extract key elements from response text"""
+    keywords = {
+        'npcs': [],
+        'items': [],
+        'locations': [],
+        'actions': []
+    }
+    
+    # Extract NPCs (names and titles)
+    npc_matches = re.findall(r'([A-Z][a-z]+ [A-Z][a-z]+|the [a-z]+ [a-z]+)', text)
+    keywords['npcs'] = list(set(npc_matches))
+    
+    # Extract items
+    item_matches = re.findall(r'(?:the |a |an )([a-z]+ [a-z]+)', text.lower())
+    keywords['items'] = list(set(item_matches))
+    
+    # Extract locations
+    loc_matches = re.findall(r'(?:at |in |near |by )(?:the )?([a-z]+ [a-z]+)', text.lower())
+    keywords['locations'] = list(set(loc_matches))
+    
+    return keywords
+
 @app.route('/static/<path:path>')
 def send_static(path):
     return send_from_directory('static', path)
@@ -272,6 +295,53 @@ def process_action():
         logging.error(f"Error processing action: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
+@app.route('/generate-examples', methods=['POST'])
+def generate_examples():
+    try:
+        data = request.json
+        context = data.get('context', '')
+        
+        examples = set()
+        keywords = extract_keywords(context)
+        
+        # Generate context-specific examples
+        if keywords['npcs']:
+            npc = random.choice(keywords['npcs'])
+            examples.add(f"Talk to {npc}")
+            examples.add(f"Ask {npc} about their work")
+            
+        if 'forge' in context.lower():
+            examples.add("Examine the forge")
+            examples.add("Watch the blacksmiths work")
+            
+        if 'market' in context.lower() or 'merchant' in context.lower():
+            examples.add("Browse goods")
+            examples.add("Negotiate prices")
+            
+        if any(item in context.lower() for item in ['box', 'contraption', 'device']):
+            examples.add("Investigate the item")
+            examples.add("Pick up the item")
+            
+        # Add inventory-based examples if relevant
+        for item in game_state.inventory:
+            if item in context.lower():
+                examples.add(f"Use {item}")
+                
+        # Add location-based examples
+        if keywords['locations']:
+            location = random.choice(keywords['locations'])
+            examples.add(f"Explore the {location}")
+            
+        # Always include at least one general action
+        general_actions = ["Look around", "Rest", "Check surroundings"]
+        examples.add(random.choice(general_actions))
+        
+        return jsonify({'examples': list(examples)[:5]})  # Return max 5 examples
+        
+    except Exception as e:
+        logging.error(f"Error generating examples: {e}")
+        return jsonify({'examples': ['Look around', 'Rest', 'Talk']})
+    
 if __name__ == '__main__':
     print("\n=== Game Ready to Start ===")
     print("\nAccess the game at http://localhost:5000")

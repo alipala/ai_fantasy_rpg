@@ -253,7 +253,7 @@ async function initializeGame(inventory) {
         
         const data = await response.json();
         
-        // Transition to game screen
+        // Transition screens
         document.getElementById('selectionPhase').classList.add('fade-out');
         setTimeout(() => {
             document.getElementById('selectionPhase').classList.add('hidden');
@@ -264,25 +264,39 @@ async function initializeGame(inventory) {
             }, 50);
         }, 300);
         
-        // Initialize game state
+        // Initialize state
+        gameState.history = [];
         updateInventory(inventory);
         document.getElementById('userInput').disabled = false;
         document.getElementById('submitBtn').disabled = false;
         
         // Display initial story
-        const story = `Welcome to ${gameState.world}! You are ${gameState.character.name} in ${gameState.town.name}, ${gameState.town.description}`;
-        updateGameOutput(story);
+        const story = `Welcome to ${gameState.world}! You are ${gameState.character.name} in ${gameState.town.name}. ${gameState.town.description}`;
+        const welcomeMessage = document.createElement('div');
+        welcomeMessage.className = 'message bot-message';
+        welcomeMessage.textContent = story;
+        document.getElementById('gameOutput').appendChild(welcomeMessage);
         
-        // Set initial possible actions
-        updateExamples([
-            'Look around',
-            'Talk to locals',
-            'Visit the market'
-        ]);
+        // Add to history
+        gameState.history.push({
+            action: 'game_start',
+            response: story
+        });
+        
+        // Generate initial examples
+        await generateNewExamples(story);
+        
+        // Focus input
+        document.getElementById('userInput').focus();
+        
     } catch (error) {
         console.error('Error initializing game:', error);
+        const errorMessage = document.createElement('div');
+        errorMessage.className = 'message bot-message';
+        errorMessage.textContent = 'Failed to initialize game. Please refresh and try again.';
+        document.getElementById('gameOutput').appendChild(errorMessage);
     }
-}
+ }
 
 // Game Interaction Functions
 async function submitAction() {
@@ -290,11 +304,9 @@ async function submitAction() {
     const action = input.value.trim();
     if (!action) return;
     
-    // Disable input and button while processing
     input.disabled = true;
     document.getElementById('submitBtn').disabled = true;
     
-    // Add user's action to game output
     const userMessage = document.createElement('div');
     userMessage.className = 'message user-message';
     userMessage.textContent = action;
@@ -309,7 +321,6 @@ async function submitAction() {
         
         const result = await response.json();
         
-        // Add game response
         const botMessage = document.createElement('div');
         botMessage.className = 'message bot-message';
         botMessage.textContent = result.response;
@@ -317,26 +328,35 @@ async function submitAction() {
         
         // Update game state
         updateInventory(result.inventory);
-        generateNewExamples(result.response);
+        await generateNewExamples(result.response);
         
-        // Clear input and scroll to bottom
+        // Update history
+        gameState.history.push({
+            action: action,
+            response: result.response
+        });
+        
+        if (gameState.history.length > 10) {
+            gameState.history.shift();
+        }
+        
         input.value = '';
-        document.getElementById('gameOutput').scrollTop = document.getElementById('gameOutput').scrollHeight;
+        const gameOutput = document.getElementById('gameOutput');
+        gameOutput.scrollTop = gameOutput.scrollHeight;
+        
     } catch (error) {
         console.error('Error:', error);
         
-        // Show error message to user
         const errorMessage = document.createElement('div');
         errorMessage.className = 'message bot-message';
         errorMessage.textContent = 'Sorry, something went wrong. Please try again.';
         document.getElementById('gameOutput').appendChild(errorMessage);
     } finally {
-        // Re-enable input and button
         input.disabled = false;
         document.getElementById('submitBtn').disabled = false;
         input.focus();
     }
-}
+ }
 
 function updateInventory(inventory) {
     const slots = document.getElementById('inventorySlots');
@@ -356,38 +376,25 @@ function updateInventory(inventory) {
     });
 }
 
-function generateNewExamples(context) {
-    let examples = [
-        'Explore further',
-        'Talk to someone',
-        'Use inventory item'
-    ];
-    
-    // Add context-specific examples
-    if (context.toLowerCase().includes('merchant') || context.toLowerCase().includes('market')) {
-        examples = [
-            'Buy items',
-            'Check prices',
-            'Negotiate'
-        ];
-    } else if (context.toLowerCase().includes('npc') || context.toLowerCase().includes('person')) {
-        examples = [
-            'Ask questions',
-            'Learn more',
-            'Request help'
-        ];
+async function generateNewExamples(context) {
+    try {
+        const response = await fetch('/generate-examples', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                context: context,
+                location: gameState.town,
+                inventory: gameState.inventory,
+                history: gameState.history
+            })
+        });
+        
+        const data = await response.json();
+        updateExamples(data.examples);
+    } catch (error) {
+        console.error('Error generating examples:', error);
+        updateExamples(['Look around', 'Talk', 'Explore']);
     }
-    
-    // Add inventory-based examples
-    Object.keys(gameState.inventory).forEach(item => {
-        if (item !== 'gold') {
-            examples.push(`Use ${item}`);
-        }
-    });
-    
-    // Keep only unique examples and limit to 5
-    examples = [...new Set(examples)].slice(0, 5);
-    updateExamples(examples);
 }
 
 function updateExamples(examples) {
