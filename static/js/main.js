@@ -1,4 +1,3 @@
-
 let gameState = {
     currentScreen: 'start',
     world: null,
@@ -9,38 +8,14 @@ let gameState = {
     history: [],
     examples: []
 };
-console.log("DOM Content Loaded");
-
 
 // Initial Setup and Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
     const startBtn = document.getElementById('initialStartBtn');
-    console.log("Start button found:", startBtn); // Debug log
-
-    startBtn.addEventListener('click', () => {
-        console.log("Start button clicked"); // Debug log
-        const startScreen = document.getElementById('startScreen');
-        const selectionPhase = document.getElementById('selectionPhase');
-
-        console.log("Start screen:", startScreen); // Debug log
-        console.log("Selection phase:", selectionPhase); // Debug log
-
-        startScreen.classList.add('fade-out');
-        setTimeout(() => {
-            startScreen.classList.add('hidden');
-            selectionPhase.classList.remove('hidden');
-            
-            void selectionPhase.offsetWidth;
-            selectionPhase.classList.add('visible');
-            
-            gameState.currentScreen = 'worldSelect';
-            showScreen('worldSelect');
-            startGame();
-        }, 300);
-    });
+    startBtn.addEventListener('click', handleStartClick);
 
     // Back button listener
-    document.getElementById('backButton').addEventListener('click', goBack);
+    document.getElementById('backButton').addEventListener('click', handleBackNavigation);
 
     // Submit button click listener
     document.getElementById('submitBtn').addEventListener('click', submitAction);
@@ -57,29 +32,43 @@ document.addEventListener('DOMContentLoaded', () => {
     submitBtn.addEventListener('mousedown', function() {
         this.style.transform = 'scale(0.95)';
     });
-
     submitBtn.addEventListener('mouseup', function() {
         this.style.transform = 'scale(1)';
     });
-
     submitBtn.addEventListener('mouseleave', function() {
         this.style.transform = 'scale(1)';
     });
 });
 
+function handleStartClick() {
+    const startScreen = document.getElementById('startScreen');
+    const selectionPhase = document.getElementById('selectionPhase');
+
+    startScreen.classList.add('fade-out');
+    setTimeout(() => {
+        startScreen.classList.add('hidden');
+        selectionPhase.classList.remove('hidden');
+        
+        void selectionPhase.offsetWidth;
+        selectionPhase.classList.add('visible');
+        
+        gameState.currentScreen = 'worldSelect';
+        showScreen('worldSelect');
+        startGame();
+    }, 300);
+}
+
 // Screen Management Functions
 function showScreen(screenId) {
-    // Hide all screens first
     document.querySelectorAll('.selection-screen').forEach(screen => {
         screen.classList.remove('visible');
         screen.classList.add('hidden');
     });
     
-    // Show selected screen with animation
     const screen = document.getElementById(screenId);
     if (screen) {
         screen.classList.remove('hidden');
-        void screen.offsetWidth; // Trigger reflow
+        void screen.offsetWidth;
         screen.classList.add('visible');
         updateBackButton(screenId);
     }
@@ -87,8 +76,6 @@ function showScreen(screenId) {
 
 function updateBackButton(currentScreenId) {
     const backButton = document.getElementById('backButton');
-    
-    // Only show back button after world selection
     if (currentScreenId === 'worldSelect') {
         backButton.classList.add('hidden');
     } else {
@@ -96,26 +83,23 @@ function updateBackButton(currentScreenId) {
     }
 }
 
-function goBack() {
+function handleBackNavigation() {
     switch(gameState.currentScreen) {
         case 'kingdomSelect':
-            // Go back to world selection
             gameState.currentScreen = 'worldSelect';
             gameState.kingdom = null;
             showScreen('worldSelect');
-            startGame(); // Reload world selection
+            startGame();
             break;
             
         case 'townSelect':
-            // Go back to kingdom selection
             gameState.currentScreen = 'kingdomSelect';
             gameState.town = null;
             showScreen('kingdomSelect');
-            displayKingdoms(); // Reload kingdoms
+            displayKingdoms(gameState.world.kingdoms);
             break;
             
         case 'characterSelect':
-            // Go back to town selection
             gameState.currentScreen = 'townSelect';
             gameState.character = null;
             showScreen('townSelect');
@@ -127,16 +111,12 @@ function goBack() {
 // Game Initialization Functions
 async function startGame() {
     try {
-        console.log("Starting game...");
         const response = await fetch('/world-info');
         const data = await response.json();
-        console.log("Raw world data:", data); // See exact data structure
         displayWorlds(data);
     } catch (error) {
-        console.error('Error details:', {
-            message: error.message,
-            stack: error.stack
-        });
+        console.error('Error starting game:', error);
+        showError('Failed to load game worlds. Please refresh and try again.');
     }
 }
 
@@ -144,7 +124,6 @@ function displayWorlds(data) {
     const worldList = document.getElementById('worldList');
     worldList.innerHTML = '';
     
-    // Check if data exists and has the worlds property
     if (data && data.worlds) {
         Object.values(data.worlds).forEach(world => {
             const button = document.createElement('button');
@@ -157,23 +136,21 @@ function displayWorlds(data) {
             worldList.appendChild(button);
         });
     } else {
-        console.error('Invalid world data structure:', data);
-        worldList.innerHTML = '<p>Error loading worlds. Please try again.</p>';
+        showError('Error loading worlds');
     }
 }
 
-async function selectWorld(world) {
-    gameState.world = world.name;  // Store just the world name
+function selectWorld(world) {
+    gameState.world = world;
     gameState.currentScreen = 'kingdomSelect';
     showScreen('kingdomSelect');
-    displayKingdoms(world.kingdoms);  // Pass kingdoms directly
+    displayKingdoms(world.kingdoms);
 }
 
 function displayKingdoms(kingdoms) {
     const kingdomList = document.getElementById('kingdomList');
     kingdomList.innerHTML = '';
     
-    // Since we're getting the kingdoms directly, no need to fetch again
     Object.values(kingdoms).forEach(kingdom => {
         const button = document.createElement('button');
         button.className = 'selection-button';
@@ -233,7 +210,7 @@ function displayCharacters(town) {
 }
 
 async function selectCharacter(character) {
-    gameState.character = character.name;  // Store just the name
+    gameState.character = character;
     
     try {
         const response = await fetch('/load-inventory', {
@@ -246,10 +223,11 @@ async function selectCharacter(character) {
         if (data.inventory) {
             await initializeGame(data.inventory);
         } else {
-            console.error('No inventory data received:', data);
+            showError('Failed to load character inventory');
         }
     } catch (error) {
         console.error('Error loading inventory:', error);
+        showError('Failed to load character inventory');
     }
 }
 
@@ -259,8 +237,8 @@ async function initializeGame(inventory) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                character: gameState.character,
-                world: gameState.world,
+                character: gameState.character.name,
+                world: gameState.world.name,
                 kingdom: gameState.kingdom.name
             })
         });
@@ -272,63 +250,104 @@ async function initializeGame(inventory) {
         }
         
         // Transition screens
-        document.getElementById('selectionPhase').classList.add('fade-out');
-        setTimeout(() => {
-            document.getElementById('selectionPhase').classList.add('hidden');
-            const gameContainer = document.getElementById('gameContainer');
-            gameContainer.classList.remove('hidden');
-            setTimeout(() => {
-                gameContainer.classList.add('visible');
-            }, 50);
-        }, 300);
+        transitionToGameScreen();
         
-        // Initialize state
-        gameState.history = [];
-        updateInventory(inventory);
-        document.getElementById('userInput').disabled = false;
-        document.getElementById('submitBtn').disabled = false;
+        // Initialize game state
+        setupInitialGameState(inventory);
         
-        // Display initial story
-        const story = `Welcome to ${gameState.world}! You are ${gameState.character} in ${data.location.name}. ${data.location.description}`;
-        const welcomeMessage = document.createElement('div');
-        welcomeMessage.className = 'message bot-message';
-        welcomeMessage.textContent = story;
-        document.getElementById('gameOutput').appendChild(welcomeMessage);
-        
-        // Add to history
-        gameState.history.push({
-            action: 'game_start',
-            response: story
-        });
+        // Display initial story and image
+        displayInitialStory(data);
         
         // Generate initial examples
-        await generateNewExamples(story);
+        await generateNewExamples(data.message);
         
         // Focus input
         document.getElementById('userInput').focus();
         
     } catch (error) {
         console.error('Error initializing game:', error);
-        const errorMessage = document.createElement('div');
-        errorMessage.className = 'message bot-message';
-        errorMessage.textContent = 'Failed to initialize game. Please refresh and try again.';
-        document.getElementById('gameOutput').appendChild(errorMessage);
+        showError('Failed to initialize game');
     }
 }
 
-// Game Interaction Functions
+function transitionToGameScreen() {
+    document.getElementById('selectionPhase').classList.add('fade-out');
+    setTimeout(() => {
+        document.getElementById('selectionPhase').classList.add('hidden');
+        const gameContainer = document.getElementById('gameContainer');
+        gameContainer.classList.remove('hidden');
+        setTimeout(() => {
+            gameContainer.classList.add('visible');
+        }, 50);
+    }, 300);
+}
+
+function setupInitialGameState(inventory) {
+    gameState.history = [];
+    updateInventory(inventory);
+    document.getElementById('userInput').disabled = false;
+    document.getElementById('submitBtn').disabled = false;
+}
+
+function displayInitialStory(data) {
+    const story = `Welcome to ${gameState.world.name}! You are ${gameState.character.name} in ${data.location.name}. ${data.location.description}`;
+    
+    // Display story message
+    const welcomeMessage = document.createElement('div');
+    welcomeMessage.className = 'message bot-message';
+    welcomeMessage.textContent = story;
+    document.getElementById('gameOutput').appendChild(welcomeMessage);
+    
+    // Handle initial story image
+    if (data.initial_image) {
+        displayStoryImage(data.initial_image);
+    }
+    
+    // Add to history
+    gameState.history.push({
+        action: 'game_start',
+        response: story
+    });
+}
+
+function displayStoryImage(imageData) {
+    // Create container for image loading state
+    const container = document.getElementById('storyImageContainer');
+    container.innerHTML = '<div class="image-loading"></div>';
+    
+    // Create image element
+    const img = new Image();
+    img.src = imageData.url;
+    
+    img.onload = () => {
+        container.innerHTML = `
+            <div class="story-image-wrapper">
+                <img src="${imageData.url}" 
+                     alt="Scene from ${imageData.context?.world || 'the story'}" 
+                     class="story-image"
+                />
+                <div class="story-image-caption">
+                    ${imageData.context?.character || ''} in ${imageData.context?.location || ''}
+                </div>
+            </div>
+        `;
+    };
+    
+    img.onerror = () => {
+        container.innerHTML = ''; // Remove loading state if image fails
+    };
+}
+
 async function submitAction() {
     const input = document.getElementById('userInput');
     const action = input.value.trim();
     if (!action) return;
     
-    input.disabled = true;
-    document.getElementById('submitBtn').disabled = true;
+    // Disable input during processing
+    disableGameControls(true);
     
-    const userMessage = document.createElement('div');
-    userMessage.className = 'message user-message';
-    userMessage.textContent = action;
-    document.getElementById('gameOutput').appendChild(userMessage);
+    // Display user message
+    displayUserMessage(action);
     
     try {
         const response = await fetch('/action', {
@@ -339,42 +358,64 @@ async function submitAction() {
         
         const result = await response.json();
         
-        const botMessage = document.createElement('div');
-        botMessage.className = 'message bot-message';
-        botMessage.textContent = result.response;
-        document.getElementById('gameOutput').appendChild(botMessage);
+        // Handle response
+        displayBotMessage(result);
         
         // Update game state
-        updateInventory(result.inventory);
-        await generateNewExamples(result.response);
+        updateGameState(action, result);
         
-        // Update history
-        gameState.history.push({
-            action: action,
-            response: result.response
-        });
-        
-        if (gameState.history.length > 10) {
-            gameState.history.shift();
-        }
-        
+        // Clear input
         input.value = '';
-        const gameOutput = document.getElementById('gameOutput');
-        gameOutput.scrollTop = gameOutput.scrollHeight;
+        
+        // Scroll to bottom
+        scrollToBottom();
         
     } catch (error) {
         console.error('Error:', error);
-        
-        const errorMessage = document.createElement('div');
-        errorMessage.className = 'message bot-message';
-        errorMessage.textContent = 'Sorry, something went wrong. Please try again.';
-        document.getElementById('gameOutput').appendChild(errorMessage);
+        showError('Sorry, something went wrong');
     } finally {
-        input.disabled = false;
-        document.getElementById('submitBtn').disabled = false;
+        disableGameControls(false);
         input.focus();
     }
- }
+}
+
+function disableGameControls(disabled) {
+    document.getElementById('userInput').disabled = disabled;
+    document.getElementById('submitBtn').disabled = disabled;
+}
+
+function displayUserMessage(action) {
+    const userMessage = document.createElement('div');
+    userMessage.className = 'message user-message';
+    userMessage.textContent = action;
+    document.getElementById('gameOutput').appendChild(userMessage);
+}
+
+function displayBotMessage(result) {
+    const botMessage = document.createElement('div');
+    botMessage.className = 'message bot-message';
+    botMessage.textContent = result.response;
+    document.getElementById('gameOutput').appendChild(botMessage);
+    
+    // Handle response image if present
+    if (result.image) {
+        displayStoryImage(result.image);
+    }
+}
+
+async function updateGameState(action, result) {
+    updateInventory(result.inventory);
+    await generateNewExamples(result.response);
+    
+    gameState.history.push({
+        action: action,
+        response: result.response
+    });
+    
+    if (gameState.history.length > 10) {
+        gameState.history.shift();
+    }
+}
 
 function updateInventory(inventory) {
     const slots = document.getElementById('inventorySlots');
@@ -431,13 +472,17 @@ function updateExamples(examples) {
 function useExample(example) {
     const input = document.getElementById('userInput');
     input.value = example;
+    input.focus();
 }
 
-function updateGameOutput(text) {
-    const output = document.getElementById('gameOutput');
-    const messageElement = document.createElement('div');
-    messageElement.className = 'message bot-message';
-    messageElement.textContent = text;
-    output.appendChild(messageElement);
-    output.scrollTop = output.scrollHeight;
+function showError(message) {
+    const errorMessage = document.createElement('div');
+    errorMessage.className = 'message bot-message error';
+    errorMessage.textContent = message;
+    document.getElementById('gameOutput').appendChild(errorMessage);
+}
+
+function scrollToBottom() {
+    const gameOutput = document.getElementById('gameOutput');
+    gameOutput.scrollTop = gameOutput.scrollHeight;
 }

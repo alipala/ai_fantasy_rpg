@@ -85,9 +85,11 @@ def initialize_worlds():
     # Only generate new worlds if loading fails
     logging.info("Creating new worlds...")
     api_key = os.getenv('TOGETHER_API_KEY')
-    if not api_key:
-        logging.error("TOGETHER_API_KEY not found")
-        raise ValueError("TOGETHER_API_KEY not found")
+    openai_api_key = os.getenv('OPENAI_API_KEY')
+
+    if not api_key or not openai_api_key:
+        logging.error("API_KEYs not found")
+        raise ValueError("API_KEYs not found")
 
     world_builder = WorldBuilderAgent(api_key)
     try:
@@ -184,7 +186,10 @@ try:
     
     logging.info("Initializing game agents...")
     api_key = os.getenv('TOGETHER_API_KEY')
-    game_master = GameMasterAgent(api_key)
+    openai_api_key = os.getenv('OPENAI_API_KEY') 
+    game_master = GameMasterAgent(
+        api_key,
+        openai_api_key=openai_api_key)
     
     # Initialize game state
     game_state = None  # Will be initialized when character is selected
@@ -235,13 +240,14 @@ def world_info():
     except Exception as e:
         logging.error(f"Error loading worlds: {e}")
         return jsonify({'error': str(e)}), 500
-    
+
 @app.route('/start-game', methods=['POST'])
 def start_game():
     try:
+        # Get request data
         data = request.json
         character_name = data.get('character')
-        world_name = data.get('world')  # Now this is the world name
+        world_name = data.get('world')
         kingdom_name = data.get('kingdom')
         
         # Load character inventory
@@ -262,12 +268,21 @@ def start_game():
             raise ValueError(f"Kingdom {kingdom_name} not found")
             
         character_town = None
+        character_data = None
+        
+        # Search for character in towns
         for town in kingdom['towns'].values():
-            if any(npc['name'] == character_name for npc in town['npcs'].values()):
+            if character_name in town['npcs']:
                 character_town = town
+                character_data = town['npcs'][character_name]
                 break
+                
         if not character_town:
+            # Fallback to random town if character's town not found
             character_town = random.choice(list(kingdom['towns'].values()))
+            
+        if not character_data:
+            raise ValueError(f"Character {character_name} not found")
         
         # Initialize game state
         global game_state
@@ -278,17 +293,76 @@ def start_game():
             history=[]
         )
         
-        return jsonify({
-            'location': character_town,
+        # Create initial welcome message
+        welcome_message = (
+            f"Welcome to {world['name']}! You are {character_name} in "
+            f"{character_town['name']}. {character_town['description']}"
+        )
+        
+        # Generate initial story image
+        try:
+            initial_image = game_master.generate_initial_story_image(
+                character=character_name,
+                location=character_town,
+                world=world
+            )
+        except Exception as e:
+            logging.error(f"Image generation error: {e}")
+            initial_image = None
+            
+        # Prepare location-specific items based on world
+        location_items = []
+        if "Ignisia" in world_name:
+            location_items = ["Fire-resistant cloak", "Magma compass"]
+        elif "Aquaria" in world_name:
+            location_items = ["Water breathing charm", "Pearl compass"]
+        elif "Mechanica" in world_name:
+            location_items = ["Clockwork assistant", "Steam-powered toolkit"]
+        elif "Terranova" in world_name:
+            location_items = ["Nature's blessing stone", "Living compass"]
+        elif "Etheria" in world_name:
+            location_items = ["Ethereal crystal", "Void compass"]
+            
+        # Add location items to inventory if any
+        if location_items:
+            for item in location_items:
+                character_inventory[item] = character_inventory.get(item, 0) + 1
+        
+        # Create response
+        response = {
+            'location': {
+                'name': character_town['name'],
+                'description': character_town['description'],
+                'npcs': character_town['npcs']
+            },
             'inventory': character_inventory,
-            'message': f"Starting game as {character_name} in {character_town['name']}"
-        })
+            'message': welcome_message,
+            'character': {
+                'name': character_name,
+                'description': character_data['description']
+            },
+            'world': {
+                'name': world['name'],
+                'description': world['description']
+            }
+        }
+        
+        # Add initial image if generation was successful
+        if initial_image:
+            response['initial_image'] = initial_image
+            
+        # Log successful game start
+        logging.info(f"Game started for character {character_name} in {world_name}")
+        
+        return jsonify(response)
+        
+    except ValueError as ve:
+        logging.error(f"Validation error in start_game: {str(ve)}")
+        return jsonify({'error': str(ve)}), 400
         
     except Exception as e:
-        logging.error(f"Error starting game: {e}")
-        return jsonify({'error': str(e)}), 500
-
-
+        logging.error(f"Error in start_game: {str(e)}")
+        return jsonify({'error': "Failed to start game. Please try again."}), 500
     
 @app.route('/load-inventory', methods=['POST'])
 def load_inventory():
