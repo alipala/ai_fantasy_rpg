@@ -2,8 +2,9 @@ from crewai import Agent
 from together import Together
 from core.game_state import GameState
 from langchain.chat_models.base import BaseChatModel
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from pydantic import BaseModel, Field
+from openai import OpenAI
 
 class CustomTogetherModel(BaseChatModel):
     client: Any = Field(default=None)
@@ -35,10 +36,15 @@ class CustomTogetherModel(BaseChatModel):
         return {"model": self.model_name}
 
 class GameMasterAgent:
-    def __init__(self, api_key):
+    def __init__(self, api_key, openai_api_key):
         try:
+            # Initialize Together client
             self.client = Together(api_key=api_key)
             self.chat_model = CustomTogetherModel(together_client=self.client)
+
+            # Initialize OpenAI client for image generation
+            self.openai_client = OpenAI(api_key=openai_api_key)
+
             self.agent = Agent(
                 role='Game Master',
                 goal='Manage game flow and player interactions',
@@ -50,6 +56,39 @@ class GameMasterAgent:
             print(f"Error initializing agent: {str(e)}")
             raise
 
+    def generate_initial_story_image(self, character: str, location: Dict, world: Dict) -> Optional[Dict]:
+        """Generate an image for the initial story scene"""
+        try:
+            # Craft a detailed prompt based on the character and location
+            prompt = (
+                f"A wide establishing shot of {character} exploring {location['name']} "
+                f"in the fantasy world of {world['name']}. {location['description']} "
+                "Epic fantasy game art style with dramatic lighting and cinematic composition."
+            )
+            
+            # Generate image using OpenAI's DALL-E
+            response = self.openai_client.images.generate(
+                model="dall-e-3",
+                prompt=prompt,
+                n=1,
+                size="1024x1024"
+            )
+            
+            if response.data:
+                return {
+                    'url': response.data[0].url,
+                    'type': 'establishing_shot',
+                    'context': {
+                        'character': character,
+                        'location': location['name'],
+                        'world': world['name']
+                    }
+                }
+                
+        except Exception as e:
+            print(f"Initial story image generation error: {e}")
+            return None
+        
     def process_action(self, action: str, game_state: GameState) -> str:
         system_prompt = """You are an AI Game master. Generate the next story event based on:
         1. Player's current location and surroundings
