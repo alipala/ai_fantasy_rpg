@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fantasy RPG Game</title>
     <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="/static/css/loading-overlay.css">
 </head>
 <body>
     <!-- Start Screen -->
@@ -89,9 +90,17 @@
             </button>
         </div>
     </div>
+
     <!-- Loading Overlay -->
     <div id="loadingOverlay" class="loading-overlay hidden">
-        <div class="loading-spinner"></div>
+        <div class="triangle-wrapper">
+            <div class="triangle triangle-1"></div>
+            <div class="triangle triangle-2"></div>
+            <div class="triangle triangle-3"></div>
+            <div class="triangle triangle-4"></div>
+            <div class="triangle triangle-5"></div>
+            <div class="triangle-loading">Loading</div>
+        </div>
     </div>
 
     <!-- Scripts -->

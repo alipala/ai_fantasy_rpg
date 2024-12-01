@@ -9,6 +9,23 @@ let gameState = {
     examples: []
 };
 
+// Triangle SVG template
+const triangleSvg = `
+  <svg class="triangle-svg" viewBox="0 0 140 141">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+      <polygon class="triangle-polygon" points="70 6 136 138 4 138"></polygon>
+    </g>
+  </svg>
+`;
+
+// Initialize triangles when document loads
+document.addEventListener('DOMContentLoaded', () => {
+    const triangles = document.querySelectorAll('.triangle');
+    triangles.forEach(triangle => {
+        triangle.innerHTML = triangleSvg;
+    });
+});
+
 // Initial Setup and Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
     const startBtn = document.getElementById('initialStartBtn');
@@ -213,6 +230,8 @@ async function selectCharacter(character) {
     gameState.character = character;
     
     try {
+        showLoadingOverlay();
+        
         const response = await fetch('/load-inventory', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -223,12 +242,30 @@ async function selectCharacter(character) {
         if (data.inventory) {
             await initializeGame(data.inventory);
         } else {
-            showError('Failed to load character inventory');
+            throw new Error('Failed to load character inventory');
         }
     } catch (error) {
         console.error('Error loading inventory:', error);
         showError('Failed to load character inventory');
+    } finally {
+        hideLoadingOverlay();
     }
+}
+
+function showLoadingOverlay() {
+    const overlay = document.getElementById('loadingOverlay');
+    overlay.classList.remove('hidden');
+    requestAnimationFrame(() => {
+        overlay.classList.add('visible');
+    });
+}
+
+function hideLoadingOverlay() {
+    const overlay = document.getElementById('loadingOverlay');
+    overlay.classList.remove('visible');
+    setTimeout(() => {
+        overlay.classList.add('hidden');
+    }, 300);
 }
 
 async function initializeGame(inventory) {
@@ -250,6 +287,7 @@ async function initializeGame(inventory) {
         }
         
         // Transition screens
+        hideLoadingOverlay();
         transitionToGameScreen();
         
         // Initialize game state
@@ -267,6 +305,7 @@ async function initializeGame(inventory) {
     } catch (error) {
         console.error('Error initializing game:', error);
         showError('Failed to initialize game');
+        hideLoadingOverlay();
     }
 }
 
