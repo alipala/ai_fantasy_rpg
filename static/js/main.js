@@ -290,6 +290,13 @@ async function initializeGame(inventory) {
         hideLoadingOverlay();
         transitionToGameScreen();
         
+        // Initialize puzzle progress if available in response
+        const puzzleProgressContainer = document.querySelector('.puzzle-progress-container');
+        if (puzzleProgressContainer && data.puzzle_progress) {
+            puzzleProgressContainer.appendChild(createPuzzleProgress());
+            updatePuzzleProgress(data.puzzle_progress);
+        }
+        
         // Initialize game state
         setupInitialGameState(inventory);
         
@@ -301,6 +308,9 @@ async function initializeGame(inventory) {
         
         // Focus input
         document.getElementById('userInput').focus();
+
+        console.log('Game data received:', data);
+        console.log('Puzzle progress:', data.puzzle_progress);
         
     } catch (error) {
         console.error('Error initializing game:', error);
@@ -402,7 +412,17 @@ async function submitAction() {
         
         // Update game state
         updateGameState(action, result);
+
+        // Update puzzle progress
+        if (result.puzzle_progress) {
+            updatePuzzleProgress(result.puzzle_progress);
+        }
         
+        // Handle puzzle completion
+        if (result.puzzle_solved) {
+            handlePuzzleCompletion();
+        }
+
         // Clear input
         input.value = '';
         
@@ -416,6 +436,20 @@ async function submitAction() {
         disableGameControls(false);
         input.focus();
     }
+}
+
+function handlePuzzleCompletion() {
+    // Create completion overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'completion-overlay';
+    overlay.innerHTML = `
+        <div class="completion-message">
+            <h2>Congratulations!</h2>
+            <p>You have solved the puzzle and saved the realm!</p>
+            <button onclick="location.reload()">Play Again</button>
+        </div>
+    `;
+    document.body.appendChild(overlay);
 }
 
 function disableGameControls(disabled) {

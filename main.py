@@ -221,6 +221,16 @@ def extract_keywords(text):
     
     return keywords
 
+def process_regular_action(action):
+    # Existing action processing logic
+    response = game_master.process_action(action, game_state)
+    return jsonify({
+        'response': response,
+        'puzzle_progress': game_state.puzzle_progress.dict() if game_state.puzzle_progress else None,
+        'inventory': game_state.inventory,
+        'puzzle_solved': False
+    })
+
 @app.route('/static/<path:path>')
 def send_static(path):
     return send_from_directory('static', path)
@@ -252,6 +262,16 @@ def start_game():
         
         # Load character inventory
         character_inventory = load_character_inventory(character_name)
+        
+        # Load puzzle data
+        puzzle_data = None
+        try:
+            with open('shared_data/puzzle_data.json', 'r') as f:
+                world_puzzles = json.load(f)['world_puzzles']
+                if world_name in world_puzzles and character_name in world_puzzles[world_name]['characters']:
+                    puzzle_data = world_puzzles[world_name]['characters'][character_name]
+        except Exception as e:
+            logging.error(f"Error loading puzzle data: {e}")
         
         # Find world data
         world = None
@@ -293,11 +313,20 @@ def start_game():
             history=[]
         )
         
+        # Initialize puzzle if data exists
+        if puzzle_data:
+            game_state.initialize_puzzle(character_name, worlds_data)
+            logging.info(f"Initialized puzzle for {character_name}")
+            print(f"Initialized puzzle progress: {game_state.puzzle_progress}")
+        
         # Create initial welcome message
         welcome_message = (
             f"Welcome to {world['name']}! You are {character_name} in "
             f"{character_town['name']}. {character_town['description']}"
         )
+        
+        if game_state.puzzle_progress:
+            welcome_message += f"\n\nYour Quest: {game_state.puzzle_progress.main_puzzle}"
         
         # Generate initial story image
         try:
@@ -344,7 +373,8 @@ def start_game():
             'world': {
                 'name': world['name'],
                 'description': world['description']
-            }
+            },
+            'puzzle_progress': game_state.puzzle_progress.dict() if game_state.puzzle_progress else None
         }
         
         # Add initial image if generation was successful
@@ -353,6 +383,9 @@ def start_game():
             
         # Log successful game start
         logging.info(f"Game started for character {character_name} in {world_name}")
+
+        print("Starting game with character:", character_name)
+        print("Puzzle progress initialized:", game_state.puzzle_progress)
         
         return jsonify(response)
         
@@ -377,30 +410,80 @@ def load_inventory():
 @app.route('/action', methods=['POST'])
 def process_action():
     action = request.json['action']
-    logging.info(f"Processing action: {action}")  # Add detailed logging
+    logging.info(f"Processing action: {action}")
     
     try:
-        response = game_master.process_action(action, game_state)
-        old_inventory = game_state.inventory.copy()
-        logging.info(f"Old inventory: {old_inventory}")  # Log old inventory
+        response = None
+        puzzle_progress = None
+        puzzle_solved = False
         
-        # Process inventory changes
-        if 'hand over' in response.lower() or 'spend' in response.lower():
-            matches = re.findall(r'(\d+)\s*gold', response.lower())
-            if matches:
-                cost = int(matches[0])
-                if game_state.inventory['gold'] >= cost:
-                    game_state.inventory['gold'] -= cost
-                    logging.info(f"Spent {cost} gold. New amount: {game_state.inventory['gold']}")
+        # Check for puzzle-related tasks if puzzle progress exists
+        if hasattr(game_state, 'puzzle_progress') and game_state.puzzle_progress:
+            available_tasks = game_state.puzzle_progress.get_available_tasks(game_state.inventory)
+            matching_task = None
+            
+            # Match action with available tasks
+            for task in available_tasks:
+                # Create a set of keywords from task description and action
+                task_keywords = set(task.description.lower().split())
+                action_keywords = set(action.lower().split())
+                
+                # Check for significant keyword overlap
+                if len(task_keywords.intersection(action_keywords)) >= 2:
+                    matching_task = task
+                    break
+            
+            # Process puzzle task if found
+            if matching_task:
+                reward = game_state.attempt_task(matching_task.task_id)
+                if reward:
+                    response = f"Task completed: {matching_task.description}. Received: {reward}"
+                    puzzle_progress = game_state.puzzle_progress.dict()
+                    puzzle_solved = game_state.puzzle_progress.is_puzzle_solved()
+                    
+                    if puzzle_solved:
+                        response += "\n\nCongratulations! You have solved the puzzle and saved the realm!"
+                    
+                    # Log task completion
+                    logging.info(f"Completed task: {matching_task.task_id}, Progress: {game_state.puzzle_progress.calculate_progress()}%")
+
+        # Process regular game action if no task was completed
+        if not response:
+            response = game_master.process_action(action, game_state)
+            old_inventory = game_state.inventory.copy()
+            
+            # Process inventory changes
+            if 'hand over' in response.lower() or 'spend' in response.lower():
+                matches = re.findall(r'(\d+)\s*gold', response.lower())
+                if matches:
+                    cost = int(matches[0])
+                    if game_state.inventory['gold'] >= cost:
+                        game_state.inventory['gold'] -= cost
+                        logging.info(f"Spent {cost} gold. New amount: {game_state.inventory['gold']}")
+            
+            # Update puzzle progress in response if it exists
+            if hasattr(game_state, 'puzzle_progress') and game_state.puzzle_progress:
+                puzzle_progress = game_state.puzzle_progress.dict()
         
-        logging.info(f"Response: {response}")  # Log response
-        logging.info(f"New inventory: {game_state.inventory}")  # Log new inventory
+        # Log final state
+        logging.info(f"Action response: {response}")
+        logging.info(f"Updated inventory: {game_state.inventory}")
+        if puzzle_progress:
+            logging.info(f"Puzzle progress: {puzzle_progress}")
         
+        # Prepare response with all necessary information
         return jsonify({
             'response': response,
             'inventory': game_state.inventory,
-            'location': game_state.current_location['name']
+            'location': game_state.current_location['name'],
+            'puzzle_progress': puzzle_progress,
+            'puzzle_solved': puzzle_solved,
+            'available_tasks': [
+                {'id': task.task_id, 'title': task.title, 'description': task.description}
+                for task in game_state.puzzle_progress.get_available_tasks(game_state.inventory)
+            ] if hasattr(game_state, 'puzzle_progress') and game_state.puzzle_progress else []
         })
+        
     except Exception as e:
         logging.error(f"Error processing action: {str(e)}")
         return jsonify({'error': str(e)}), 500
@@ -452,6 +535,7 @@ def generate_examples():
         logging.error(f"Error generating examples: {e}")
         return jsonify({'examples': ['Look around', 'Rest', 'Talk']})
     
+
 if __name__ == '__main__':
     print("\n=== Game Ready to Start ===")
     print("\nAccess the game at http://localhost:5000")

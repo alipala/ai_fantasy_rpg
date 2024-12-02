@@ -392,6 +392,49 @@ body {
     animation: spin 1s linear infinite;
 }
 
+/* Puzzle Progress Styles */
+.puzzle-progress-container {
+    background: #272736;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    overflow: hidden;
+}
+
+.card {
+    background: transparent;
+    border: 1px solid #3a3a4d;
+}
+
+.card-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid #3a3a4d;
+}
+
+.card-content {
+    padding: 16px;
+}
+
+.progress-bar-container {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    transition: width 0.5s ease-in-out;
+}
+
+.puzzle-description {
+    color: #ffffff;
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.progress-text {
+    color: #a0aec0;
+    font-size: 0.875rem;
+}
+
 /* Animations */
 @keyframes fadeIn {
     from {

@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import Dict, List, Any, Optional
+from .puzzle_state import PuzzleProgress, TaskProgress
 import json
 import logging
 
@@ -8,6 +9,7 @@ class GameState(BaseModel):
     current_location: Dict
     inventory: Dict[str, int]
     history: List[Dict]
+    puzzle_progress: Optional[PuzzleProgress] = None
     
     def to_string(self):
         return f"""
@@ -69,3 +71,44 @@ class GameState(BaseModel):
             'action': action,
             'response': response
         })
+
+    def initialize_puzzle(self, character_name: str, world_data: Dict):
+        """Initialize puzzle state for the character"""
+        try:
+            with open('shared_data/puzzle_data.json', 'r') as f:
+                puzzle_data = json.load(f)
+                world_name = self.world['name']
+                
+                if (world_name in puzzle_data['world_puzzles'] and 
+                    character_name in puzzle_data['world_puzzles'][world_name]['characters']):
+                        
+                    char_puzzle = puzzle_data['world_puzzles'][world_name]['characters'][character_name]
+                    world_puzzle = puzzle_data['world_puzzles'][world_name]
+                    
+                    self.puzzle_progress = PuzzleProgress(
+                        main_puzzle=world_puzzle['main_puzzle'],
+                        solution_requirements=world_puzzle['solution_requirements'],
+                        total_tasks=len(char_puzzle['role_tasks']),
+                        completed_tasks=0,
+                        tasks={
+                            task['task_id']: TaskProgress(**task, completed=False)
+                            for task in char_puzzle['role_tasks']
+                        }
+                    )
+                    
+                    print(f"Puzzle initialized for {character_name}")
+                    return True
+                    
+        except Exception as e:
+            print(f"Error initializing puzzle: {e}")
+        return False
+            
+    def attempt_task(self, task_id: str) -> Optional[str]:
+        """Attempt to complete a task and return reward if successful"""
+        if not self.puzzle_progress:
+            return None
+            
+        if self.puzzle_progress.can_perform_task(task_id, self.inventory):
+            return self.puzzle_progress.complete_task(task_id)
+            
+        return None
