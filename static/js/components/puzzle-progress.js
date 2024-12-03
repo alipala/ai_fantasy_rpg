@@ -4,17 +4,20 @@ function createPuzzleProgress() {
     const container = document.createElement('div');
     container.className = 'puzzle-progress-container';
     container.innerHTML = `
-        <div class="card w-full mb-4">
-            <div class="card-header">
-                <h3 class="text-sm font-medium">Puzzle Progress</h3>
+        <div class="card w-full bg-gray-800 rounded-lg p-4 mb-4">
+            <div class="card-header border-none">
+                <h3 class="text-sm font-medium text-white">Quest Progress</h3>
             </div>
             <div class="card-content p-4">
                 <div class="space-y-2">
-                    <p class="puzzle-description text-sm"></p>
-                    <div class="progress-bar-container w-full bg-gray-200 rounded-full h-2.5">
-                        <div class="progress-bar bg-blue-600 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    <p class="puzzle-description text-sm text-gray-300"></p>
+                    <div class="progress-bar-container w-full bg-gray-700 rounded-full h-2.5">
+                        <div class="progress-bar bg-green-600 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
                     </div>
-                    <p class="progress-text text-sm text-right">0% Complete</p>
+                    <div class="flex justify-between">
+                        <span class="progress-count text-xs text-gray-400">0/0 tasks</span>
+                        <span class="progress-text text-xs text-gray-400">0% Complete</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -31,10 +34,11 @@ function updatePuzzleProgress(puzzleProgress) {
     if (container) {
         container.querySelector('.puzzle-description').textContent = puzzleProgress.main_puzzle;
         container.querySelector('.progress-bar').style.width = `${progress}%`;
+        container.querySelector('.progress-count').textContent = 
+            `${puzzleProgress.completed_tasks}/${puzzleProgress.total_tasks} tasks`;
         container.querySelector('.progress-text').textContent = `${Math.round(progress)}% Complete`;
     }
 }
 
-// Export for use in main.js
 window.createPuzzleProgress = createPuzzleProgress;
 window.updatePuzzleProgress = updatePuzzleProgress;

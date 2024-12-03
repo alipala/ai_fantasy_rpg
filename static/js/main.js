@@ -1,3 +1,4 @@
+
 let gameState = {
     currentScreen: 'start',
     world: null,
@@ -490,20 +491,70 @@ async function updateGameState(action, result) {
     }
 }
 
+function createInventoryItem(item, count) {
+    return `
+        <div class="inventory-item relative p-2 bg-gray-800 rounded-lg transition-all duration-300">
+            <div class="flex justify-between items-center">
+                <div class="flex flex-col">
+                    <span class="text-white">${item}</span>
+                    <span class="text-xs text-gray-400">${getItemTooltip(item)}</span>
+                </div>
+                <span class="inline-flex items-center justify-center w-6 h-6 rounded-full ${count > 0 ? 'bg-green-500' : 'bg-red-500'}">
+                    ${count}
+                </span>
+            </div>
+        </div>
+    `;
+}
+
+function createTaskProgress(progress, totalTasks, tasks) {
+    const steps = [
+        { name: 'Initial', threshold: 0.25 },
+        { name: 'Midway', threshold: 0.5 },
+        { name: 'Advanced', threshold: 0.75 },
+        { name: 'Final', threshold: 1 }
+    ];
+    
+    const percentage = (progress / totalTasks) * 100;
+    const currentStep = steps.findIndex(step => (progress / totalTasks) <= step.threshold);
+    
+    const stepsHtml = steps.map((step, idx) => `
+        <div class="flex flex-col items-center">
+            <div class="w-8 h-8 rounded-full flex items-center justify-center 
+                ${idx < currentStep ? 'bg-green-500' : 'bg-gray-300'} 
+                ${idx === currentStep ? 'ring-2 ring-green-400' : ''}">
+                ${idx + 1}
+            </div>
+            <span class="text-sm mt-2 text-white">${step.name}</span>
+        </div>
+    `).join('');
+
+    return `
+        <div class="w-full py-4 bg-gray-800 rounded-lg p-4">
+            <div class="flex justify-between mb-4">
+                ${stepsHtml}
+            </div>
+            <div class="h-2 bg-gray-200 rounded-full mt-4">
+                <div class="h-full bg-green-500 rounded-full transition-all duration-300" 
+                     style="width: ${percentage}%"></div>
+            </div>
+            ${tasks && tasks.length > 0 ? `
+                <div class="mt-4 text-sm text-gray-300">
+                    <p>Next objective hint:</p>
+                    <p class="italic">${tasks[0].description.split(' ').slice(0, 5).join(' ')}...</p>
+                </div>
+            ` : ''}
+        </div>
+    `;
+}
+
 function updateInventory(inventory) {
     const slots = document.getElementById('inventorySlots');
     slots.innerHTML = '';
-    gameState.inventory = inventory;
     
     Object.entries(inventory).forEach(([item, count]) => {
         if (count > 0) {
-            const itemElement = document.createElement('div');
-            itemElement.className = 'inventory-item';
-            itemElement.innerHTML = `
-                <span>${item}</span>
-                <span class="item-count">${count}</span>
-            `;
-            slots.appendChild(itemElement);
+            slots.innerHTML += createInventoryItem(item, count);
         }
     });
 }
@@ -540,6 +591,59 @@ function updateExamples(examples) {
         button.onclick = () => useExample(example);
         container.appendChild(button);
     });
+}
+
+function updatePuzzleProgress(puzzleData) {
+    if (!puzzleData) return;
+    
+    const progressContainer = document.getElementById('puzzleProgress');
+    if (!progressContainer) return;
+
+    const percentage = (puzzleData.completed_tasks / puzzleData.total_tasks) * 100;
+    const stepWidth = 100 / (puzzleData.total_tasks - 1);
+    
+    const stepsHtml = Array.from({length: puzzleData.total_tasks}, (_, i) => {
+        const stepPercent = Math.round(i * stepWidth);
+        const isCompleted = percentage >= stepPercent;
+        return `
+            <div class="step-container relative">
+                <div class="step ${isCompleted ? 'completed' : ''}">${i + 1}</div>
+                ${i < puzzleData.total_tasks - 1 ? `<div class="connector ${isCompleted ? 'completed' : ''}"></div>` : ''}
+            </div>
+        `;
+    }).join('');
+
+    progressContainer.innerHTML = `
+        <div class="puzzle-progress-container">
+            <div class="card w-full bg-gray-800 rounded-lg p-4 mb-4">
+                <div class="card-header border-none">
+                    <h3 class="text-sm font-medium text-white">Quest Progress</h3>
+                </div>
+                <div class="card-content p-4">
+                    <div class="space-y-4">
+                        <p class="puzzle-description text-sm text-gray-300">${puzzleData.main_puzzle}</p>
+                        <div class="progress-steps">
+                            ${stepsHtml}
+                        </div>
+                        <div class="text-xs text-gray-400 text-center">
+                            ${puzzleData.completed_tasks}/${puzzleData.total_tasks} tasks completed (${Math.round(percentage)}%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function getItemTooltip(item) {
+    const tooltips = {
+        "Craftsman's hammer": "For construction and repairs",
+        "Set of precision tools": "For detailed mechanical work",
+        "Blueprint journal": "Contains architectural designs",
+        "Enchanted measuring tape": "Reveals structural patterns",
+        "Courage charm": "Enhances bravery and leadership"
+    };
+    return tooltips[item] || "A useful item";
 }
 
 function useExample(example) {

@@ -76,3 +76,25 @@ class InventoryManagerAgent:
         )
         
         return response.choices[0].message.content
+    
+class ItemTooltip:
+    def __init__(self):
+        self.tooltips = {
+            "Craftsman's hammer": "A versatile tool for construction and repairs. Useful for structural work.",
+            "Set of precision tools": "Delicate instruments for detailed mechanical work.",
+            "Blueprint journal": "Contains architectural designs and notes. May reveal hidden structural patterns.",
+            "Enchanted measuring tape": "Magically reveals precise measurements and structural weaknesses.",
+            "Courage charm": "Emboldens both the bearer and those nearby."
+        }
+    
+    def get_tooltip(self, item_name: str) -> dict:
+        base_tooltip = self.tooltips.get(item_name, "A useful item")
+        return {
+            "description": base_tooltip,
+            "usage_hint": "Try using this item when examining structures or mechanisms"
+        }
+
+# Add to inventory_manager.py
+def get_item_tooltip(self, item_name: str) -> Dict:
+    tooltip = ItemTooltip()
+    return tooltip.get_tooltip(item_name)
