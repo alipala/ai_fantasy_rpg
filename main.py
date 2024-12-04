@@ -435,23 +435,19 @@ def process_action():
         puzzle_solved = False
         completion_image = None
         
-        # Check for puzzle-related tasks if puzzle progress exists
+        # Check for puzzle completion
         if hasattr(game_state, 'puzzle_progress') and game_state.puzzle_progress:
             available_tasks = game_state.puzzle_progress.get_available_tasks(game_state.inventory)
             matching_task = None
             
             # Match action with available tasks
             for task in available_tasks:
-                # Create a set of keywords from task description and action
                 task_keywords = set(task.description.lower().split())
                 action_keywords = set(action.lower().split())
-                
-                # Check for significant keyword overlap
                 if len(task_keywords.intersection(action_keywords)) >= 2:
                     matching_task = task
                     break
             
-            # Process puzzle task if found
             if matching_task:
                 reward = game_state.attempt_task(matching_task.task_id)
                 if reward:
@@ -460,78 +456,31 @@ def process_action():
                     puzzle_solved = game_state.puzzle_progress.is_puzzle_solved()
                     
                     if puzzle_solved:
-                        # First add completion message
-                        completion_message = "\n\nCongratulations! You have solved the puzzle and saved the realm!"
-                        response += completion_message
-                        
-                        # Then attempt to generate completion image
-                        try:
-                            completion_image = game_master.generate_completion_image(game_state)
-                            if completion_image:
-                                completion_message = "\nA magical image captures your legendary achievement!"
-                                response += completion_message
-                                logging.info("Generated completion image successfully")
-                            else:
-                                logging.warning("Failed to generate completion image")
-                        except Exception as img_error:
-                            logging.error(f"Error generating completion image: {str(img_error)}")
-                            completion_image = None
+                        # Only add completion message first
+                        response += "\n\nCongratulations! You have solved the puzzle and saved the realm!"
                     
-                    # Log task completion
-                    logging.info(f"Completed task: {matching_task.task_id}, Progress: {game_state.puzzle_progress.calculate_progress()}%")
-
-        # Process regular game action if no task was completed
+        # Regular game action processing if no task completed
         if not response:
             response = game_master.process_action(action, game_state)
-            old_inventory = game_state.inventory.copy()
             
-            # Process inventory changes
-            if 'hand over' in response.lower() or 'spend' in response.lower():
-                matches = re.findall(r'(\d+)\s*gold', response.lower())
-                if matches:
-                    cost = int(matches[0])
-                    if game_state.inventory['gold'] >= cost:
-                        game_state.inventory['gold'] -= cost
-                        logging.info(f"Spent {cost} gold. New amount: {game_state.inventory['gold']}")
-            
-            # Update puzzle progress in response if it exists
-            if hasattr(game_state, 'puzzle_progress') and game_state.puzzle_progress:
-                puzzle_progress = game_state.puzzle_progress.dict()
-        
-        # Log final state
-        logging.info(f"Action response: {response}")
-        logging.info(f"Updated inventory: {game_state.inventory}")
-        if puzzle_progress:
-            logging.info(f"Puzzle progress: {puzzle_progress}")
-        
-        # Prepare available tasks for response
-        available_tasks = []
-        if hasattr(game_state, 'puzzle_progress') and game_state.puzzle_progress:
-            available_tasks = [
-                {
-                    'id': task.task_id,
-                    'title': task.title,
-                    'description': task.description
-                }
-                for task in game_state.puzzle_progress.get_available_tasks(game_state.inventory)
-            ]
-        
-        # Create response object
+        # Create base response data
         response_data = {
             'response': response,
             'inventory': game_state.inventory,
             'location': game_state.current_location['name'],
             'puzzle_progress': puzzle_progress,
             'puzzle_solved': puzzle_solved,
-            'available_tasks': available_tasks
+            'available_tasks': [
+                {
+                    'id': task.task_id,
+                    'title': task.title,
+                    'description': task.description
+                }
+                for task in game_state.puzzle_progress.get_available_tasks(game_state.inventory)
+            ] if hasattr(game_state, 'puzzle_progress') and game_state.puzzle_progress else []
         }
         
-        # Add completion image if available
-        if completion_image:
-            response_data['completion_image'] = completion_image
-            logging.info("Added completion image to response")
-        
-        # Add character and world context for frontend if puzzle is solved
+        # Add completion context if puzzle is solved
         if puzzle_solved:
             response_data['character'] = {
                 'name': game_state.character['name'],
@@ -548,6 +497,20 @@ def process_action():
         error_msg = f"Error processing action: {str(e)}"
         logging.error(error_msg)
         return jsonify({'error': error_msg}), 500
+
+@app.route('/generate-completion', methods=['POST'])
+def generate_completion():
+    try:
+        completion_image = game_master.generate_completion_image(game_state)
+        if completion_image:
+            return jsonify({
+                'completion_image': completion_image,
+                'success': True
+            })
+        return jsonify({'success': False}), 404
+    except Exception as e:
+        logging.error(f"Error generating completion image: {e}")
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/generate-examples', methods=['POST'])
 def generate_examples():
