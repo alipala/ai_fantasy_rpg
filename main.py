@@ -323,7 +323,11 @@ def start_game():
             world=world,
             current_location=character_town,
             inventory=character_inventory,
-            history=[]
+            history=[],
+            character={
+                'name': character_name,
+                'description': character_data['description']
+            }
         )
         
         # Initialize puzzle if data exists
@@ -429,6 +433,7 @@ def process_action():
         response = None
         puzzle_progress = None
         puzzle_solved = False
+        completion_image = None
         
         # Check for puzzle-related tasks if puzzle progress exists
         if hasattr(game_state, 'puzzle_progress') and game_state.puzzle_progress:
@@ -455,7 +460,19 @@ def process_action():
                     puzzle_solved = game_state.puzzle_progress.is_puzzle_solved()
                     
                     if puzzle_solved:
-                        response += "\n\nCongratulations! You have solved the puzzle and saved the realm!"
+                        # Generate completion image first
+                        try:
+                            completion_image = game_master.generate_completion_image(game_state)
+                            logging.info("Generated completion image successfully")
+                        except Exception as img_error:
+                            logging.error(f"Error generating completion image: {str(img_error)}")
+                            completion_image = None
+                            
+                        # Add completion message
+                        completion_message = "\n\nCongratulations! You have solved the puzzle and saved the realm!"
+                        if completion_image:
+                            completion_message += "\nA magical image captures your legendary achievement!"
+                        response += completion_message
                     
                     # Log task completion
                     logging.info(f"Completed task: {matching_task.task_id}, Progress: {game_state.puzzle_progress.calculate_progress()}%")
@@ -484,22 +501,50 @@ def process_action():
         if puzzle_progress:
             logging.info(f"Puzzle progress: {puzzle_progress}")
         
-        # Prepare response with all necessary information
-        return jsonify({
+        # Prepare available tasks for response
+        available_tasks = []
+        if hasattr(game_state, 'puzzle_progress') and game_state.puzzle_progress:
+            available_tasks = [
+                {
+                    'id': task.task_id,
+                    'title': task.title,
+                    'description': task.description
+                }
+                for task in game_state.puzzle_progress.get_available_tasks(game_state.inventory)
+            ]
+        
+        # Create response object
+        response_data = {
             'response': response,
             'inventory': game_state.inventory,
             'location': game_state.current_location['name'],
             'puzzle_progress': puzzle_progress,
             'puzzle_solved': puzzle_solved,
-            'available_tasks': [
-                {'id': task.task_id, 'title': task.title, 'description': task.description}
-                for task in game_state.puzzle_progress.get_available_tasks(game_state.inventory)
-            ] if hasattr(game_state, 'puzzle_progress') and game_state.puzzle_progress else []
-        })
+            'available_tasks': available_tasks
+        }
+        
+        # Add completion image if available
+        if completion_image:
+            response_data['completion_image'] = completion_image
+            logging.info("Added completion image to response")
+        
+        # Add character context for frontend
+        if puzzle_solved:
+            response_data['character'] = {
+                'name': game_state.character['name'],
+                'description': game_state.character['description']
+            }
+            response_data['world'] = {
+                'name': game_state.world['name'],
+                'description': game_state.world['description']
+            }
+            
+        return jsonify(response_data)
         
     except Exception as e:
-        logging.error(f"Error processing action: {str(e)}")
-        return jsonify({'error': str(e)}), 500
+        error_msg = f"Error processing action: {str(e)}"
+        logging.error(error_msg)
+        return jsonify({'error': error_msg}), 500
 
 @app.route('/generate-examples', methods=['POST'])
 def generate_examples():

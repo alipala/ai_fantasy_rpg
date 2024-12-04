@@ -422,7 +422,12 @@ async function submitAction() {
         
         const result = await response.json();
         
-        // Handle response
+        if (result.error) {
+            showError(result.error);
+            return;
+        }
+        
+        // Display bot response
         displayBotMessage(result);
         
         // Update game state
@@ -433,9 +438,9 @@ async function submitAction() {
             updatePuzzleProgress(result.puzzle_progress);
         }
         
-        // Handle puzzle completion
+        // Handle puzzle completion with completion image
         if (result.puzzle_solved) {
-            handlePuzzleCompletion();
+            handlePuzzleCompletion(result);
         }
 
         // Clear input
@@ -446,25 +451,95 @@ async function submitAction() {
         
     } catch (error) {
         console.error('Error:', error);
-        showError('Sorry, something went wrong');
+        showError('Sorry, something went wrong. Please try again.');
     } finally {
         disableGameControls(false);
         input.focus();
     }
 }
 
-function handlePuzzleCompletion() {
-    // Create completion overlay
+// In main.js - Update handlePuzzleCompletion function
+function handlePuzzleCompletion(result) {
+    // Create completion overlay with image if available
     const overlay = document.createElement('div');
     overlay.className = 'completion-overlay';
-    overlay.innerHTML = `
-        <div class="completion-message">
-            <h2>Congratulations!</h2>
-            <p>You have solved the puzzle and saved the realm!</p>
-            <button onclick="location.reload()">Play Again</button>
-        </div>
-    `;
+    
+    let completionContent = `
+        <div class="completion-content">
+            <div class="completion-header">
+                <h2>Victory in ${result.world.name}!</h2>
+                <p class="completion-subtitle">The realm has been saved by ${result.character.name}</p>
+            </div>`;
+    
+    // Add completion image if available
+    if (result.completion_image) {
+        completionContent += `
+            <div class="completion-image-container">
+                <img src="${result.completion_image.url}" 
+                     alt="Victory scene in ${result.completion_image.context.world}"
+                     class="completion-image"
+                />
+                <div class="completion-image-caption">
+                    <h3>The Legend of ${result.completion_image.context.character}</h3>
+                    <p>Savior of ${result.completion_image.context.world}</p>
+                    <div class="achievement-badges">
+                        ${result.completion_image.context.achievements.map(achievement => 
+                            `<span class="achievement-badge">${achievement}</span>`
+                        ).join('')}
+                    </div>
+                </div>
+            </div>`;
+    }
+
+    // Add story summary and buttons
+    completionContent += `
+            <div class="completion-summary">
+                <p>${result.response}</p>
+            </div>
+            <div class="completion-actions">
+                <button onclick="location.reload()" class="completion-button replay-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M3 12a9 9 0 1 1 9 9 9 9 0 0 1-9-9z"/>
+                        <path d="M12 7v5l4 2"/>
+                    </svg>
+                    Play Again
+                </button>
+                <button onclick="shareStory()" class="completion-button share-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                        <polyline points="16 6 12 2 8 6"/>
+                        <line x1="12" y1="2" x2="12" y2="15"/>
+                    </svg>
+                    Share Story
+                </button>
+            </div>
+        </div>`;
+    
+    overlay.innerHTML = completionContent;
     document.body.appendChild(overlay);
+    
+    // Add the visible class after a short delay for animation
+    requestAnimationFrame(() => {
+        overlay.classList.add('visible');
+    });
+}
+
+// Add share functionality
+function shareStory() {
+    const shareData = {
+        title: `Victory in ${gameState.world.name}`,
+        text: `I just completed my quest as ${gameState.character.name} and saved ${gameState.world.name} from destruction!`,
+        url: window.location.href
+    };
+    
+    if (navigator.share) {
+        navigator.share(shareData)
+            .catch((err) => console.error('Error sharing:', err));
+    } else {
+        // Fallback for browsers that don't support sharing
+        const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareData.text)}&url=${encodeURIComponent(shareData.url)}`;
+        window.open(shareUrl, '_blank');
+    }
 }
 
 function disableGameControls(disabled) {
