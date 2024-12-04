@@ -27,10 +27,31 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #1a1a1a;
-    z-index: 200;
+    background: transparent;
+    z-index: 300;
 }
 
+.game-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                url('../images/fantasy-bg.png');
+    background-size: cover;
+    background-position: center;
+    z-index: 250;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+ }
+ 
+ .game-background.fade-out {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+ }
 .start-button {
     padding: 20px 40px;
     font-size: 24px;
@@ -55,14 +76,15 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: #1a1a1a;
-    z-index: 100;
+    background: transparent;
+    z-index: 275;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
     padding: 20px;
     overflow-y: auto;
 }
+
 
 .selection-phase.visible {
     opacity: 1;
@@ -114,7 +136,7 @@ body {
 }
 
 .selection-button {
-    background: #2a2a3d;
+    background: rgba(42, 42, 61, 0.9); /* Semi-transparent background */
     border: 1px solid #3a3a4d;
     border-radius: 8px;
     padding: 16px;
