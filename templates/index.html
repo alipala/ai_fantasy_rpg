@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fantasy RPG Game</title>
+    <title>Adventure Game</title>
     <link rel="stylesheet" href="static/css/style.css">
-    <link rel="stylesheet" href="/static/css/loading-overlay.css">
+    <link rel="stylesheet" href="static/css/loading-overlay.css">
 </head>
 <body>
     <!-- Start Screen -->
@@ -15,79 +15,64 @@
 
     <!-- Selection Phase -->
     <div id="selectionPhase" class="selection-phase hidden">
-        <!-- Back Button -->
         <button id="backButton" class="back-button hidden">← Back</button>
 
-        <!-- World Selection -->
         <div id="worldSelect" class="selection-screen hidden">
             <h2>Choose Your World</h2>
-            <div id="worldList" class="selection-list">
-                <!-- World options will be populated here -->
-            </div>
+            <div id="worldList" class="selection-list"></div>
         </div>
 
-        <!-- Kingdom Selection -->
         <div id="kingdomSelect" class="selection-screen hidden">
             <h2>Choose Your Kingdom</h2>
-            <div id="kingdomList" class="selection-list">
-                <!-- Kingdom options will be populated here -->
-            </div>
+            <div id="kingdomList" class="selection-list"></div>
         </div>
 
-        <!-- Town Selection -->
         <div id="townSelect" class="selection-screen hidden">
             <h2>Choose Your Town</h2>
-            <div id="townList" class="selection-list">
-                <!-- Town options will be populated here -->
-            </div>
+            <div id="townList" class="selection-list"></div>
         </div>
 
-        <!-- Character Selection -->
         <div id="characterSelect" class="selection-screen hidden">
             <h2>Choose Your Character</h2>
-            <div id="characterList" class="selection-list">
-                <!-- Character options will be populated here -->
-            </div>
+            <div id="characterList" class="selection-list"></div>
         </div>
     </div>
 
-    <!-- Main Game Container -->
-    <div id="gameContainer" class="game-container hidden">
-        <!-- Game Output Area -->
-        <div id="gameOutput" class="messages">
-            <!-- Story messages will appear here -->
-            <div id="storyImageContainer"></div>
+    <div class="game-wrapper">
+        <!-- Quest Progress -->
+        <div id="puzzleProgress" class="puzzle-progress-container">
+            <h2 class="text-white text-lg mb-2">Quest Progress</h2>
+            <div class="progress-container">
+                <div class="progress-bar" role="progressbar"></div>
+            </div>
+            <div class="step-container">
+                <!-- Steps will be populated by JS -->
+            </div>
         </div>
 
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <!-- Inventory Section -->
-            <div class="inventory-section">
-                <h3>Inventory</h3>
-                <div id="inventorySlots" class="inventory-slots">
-                    <!-- Inventory items will be populated here -->
+        <!-- Game Container -->
+        <div id="gameContainer" class="game-container hidden">
+            <div class="main-content">
+                <div id="gameOutput" class="messages">
+                    <div id="storyImageContainer"></div>
+                </div>
+
+                <div class="sidebar">
+                    <div class="inventory-section">
+                        <h3>Inventory</h3>
+                        <div id="inventorySlots" class="inventory-slots"></div>
+                    </div>
+                    
+                    <div id="exampleActions" class="examples">
+                        <h4>Possible Actions</h4>
+                    </div>
                 </div>
             </div>
 
-            <!-- Example Actions -->
-            <div id="exampleActions" class="examples">
-                <h4>Possible Actions</h4>
-                <!-- Example actions will be populated here -->
+            <div class="input-wrapper">
+                <input type="text" id="userInput" class="game-input" placeholder="What would you like to do?">
+                <button id="submitBtn" class="action-button">Send</button>
             </div>
-        </div>
-
-        <!-- Input Container -->
-        <div class="input-container">
-            <input type="text" 
-                   id="userInput" 
-                   class="game-input" 
-                   placeholder="What would you like to do?" 
-                   disabled>
-            <button id="submitBtn" 
-                    class="action-button" 
-                    disabled>
-                Send
-            </button>
         </div>
     </div>
 
@@ -103,7 +88,6 @@
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="static/js/main.js"></script>
 </body>
 </html>

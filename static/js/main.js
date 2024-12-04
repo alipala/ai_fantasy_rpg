@@ -1,3 +1,4 @@
+
 let gameState = {
     currentScreen: 'start',
     world: null,
@@ -56,6 +57,13 @@ document.addEventListener('DOMContentLoaded', () => {
         this.style.transform = 'scale(1)';
     });
 });
+
+function createPuzzleProgress() {
+    const progressDiv = document.createElement('div');
+    progressDiv.className = 'quest-progress-content';
+    progressDiv.innerHTML = '<div class="progress-steps"></div>';
+    return progressDiv;
+}
 
 function handleStartClick() {
     const startScreen = document.getElementById('startScreen');
@@ -290,6 +298,13 @@ async function initializeGame(inventory) {
         hideLoadingOverlay();
         transitionToGameScreen();
         
+        // Initialize puzzle progress if available in response
+        const puzzleProgressContainer = document.querySelector('.puzzle-progress-container');
+        if (puzzleProgressContainer && data.puzzle_progress) {
+            puzzleProgressContainer.appendChild(createPuzzleProgress());
+            updatePuzzleProgress(data.puzzle_progress);
+        }
+        
         // Initialize game state
         setupInitialGameState(inventory);
         
@@ -301,6 +316,9 @@ async function initializeGame(inventory) {
         
         // Focus input
         document.getElementById('userInput').focus();
+
+        console.log('Game data received:', data);
+        console.log('Puzzle progress:', data.puzzle_progress);
         
     } catch (error) {
         console.error('Error initializing game:', error);
@@ -402,7 +420,17 @@ async function submitAction() {
         
         // Update game state
         updateGameState(action, result);
+
+        // Update puzzle progress
+        if (result.puzzle_progress) {
+            updatePuzzleProgress(result.puzzle_progress);
+        }
         
+        // Handle puzzle completion
+        if (result.puzzle_solved) {
+            handlePuzzleCompletion();
+        }
+
         // Clear input
         input.value = '';
         
@@ -416,6 +444,20 @@ async function submitAction() {
         disableGameControls(false);
         input.focus();
     }
+}
+
+function handlePuzzleCompletion() {
+    // Create completion overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'completion-overlay';
+    overlay.innerHTML = `
+        <div class="completion-message">
+            <h2>Congratulations!</h2>
+            <p>You have solved the puzzle and saved the realm!</p>
+            <button onclick="location.reload()">Play Again</button>
+        </div>
+    `;
+    document.body.appendChild(overlay);
 }
 
 function disableGameControls(disabled) {
@@ -456,20 +498,29 @@ async function updateGameState(action, result) {
     }
 }
 
+function createInventoryItem(item, count) {
+    return `
+        <div class="inventory-item relative p-2 bg-gray-800 rounded-lg transition-all duration-300">
+            <div class="flex justify-between items-center">
+                <div class="flex flex-col flex-1">
+                    <span class="text-white">${item}</span>
+                    <span class="text-xs text-gray-400">${getItemTooltip(item)}</span>
+                </div>
+            </div>
+            <div class="item-count absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center bg-red-600 rounded-full text-white text-xs font-medium">
+                ${count}
+            </div>
+        </div>
+    `;
+}
+
 function updateInventory(inventory) {
     const slots = document.getElementById('inventorySlots');
     slots.innerHTML = '';
-    gameState.inventory = inventory;
     
     Object.entries(inventory).forEach(([item, count]) => {
         if (count > 0) {
-            const itemElement = document.createElement('div');
-            itemElement.className = 'inventory-item';
-            itemElement.innerHTML = `
-                <span>${item}</span>
-                <span class="item-count">${count}</span>
-            `;
-            slots.appendChild(itemElement);
+            slots.innerHTML += createInventoryItem(item, count);
         }
     });
 }
@@ -506,6 +557,44 @@ function updateExamples(examples) {
         button.onclick = () => useExample(example);
         container.appendChild(button);
     });
+}
+
+function updatePuzzleProgress(puzzleData) {
+    if (!puzzleData) return;
+    
+    const progressContainer = document.getElementById('puzzleProgress');
+    if (!progressContainer) return;
+
+    const percentage = (puzzleData.completed_tasks / puzzleData.total_tasks) * 100;
+    
+    progressContainer.innerHTML = `
+        <div class="quest-progress-content">
+            <h2>Quest Progress</h2>
+            <p class="puzzle-description">${puzzleData.main_puzzle}</p>
+            <div class="progress-steps">
+                ${Array.from({length: puzzleData.total_tasks}, (_, i) => `
+                    <div class="step-container">
+                        <div class="step ${i < puzzleData.completed_tasks ? 'completed' : ''}">${i + 1}</div>
+                        ${i < puzzleData.total_tasks - 1 ? 
+                            `<div class="connector ${i < puzzleData.completed_tasks - 1 ? 'completed' : ''}"></div>` 
+                            : ''}
+                    </div>
+                `).join('')}
+            </div>
+            <p class="progress-text">${puzzleData.completed_tasks}/${puzzleData.total_tasks} tasks completed (${Math.round(percentage)}%)</p>
+        </div>
+    `;
+}
+
+function getItemTooltip(item) {
+    const tooltips = {
+        "Craftsman's hammer": "For construction and repairs",
+        "Set of precision tools": "For detailed mechanical work",
+        "Blueprint journal": "Contains architectural designs",
+        "Enchanted measuring tape": "Reveals structural patterns",
+        "Courage charm": "Enhances bravery and leadership"
+    };
+    return tooltips[item] || "A useful item";
 }
 
 function useExample(example) {

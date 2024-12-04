@@ -1,0 +1,988 @@
+{
+  "world_puzzles": {
+    "Etherion": {
+      "main_puzzle": "The Ethereal Resonance Crisis: The celestial anchors holding the floating islands of Etherion are weakening, threatening to send the entire realm plummeting into the void.",
+      "solution_requirements": ["Restore all 5 celestial anchor points", "Gather ethereal essence from each kingdom", "Harmonize the realm's magical frequencies"],
+      "characters": {
+        "Eira the Brave": {
+          "role_tasks": [
+            {
+              "task_id": "EB1",
+              "title": "Defend the Spire Crystal",
+              "description": "Use your Enchanted Shield to protect the central spire crystal from void storms",
+              "required_item": "Enchanted shield",
+              "reward": "Celestial Fragment"
+            },
+            {
+              "task_id": "EB2",
+              "title": "Courage Rally",
+              "description": "Activate your Courage Charm to inspire other defenders during a void breach",
+              "required_item": "Courage charm",
+              "reward": "Ethereal Essence"
+            },
+            {
+              "task_id": "EB3",
+              "title": "Healing the Anchors",
+              "description": "Apply your Healing Poultice to repair minor fractures in the celestial anchors",
+              "required_item": "Healing poultice",
+              "reward": "Anchor Stabilizer"
+            },
+            {
+              "task_id": "EB4",
+              "title": "Medallion Resonance",
+              "description": "Use your Warrior's Medallion to attune with the ancient defensive wards",
+              "required_item": "Warrior's medallion",
+              "reward": "Ward Key"
+            },
+            {
+              "task_id": "EB5",
+              "title": "Void Patrol",
+              "description": "Lead a patrol to secure the outer islands from void creatures",
+              "required_item": "Enchanted shield",
+              "reward": "Void Essence"
+            },
+            {
+              "task_id": "EB6",
+              "title": "Crystal Defense Network",
+              "description": "Establish a network of defensive positions around key crystals",
+              "required_item": "Warrior's medallion",
+              "reward": "Defense Matrix Key"
+            },
+            {
+              "task_id": "EB7",
+              "title": "Rally the Guards",
+              "description": "Organize the kingdom's defenders to protect anchor points",
+              "required_item": "Courage charm",
+              "reward": "Guard Captain's Trust"
+            },
+            {
+              "task_id": "EB8",
+              "title": "Emergency Response",
+              "description": "Coordinate rapid response teams for anchor point emergencies",
+              "required_item": "Healing poultice",
+              "reward": "Quick Response Badge"
+            },
+            {
+              "task_id": "EB9",
+              "title": "Shield Wall",
+              "description": "Create a defensive barrier during major void storms",
+              "required_item": "Enchanted shield",
+              "reward": "Storm Defender Mark"
+            },
+            {
+              "task_id": "EB10",
+              "title": "Final Stand",
+              "description": "Lead the final defense of the central anchor point",
+              "required_item": "All items",
+              "reward": "Hero's Mark of Valor"
+            }
+          ]
+        },
+        "Seren the Builder": {
+          "role_tasks": [
+            {
+              "task_id": "SB1",
+              "title": "Anchor Point Reinforcement",
+              "description": "Use your precision tools to strengthen the celestial anchor points",
+              "required_item": "Set of precision tools",
+              "reward": "Enhanced Anchor Plans"
+            },
+            {
+              "task_id": "SB2",
+              "title": "Blueprint Analysis",
+              "description": "Study ancient floating island schematics in your journal",
+              "required_item": "Blueprint journal",
+              "reward": "Ancient Construction Secrets"
+            },
+            {
+              "task_id": "SB3",
+              "title": "Crystal Calibration",
+              "description": "Use your enchanted measuring tape to align stabilization crystals",
+              "required_item": "Enchanted measuring tape",
+              "reward": "Crystal Alignment Key"
+            },
+            {
+              "task_id": "SB4",
+              "title": "Foundation Repair",
+              "description": "Repair damaged floating island foundations with your hammer",
+              "required_item": "Craftsman's hammer",
+              "reward": "Foundation Stabilizer"
+            },
+            {
+              "task_id": "SB5",
+              "title": "Support Structure Design",
+              "description": "Design new support structures for weakening anchor points",
+              "required_item": "Blueprint journal",
+              "reward": "Master Blueprint"
+            },
+            {
+              "task_id": "SB6",
+              "title": "Emergency Repairs",
+              "description": "Perform critical repairs during void storms",
+              "required_item": "Set of precision tools",
+              "reward": "Emergency Repair Kit"
+            },
+            {
+              "task_id": "SB7",
+              "title": "Anchor Network Planning",
+              "description": "Design an improved network of anchor points",
+              "required_item": "Blueprint journal",
+              "reward": "Network Schematic"
+            },
+            {
+              "task_id": "SB8",
+              "title": "Crystal Housing Construction",
+              "description": "Build protective housings for stabilization crystals",
+              "required_item": "Craftsman's hammer",
+              "reward": "Crystal Protection Plans"
+            },
+            {
+              "task_id": "SB9",
+              "title": "Measurement Survey",
+              "description": "Survey the entire anchor network for weaknesses",
+              "required_item": "Enchanted measuring tape",
+              "reward": "Survey Data Crystal"
+            },
+            {
+              "task_id": "SB10",
+              "title": "Master Construction",
+              "description": "Oversee the construction of the final stabilization matrix",
+              "required_item": "All items",
+              "reward": "Master Builder's Mark"
+            }
+          ]
+        },
+        "Liora the Whisperer": {
+          "role_tasks": [
+            {
+              "task_id": "LW1",
+              "title": "Crystal Communication",
+              "description": "Use your mystic crystal to communicate with the anchor points",
+              "required_item": "Mystic communication crystal",
+              "reward": "Crystal Resonance Map"
+            },
+            {
+              "task_id": "LW2",
+              "title": "Essence Collection",
+              "description": "Gather ethereal essence from unstable regions",
+              "required_item": "Essence collector",
+              "reward": "Pure Essence Vial"
+            },
+            {
+              "task_id": "LW3",
+              "title": "Secret Translation",
+              "description": "Translate ancient stabilization texts from your book",
+              "required_item": "Book of whispered secrets",
+              "reward": "Ancient Knowledge Crystal"
+            },
+            {
+              "task_id": "LW4",
+              "title": "Spirit Consultation",
+              "description": "Consult with realm spirits using your amulet",
+              "required_item": "Spirit-touched amulet",
+              "reward": "Spirit Wisdom Stone"
+            },
+            {
+              "task_id": "LW5",
+              "title": "Resonance Mapping",
+              "description": "Map the magical resonance patterns between anchor points",
+              "required_item": "Mystic communication crystal",
+              "reward": "Resonance Chart"
+            },
+            {
+              "task_id": "LW6",
+              "title": "Void Echo Analysis",
+              "description": "Analyze void storm patterns through essence collection",
+              "required_item": "Essence collector",
+              "reward": "Void Pattern Crystal"
+            },
+            {
+              "task_id": "LW7",
+              "title": "Ancient Protocol Recovery",
+              "description": "Recover lost stabilization protocols from ancient texts",
+              "required_item": "Book of whispered secrets",
+              "reward": "Protocol Crystal"
+            },
+            {
+              "task_id": "LW8",
+              "title": "Spirit Network Creation",
+              "description": "Establish a network of spiritual guardians",
+              "required_item": "Spirit-touched amulet",
+              "reward": "Spirit Network Key"
+            },
+            {
+              "task_id": "LW9",
+              "title": "Harmony Restoration",
+              "description": "Restore harmonic balance between anchor points",
+              "required_item": "Mystic communication crystal",
+              "reward": "Harmony Crystal"
+            },
+            {
+              "task_id": "LW10",
+              "title": "Final Attunement",
+              "description": "Perform the final attunement of all anchor points",
+              "required_item": "All items",
+              "reward": "Master Whisperer's Mark"
+            }
+          ]
+        },
+        "Kael the Wise": {
+          "role_tasks": [
+            {
+              "task_id": "KW1",
+              "title": "Ancient Knowledge Research",
+              "description": "Research stabilization methods in your ancient tome",
+              "required_item": "Ancient tome",
+              "reward": "Knowledge Crystal"
+            },
+            {
+              "task_id": "KW2",
+              "title": "Crystal Attunement",
+              "description": "Attune your wisdom crystal to the anchor points",
+              "required_item": "Wisdom crystal",
+              "reward": "Attuned Crystal Core"
+            },
+            {
+              "task_id": "KW3",
+              "title": "Scroll Analysis",
+              "description": "Analyze prophecy scrolls about the realm's stability",
+              "required_item": "Scroll case",
+              "reward": "Prophecy Insights"
+            },
+            {
+              "task_id": "KW4",
+              "title": "Memory Stone Study",
+              "description": "Study historical anchor point failures",
+              "required_item": "Memory stones",
+              "reward": "Historical Data Crystal"
+            },
+            {
+              "task_id": "KW5",
+              "title": "Solution Theory",
+              "description": "Develop theoretical solutions for anchor point stabilization",
+              "required_item": "Ancient tome",
+              "reward": "Theory Crystal"
+            },
+            {
+              "task_id": "KW6",
+              "title": "Wisdom Application",
+              "description": "Apply ancient wisdom to modern stabilization techniques",
+              "required_item": "Wisdom crystal",
+              "reward": "Applied Knowledge Crystal"
+            },
+            {
+              "task_id": "KW7",
+              "title": "Documentation Creation",
+              "description": "Create comprehensive documentation of stabilization efforts",
+              "required_item": "Scroll case",
+              "reward": "Master Documentation"
+            },
+            {
+              "task_id": "KW8",
+              "title": "Pattern Recognition",
+              "description": "Identify patterns in anchor point destabilization",
+              "required_item": "Memory stones",
+              "reward": "Pattern Matrix"
+            },
+            {
+              "task_id": "KW9",
+              "title": "Knowledge Integration",
+              "description": "Integrate all gathered knowledge into a unified theory",
+              "required_item": "All items",
+              "reward": "Unified Theory Crystal"
+            },
+            {
+              "task_id": "KW10",
+              "title": "Final Analysis",
+              "description": "Perform the final analysis of the stabilization solution",
+              "required_item": "All items",
+              "reward": "Master Sage's Mark"
+            }
+          ]
+        },
+        "Kael the Builder": {
+          "role_tasks": [
+            {
+              "task_id": "KB1",
+              "title": "Support Structure Creation",
+              "description": "Create emergency support structures for failing anchor points",
+              "required_item": "Craftsman's hammer",
+              "reward": "Structure Blueprint"
+            },
+            {
+              "task_id": "KB2",
+              "title": "Precision Repairs",
+              "description": "Perform detailed repairs on anchor point mechanisms",
+              "required_item": "Set of precision tools",
+              "reward": "Repair Manual"
+            },
+            {
+              "task_id": "KB3",
+              "title": "Blueprint Development",
+              "description": "Develop new blueprints for anchor point reinforcement",
+              "required_item": "Blueprint journal",
+              "reward": "Enhanced Design Crystal"
+            },
+            {
+              "task_id": "KB4",
+              "title": "Measurement Analysis",
+              "description": "Analyze critical measurements of anchor point stability",
+              "required_item": "Enchanted measuring tape",
+              "reward": "Stability Data Crystal"
+            },
+            {
+              "task_id": "KB5",
+              "title": "Infrastructure Enhancement",
+              "description": "Enhance existing infrastructure around anchor points",
+              "required_item": "Craftsman's hammer",
+              "reward": "Enhancement Plans"
+            },
+            {
+              "task_id": "KB6",
+              "title": "Tool Calibration",
+              "description": "Calibrate tools for precise anchor point work",
+              "required_item": "Set of precision tools",
+              "reward": "Calibration Crystal"
+            },
+            {
+              "task_id": "KB7",
+              "title": "Design Innovation",
+              "description": "Innovate new designs for anchor point stability",
+              "required_item": "Blueprint journal",
+              "reward": "Innovation Crystal"
+            },
+            {
+              "task_id": "KB8",
+              "title": "Structural Analysis",
+              "description": "Analyze structural integrity of all anchor points",
+              "required_item": "Enchanted measuring tape",
+              "reward": "Analysis Matrix"
+            },
+            {
+              "task_id": "KB9",
+              "title": "Construction Coordination",
+              "description": "Coordinate construction efforts across all anchor points",
+              "required_item": "All items",
+              "reward": "Coordination Crystal"
+            },
+            {
+              "task_id": "KB10",
+              "title": "Final Construction",
+              "description": "Oversee final construction phase of stabilization",
+              "required_item": "All items",
+              "reward": "Master Constructor's Mark"
+            }
+          ]
+        }
+      }
+    },
+    "Mechanica": {
+      "main_puzzle": "The Great Synchronization Crisis: The master clockwork that maintains harmony between all mechanical systems is failing, threatening to halt all machinery in the realm.",
+      "solution_requirements": ["Repair the Master Control Mechanism", "Restore power to all major gear networks", "Synchronize the realm's clockwork systems"],
+      "characters": {
+        "Kael the Brave": {
+          "role_tasks": [
+            {
+              "task_id": "KB1",
+              "title": "Gear Guard",
+              "description": "Protect the central gear mechanism from saboteurs",
+              "required_item": "Enchanted shield",
+              "reward": "Master Gear Fragment"
+            },
+            {
+              "task_id": "KB2",
+              "title": "Steam Vent Defense",
+              "description": "Guard critical steam vents during pressure regulation",
+              "required_item": "Warrior's medallion",
+              "reward": "Steam Control Key"
+            },
+            {
+              "task_id": "KB3",
+              "title": "Emergency Response",
+              "description": "Lead emergency responses to mechanical failures",
+              "required_item": "Healing poultice",
+              "reward": "Response Commander Badge"
+            },
+            {
+              "task_id": "KB4",
+              "title": "Clockwork Defense",
+              "description": "Establish defensive positions around key clockwork nodes",
+              "required_item": "Courage charm",
+              "reward": "Node Security Pass"
+            },
+            {
+              "task_id": "KB5",
+              "title": "Patrol Organization",
+              "description": "Organize patrols of the mechanical infrastructure",
+              "required_item": "Enchanted shield",
+              "reward": "Patrol Master's Mark"
+            },
+            {
+              "task_id": "KB6",
+              "title": "Power Core Protection",
+              "description": "Defend the main power core during maintenance",
+              "required_item": "Warrior's medallion",
+              "reward": "Core Guardian's Badge"
+            },
+            {
+              "task_id": "KB7",
+              "title": "Crisis Management",
+              "description": "Handle mechanical emergencies in critical areas",
+              "required_item": "Healing poultice",
+              "reward": "Crisis Manager's Token"
+            },
+            {
+              "task_id": "KB8",
+              "title": "Security Network",
+              "description": "Establish a security network for the mechanical system",
+              "required_item": "Courage charm",
+              "reward": "Security Network Key"
+            },
+            {
+              "task_id": "KB9",
+              "title": "Defense Coordination",
+              "description": "Coordinate defense of all major mechanical hubs",
+              "required_item": "All items",
+              "reward": "Hub Defense Matrix"
+            },
+            {
+              "task_id": "KB10",
+              "title": "Final Stand",
+              "description": "Make the final stand protecting the master mechanism",
+              "required_item": "All items",
+              "reward": "Brave Defender's Mark"
+            }
+          ]
+        },
+        "Eira the Builder": {
+          "role_tasks": [
+            {
+              "task_id": "EB1",
+              "title": "Gear Reconstruction",
+              "description": "Rebuild damaged gear systems in the central mechanism",
+              "required_item": "Craftsman's hammer",
+              "reward": "Master Gear Plans"
+            },
+            {
+              "task_id": "EB2",
+              "title": "Precision Calibration",
+              "description": "Calibrate delicate clockwork components",
+              "required_item": "Set of precision tools",
+              "reward": "Calibration Matrix"
+            },
+            {
+              "task_id": "EB3",
+              "title": "System Design",
+              "description": "Design improved mechanical systems",
+              "required_item": "Blueprint journal",
+              "reward": "Advanced System Plans"
+            },
+            {
+              "task_id": "EB4",
+              "title": "Measurement Verification",
+              "description": "Verify critical measurements in the mechanism",
+              "required_item": "Enchanted measuring tape",
+              "reward": "Verification Crystal"
+            },
+            {
+              "task_id": "EB5",
+              "title": "Power Network Construction",
+              "description": "Construct new power distribution networks",
+              "required_item": "Craftsman's hammer",
+              "reward": "Power Grid Plans"
+            },
+            {
+              "task_id": "EB6",
+              "title": "Component Repair",
+              "description": "Repair damaged mechanical components",
+              "required_item": "Set of precision tools",
+              "reward": "Repair Manual"
+            },
+            {
+              "task_id": "EB7",
+              "title": "Blueprint Implementation",
+              "description": "Implement new mechanical system blueprints",
+              "required_item": "Blueprint journal",
+              "reward": "Implementation Guide"
+            },
+            {
+              "task_id": "EB8",
+              "title": "Alignment Check",
+              "description": "Check alignment of all major mechanical systems",
+              "required_item": "Enchanted measuring tape",
+              "reward": "Alignment Data"
+            },
+            {
+              "task_id": "EB9",
+              "title": "Integration Planning",
+              "description": "Plan integration of all mechanical systems",
+              "required_item": "All items",
+              "reward": "Integration Matrix"
+            },
+            {
+              "task_id": "EB10",
+              "title": "Master Assembly",
+              "description": "Oversee final assembly of the master mechanism",
+              "required_item": "All items",
+              "reward": "Master Builder's Seal"
+            }
+          ]
+        },
+        "Liora the Brave": {
+          "role_tasks": [
+            {
+              "task_id": "LB1",
+              "title": "Core Protection",
+              "description": "Guard the mechanical core during critical operations",
+              "required_item": "Enchanted shield",
+              "reward": "Core Guardian Crystal"
+            },
+            {
+              "task_id": "LB2",
+              "title": "Steam Defense",
+              "description": "Protect workers during dangerous steam releases",
+              "required_item": "Warrior's medallion",
+              "reward": "Steam Warrior's Mark"
+            },
+            {
+              "task_id": "LB3",
+              "title": "Emergency Treatment",
+              "description": "Provide emergency care during mechanical accidents",
+              "required_item": "Healing poultice",
+              "reward": "Medic's Badge"
+            },
+            {
+              "task_id": "LB4",
+              "title": "Morale Boost",
+              "description": "Maintain worker morale during critical repairs",
+              "required_item": "Courage charm",
+              "reward": "Leadership Token"
+            },
+            {
+              "task_id": "LB5",
+              "title": "Security Rounds",
+              "description": "Conduct security checks of mechanical systems",
+              "required_item": "Enchanted shield",
+              "reward": "Security Clearance"
+            },
+            {
+              "task_id": "LB6",
+              "title": "Crisis Response",
+              "description": "Lead responses to mechanical emergencies",
+              "required_item": "Warrior's medallion",
+              "reward": "Crisis Badge"
+            },
+            {
+              "task_id": "LB7",
+              "title": "Worker Protection",
+              "description": "Ensure worker safety during dangerous operations",
+              "required_item": "Healing poultice",
+              "reward": "Safety Officer's Mark"
+            },
+            {
+              "task_id": "LB8",
+              "title": "Team Leadership",
+              "description": "Lead repair teams in hazardous areas",
+              "required_item": "Courage charm",
+              "reward": "Team Leader's Badge"
+            },
+            {
+              "task_id": "LB9",
+              "title": "Defense Network",
+              "description": "Establish a defense network for critical systems",
+              "required_item": "All items",
+              "reward": "Defense Matrix Key"
+            },
+            {
+              "task_id": "LB10",
+              "title": "Final Defense",
+              "description": "Lead the final defense of the master mechanism",
+              "required_item": "All items",
+              "reward": "Hero's Mark"
+            }
+          ]
+        },
+        "Thorin the Builder": {
+          "role_tasks": [
+            {
+              "task_id": "TB1",
+              "title": "Framework Construction",
+              "description": "Construct support framework for major mechanisms",
+              "required_item": "Craftsman's hammer",
+              "reward": "Framework Plans"
+            },
+            {
+              "task_id": "TB2",
+              "title": "Component Assembly",
+              "description": "Assemble precise mechanical components",
+              "required_item": "Set of precision tools",
+              "reward": "Assembly Guide"
+            },
+            {
+              "task_id": "TB3",
+              "title": "System Planning",
+              "description": "Plan new mechanical system layouts",
+              "required_item": "Blueprint journal",
+              "reward": "System Matrix"
+            },
+            {
+              "task_id": "TB4",
+              "title": "Precision Check",
+              "description": "Verify precise measurements of critical components",
+              "required_item": "Enchanted measuring tape",
+              "reward": "Precision Data"
+            },
+            {
+              "task_id": "TB5",
+              "title": "Structure Reinforcement",
+              "description": "Reinforce existing mechanical structures",
+              "required_item": "Craftsman's hammer",
+              "reward": "Reinforcement Plans"
+            },
+            {
+              "task_id": "TB6",
+              "title": "Detail Work",
+              "description": "Perform detailed mechanical assembly work",
+              "required_item": "Set of precision tools",
+              "reward": "Detail Manual"
+            },
+            {
+              "task_id": "TB7",
+              "title": "Design Implementation",
+              "description": "Implement new mechanical designs",
+              "required_item": "Blueprint journal",
+              "reward": "Design Crystal"
+            },
+            {
+              "task_id": "TB8",
+              "title": "Quality Control",
+              "description": "Perform quality checks on all assemblies",
+              "required_item": "Enchanted measuring tape",
+              "reward": "Quality Mark"
+            },
+            {
+              "task_id": "TB9",
+              "title": "System Integration",
+              "description": "Integrate new and existing mechanical systems",
+              "required_item": "All items",
+              "reward": "Integration Key"
+            },
+            {
+              "task_id": "TB10",
+              "title": "Master Construction",
+              "description": "Complete the master mechanism construction",
+              "required_item": "All items",
+              "reward": "Master Constructor's Mark"
+            }
+          ]
+        },
+        "Thorin the Whisperer": {
+          "role_tasks": [
+            {
+              "task_id": "TW1",
+              "title": "Machine Communication",
+              "description": "Communicate with machine spirits",
+              "required_item": "Mystic communication crystal",
+              "reward": "Machine Spirit Token"
+            },
+            {
+              "task_id": "TW2",
+              "title": "Energy Collection",
+              "description": "Collect mechanical energy signatures",
+              "required_item": "Essence collector",
+              "reward": "Energy Matrix"
+            },
+            {
+              "task_id": "TW3",
+              "title": "Technical Translation",
+              "description": "Translate ancient mechanical texts",
+              "required_item": "Book of whispered secrets",
+              "reward": "Translation Crystal"
+            },
+            {
+              "task_id": "TW4",
+              "title": "Spirit Binding",
+              "description": "Bind helpful spirits to mechanical systems",
+              "required_item": "Spirit-touched amulet",
+              "reward": "Binding Stone"
+            },
+            {
+              "task_id": "TW5",
+              "title": "System Attunement",
+              "description": "Attune with major mechanical systems",
+              "required_item": "Mystic communication crystal",
+              "reward": "Attunement Matrix"
+            },
+            {
+              "task_id": "TW6",
+              "title": "Energy Harmonization",
+              "description": "Harmonize mechanical energy flows",
+              "required_item": "Essence collector",
+              "reward": "Harmony Crystal"
+            },
+            {
+              "task_id": "TW7",
+              "title": "Knowledge Recovery",
+              "description": "Recover lost mechanical knowledge",
+              "required_item": "Book of whispered secrets",
+              "reward": "Knowledge Matrix"
+            },
+            {
+              "task_id": "TW8",
+              "title": "Spirit Network",
+              "description": "Create a network of mechanical spirits",
+              "required_item": "Spirit-touched amulet",
+              "reward": "Spirit Web Key"
+            },
+            {
+              "task_id": "TW9",
+              "title": "System Synchronization",
+              "description": "Synchronize all mechanical systems",
+              "required_item": "All items",
+              "reward": "Sync Matrix"
+            },
+            {
+              "task_id": "TW10",
+              "title": "Final Communion",
+              "description": "Achieve final communion with the master mechanism",
+              "required_item": "All items",
+              "reward": "Master Whisperer's Mark"
+            }
+          ]
+        }
+      }
+    },
+    "Aquaria": {
+      "characters": {
+        "Seren the Wise": {
+          "role_tasks": [
+            {
+              "task_id": "SW1",
+              "title": "Ancient Research",
+              "description": "Research ancient coral healing methods",
+              "required_item": "Ancient tome",
+              "reward": "Coral Knowledge Crystal"
+            },
+            {
+              "task_id": "SW2",
+              "title": "Water Magic Study",
+              "description": "Study water magic crystallization patterns",
+              "required_item": "Wisdom crystal",
+              "reward": "Water Magic Matrix"
+            },
+            {
+              "task_id": "SW3",
+              "title": "Coral Documentation",
+              "description": "Document coral regeneration techniques",
+              "required_item": "Scroll case",
+              "reward": "Regeneration Guide"
+            },
+            {
+              "task_id": "SW4",
+              "title": "Memory Analysis",
+              "description": "Analyze historical coral healing records",
+              "required_item": "Memory stones",
+              "reward": "Historical Data Crystal"
+            },
+            {
+              "task_id": "SW5",
+              "title": "Purification Research",
+              "description": "Research water purification methods",
+              "required_item": "Ancient tome",
+              "reward": "Purification Formula"
+            },
+            {
+              "task_id": "SW6",
+              "title": "Crystal Attunement",
+              "description": "Attune crystals to coral frequencies",
+              "required_item": "Wisdom crystal",
+              "reward": "Coral Resonance Key"
+            },
+            {
+              "task_id": "SW7",
+              "title": "Protocol Development",
+              "description": "Develop coral restoration protocols",
+              "required_item": "Scroll case",
+              "reward": "Protocol Crystal"
+            },
+            {
+              "task_id": "SW8",
+              "title": "Pattern Recognition",
+              "description": "Identify coral growth patterns",
+              "required_item": "Memory stones",
+              "reward": "Pattern Matrix"
+            },
+            {
+              "task_id": "SW9",
+              "title": "Knowledge Integration",
+              "description": "Integrate all coral research findings",
+              "required_item": "All items",
+              "reward": "Master Research Crystal"
+            },
+            {
+              "task_id": "SW10",
+              "title": "Final Theory",
+              "description": "Complete the coral restoration theory",
+              "required_item": "All items",
+              "reward": "Master Sage's Mark"
+            }
+          ]
+        },
+        "Liora the Brave": {
+          "role_tasks": [
+            {
+              "task_id": "LB1",
+              "title": "Reef Defense",
+              "description": "Defend vulnerable coral reefs",
+              "required_item": "Enchanted shield",
+              "reward": "Reef Guardian's Mark"
+            },
+            {
+              "task_id": "LB2",
+              "title": "Current Control",
+              "description": "Navigate dangerous water currents",
+              "required_item": "Warrior's medallion",
+              "reward": "Current Master's Badge"
+            },
+            {
+              "task_id": "LB3",
+              "title": "Coral Treatment",
+              "description": "Apply healing treatments to damaged coral",
+              "required_item": "Healing poultice",
+              "reward": "Coral Healer's Crystal"
+            },
+            {
+              "task_id": "LB4",
+              "title": "Team Leadership",
+              "description": "Lead underwater expedition teams",
+              "required_item": "Courage charm",
+              "reward": "Leadership Token"
+            },
+            {
+              "task_id": "LB5",
+              "title": "Guardian Patrol",
+              "description": "Patrol threatened coral regions",
+              "required_item": "Enchanted shield",
+              "reward": "Guardian's Pass"
+            },
+            {
+              "task_id": "LB6",
+              "title": "Rescue Operations",
+              "description": "Conduct underwater rescue missions",
+              "required_item": "Warrior's medallion",
+              "reward": "Rescue Medal"
+            },
+            {
+              "task_id": "LB7",
+              "title": "Crisis Management",
+              "description": "Manage coral crisis situations",
+              "required_item": "Healing poultice",
+              "reward": "Crisis Manager's Mark"
+            },
+            {
+              "task_id": "LB8",
+              "title": "Morale Maintenance",
+              "description": "Maintain team morale in deep waters",
+              "required_item": "Courage charm",
+              "reward": "Spirit Crystal"
+            },
+            {
+              "task_id": "LB9",
+              "title": "Defense Network",
+              "description": "Establish reef defense network",
+              "required_item": "All items",
+              "reward": "Network Matrix"
+            },
+            {
+              "task_id": "LB10",
+              "title": "Final Protection",
+              "description": "Lead final defense of Master Coral",
+              "required_item": "All items",
+              "reward": "Hero's Water Crystal"
+            }
+          ]
+        }
+      }
+    },
+    "Ignisia": {
+      "main_puzzle": "The Volcanic Harmony Crisis: The ancient fire network that maintains balance between the realm's volcanoes is destabilizing, threatening to trigger catastrophic eruptions.",
+      "solution_requirements": ["Stabilize the Master Flame Core", "Restore volcanic ley lines", "Harmonize fire energy networks"],
+      "characters": {
+        "Eira the Wise": {
+          "role_tasks": [
+            {
+              "task_id": "EW1",
+              "title": "Fire Lore Study",
+              "description": "Study ancient volcanic control methods",
+              "required_item": "Ancient tome",
+              "reward": "Fire Knowledge Crystal"
+            },
+            {
+              "task_id": "EW2",
+              "title": "Magma Analysis",
+              "description": "Analyze magma flow patterns",
+              "required_item": "Wisdom crystal",
+              "reward": "Flow Pattern Matrix"
+            },
+            {
+              "task_id": "EW3",
+              "title": "Heat Documentation",
+              "description": "Document thermal vent activities",
+              "required_item": "Scroll case",
+              "reward": "Thermal Data Crystal"
+            },
+            {
+              "task_id": "EW4",
+              "title": "Historical Review",
+              "description": "Review historical eruption patterns",
+              "required_item": "Memory stones",
+              "reward": "History Crystal"
+            },
+            {
+              "task_id": "EW5",
+              "title": "Energy Research",
+              "description": "Research fire energy stabilization",
+              "required_item": "Ancient tome",
+              "reward": "Energy Formula"
+            },
+            {
+              "task_id": "EW6",
+              "title": "Crystal Harmonization",
+              "description": "Harmonize crystals with fire energy",
+              "required_item": "Wisdom crystal",
+              "reward": "Harmony Matrix"
+            },
+            {
+              "task_id": "EW7",
+              "title": "Protocol Creation",
+              "description": "Create volcanic stability protocols",
+              "required_item": "Scroll case",
+              "reward": "Protocol Crystal"
+            },
+            {
+              "task_id": "EW8",
+              "title": "Pattern Study",
+              "description": "Study volcanic activation patterns",
+              "required_item": "Memory stones",
+              "reward": "Pattern Data"
+            },
+            {
+              "task_id": "EW9",
+              "title": "Knowledge Synthesis",
+              "description": "Synthesize all volcanic research",
+              "required_item": "All items",
+              "reward": "Master Research Matrix"
+            },
+            {
+              "task_id": "EW10",
+              "title": "Final Theory",
+              "description": "Complete the flame stabilization theory",
+              "required_item": "All items",
+              "reward": "Sage's Flame Crystal"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

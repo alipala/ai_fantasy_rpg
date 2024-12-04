@@ -9,6 +9,7 @@ from core.game_state import GameState
 import json
 from datetime import datetime
 import random
+from typing import List, Dict
 
 # Set up logging
 logging.basicConfig(
@@ -159,19 +160,31 @@ def validate_inventory_change(old_inventory: dict, new_inventory: dict) -> bool:
         return False
     return True
 
-def generate_examples(response: str, location: dict) -> list:
-    """Generate contextual example actions."""
-    examples = []
+def generate_examples(self, context: str, location: Dict, game_state: GameState) -> List[str]:
+    examples = set()
     
-    # Location-based examples
-    if 'market' in response.lower() or 'shop' in response.lower():
-        examples.extend(['Browse goods', 'Check prices', 'Negotiate'])
-    elif 'npc' in response.lower() or any(npc in response for npc in location['npcs']):
-        examples.extend(['Ask questions', 'Learn more', 'Request help'])
-    else:
-        examples.extend(['Explore area', 'Talk to locals', 'Check surroundings'])
+    # Add environmental actions
+    environmental_actions = [
+        f"Examine {location['name'].lower()}",
+        f"Inspect the area",
+        "Look around carefully"
+    ]
+    examples.add(random.choice(environmental_actions))
     
-    return examples[:3]  # Return top 3 examples
+    # Add inventory-based suggestions
+    if game_state.puzzle_progress:
+        available_tasks = game_state.puzzle_progress.get_available_tasks(game_state.inventory)
+        if available_tasks:
+            for task in available_tasks[:2]:
+                if task.required_item in game_state.inventory:
+                    examples.add(f"Use {task.required_item}")
+    
+    # Add NPC interactions
+    if 'npcs' in location:
+        npc = random.choice(list(location['npcs'].values()))
+        examples.add(f"Talk to {npc['name']}")
+    
+    return list(examples)[:4]
 
 
 # Initialize worlds and agents
@@ -221,6 +234,16 @@ def extract_keywords(text):
     
     return keywords
 
+def process_regular_action(action):
+    # Existing action processing logic
+    response = game_master.process_action(action, game_state)
+    return jsonify({
+        'response': response,
+        'puzzle_progress': game_state.puzzle_progress.dict() if game_state.puzzle_progress else None,
+        'inventory': game_state.inventory,
+        'puzzle_solved': False
+    })
+
 @app.route('/static/<path:path>')
 def send_static(path):
     return send_from_directory('static', path)
@@ -252,6 +275,16 @@ def start_game():
         
         # Load character inventory
         character_inventory = load_character_inventory(character_name)
+        
+        # Load puzzle data
+        puzzle_data = None
+        try:
+            with open('shared_data/puzzle_data.json', 'r') as f:
+                world_puzzles = json.load(f)['world_puzzles']
+                if world_name in world_puzzles and character_name in world_puzzles[world_name]['characters']:
+                    puzzle_data = world_puzzles[world_name]['characters'][character_name]
+        except Exception as e:
+            logging.error(f"Error loading puzzle data: {e}")
         
         # Find world data
         world = None
@@ -293,11 +326,20 @@ def start_game():
             history=[]
         )
         
+        # Initialize puzzle if data exists
+        if puzzle_data:
+            game_state.initialize_puzzle(character_name, worlds_data)
+            logging.info(f"Initialized puzzle for {character_name}")
+            print(f"Initialized puzzle progress: {game_state.puzzle_progress}")
+        
         # Create initial welcome message
         welcome_message = (
             f"Welcome to {world['name']}! You are {character_name} in "
             f"{character_town['name']}. {character_town['description']}"
         )
+        
+        if game_state.puzzle_progress:
+            welcome_message += f"\n\nYour Quest: {game_state.puzzle_progress.main_puzzle}"
         
         # Generate initial story image
         try:
@@ -344,7 +386,8 @@ def start_game():
             'world': {
                 'name': world['name'],
                 'description': world['description']
-            }
+            },
+            'puzzle_progress': game_state.puzzle_progress.dict() if game_state.puzzle_progress else None
         }
         
         # Add initial image if generation was successful
@@ -353,6 +396,9 @@ def start_game():
             
         # Log successful game start
         logging.info(f"Game started for character {character_name} in {world_name}")
+
+        print("Starting game with character:", character_name)
+        print("Puzzle progress initialized:", game_state.puzzle_progress)
         
         return jsonify(response)
         
@@ -377,30 +423,80 @@ def load_inventory():
 @app.route('/action', methods=['POST'])
 def process_action():
     action = request.json['action']
-    logging.info(f"Processing action: {action}")  # Add detailed logging
+    logging.info(f"Processing action: {action}")
     
     try:
-        response = game_master.process_action(action, game_state)
-        old_inventory = game_state.inventory.copy()
-        logging.info(f"Old inventory: {old_inventory}")  # Log old inventory
+        response = None
+        puzzle_progress = None
+        puzzle_solved = False
         
-        # Process inventory changes
-        if 'hand over' in response.lower() or 'spend' in response.lower():
-            matches = re.findall(r'(\d+)\s*gold', response.lower())
-            if matches:
-                cost = int(matches[0])
-                if game_state.inventory['gold'] >= cost:
-                    game_state.inventory['gold'] -= cost
-                    logging.info(f"Spent {cost} gold. New amount: {game_state.inventory['gold']}")
+        # Check for puzzle-related tasks if puzzle progress exists
+        if hasattr(game_state, 'puzzle_progress') and game_state.puzzle_progress:
+            available_tasks = game_state.puzzle_progress.get_available_tasks(game_state.inventory)
+            matching_task = None
+            
+            # Match action with available tasks
+            for task in available_tasks:
+                # Create a set of keywords from task description and action
+                task_keywords = set(task.description.lower().split())
+                action_keywords = set(action.lower().split())
+                
+                # Check for significant keyword overlap
+                if len(task_keywords.intersection(action_keywords)) >= 2:
+                    matching_task = task
+                    break
+            
+            # Process puzzle task if found
+            if matching_task:
+                reward = game_state.attempt_task(matching_task.task_id)
+                if reward:
+                    response = f"Task completed: {matching_task.description}. Received: {reward}"
+                    puzzle_progress = game_state.puzzle_progress.dict()
+                    puzzle_solved = game_state.puzzle_progress.is_puzzle_solved()
+                    
+                    if puzzle_solved:
+                        response += "\n\nCongratulations! You have solved the puzzle and saved the realm!"
+                    
+                    # Log task completion
+                    logging.info(f"Completed task: {matching_task.task_id}, Progress: {game_state.puzzle_progress.calculate_progress()}%")
+
+        # Process regular game action if no task was completed
+        if not response:
+            response = game_master.process_action(action, game_state)
+            old_inventory = game_state.inventory.copy()
+            
+            # Process inventory changes
+            if 'hand over' in response.lower() or 'spend' in response.lower():
+                matches = re.findall(r'(\d+)\s*gold', response.lower())
+                if matches:
+                    cost = int(matches[0])
+                    if game_state.inventory['gold'] >= cost:
+                        game_state.inventory['gold'] -= cost
+                        logging.info(f"Spent {cost} gold. New amount: {game_state.inventory['gold']}")
+            
+            # Update puzzle progress in response if it exists
+            if hasattr(game_state, 'puzzle_progress') and game_state.puzzle_progress:
+                puzzle_progress = game_state.puzzle_progress.dict()
         
-        logging.info(f"Response: {response}")  # Log response
-        logging.info(f"New inventory: {game_state.inventory}")  # Log new inventory
+        # Log final state
+        logging.info(f"Action response: {response}")
+        logging.info(f"Updated inventory: {game_state.inventory}")
+        if puzzle_progress:
+            logging.info(f"Puzzle progress: {puzzle_progress}")
         
+        # Prepare response with all necessary information
         return jsonify({
             'response': response,
             'inventory': game_state.inventory,
-            'location': game_state.current_location['name']
+            'location': game_state.current_location['name'],
+            'puzzle_progress': puzzle_progress,
+            'puzzle_solved': puzzle_solved,
+            'available_tasks': [
+                {'id': task.task_id, 'title': task.title, 'description': task.description}
+                for task in game_state.puzzle_progress.get_available_tasks(game_state.inventory)
+            ] if hasattr(game_state, 'puzzle_progress') and game_state.puzzle_progress else []
         })
+        
     except Exception as e:
         logging.error(f"Error processing action: {str(e)}")
         return jsonify({'error': str(e)}), 500
@@ -412,46 +508,58 @@ def generate_examples():
         context = data.get('context', '')
         
         examples = set()
-        keywords = extract_keywords(context)
         
-        # Generate context-specific examples
-        if keywords['npcs']:
-            npc = random.choice(keywords['npcs'])
-            examples.add(f"Talk to {npc}")
-            examples.add(f"Ask {npc} about their work")
+        # Get available puzzle tasks
+        if hasattr(game_state, 'puzzle_progress') and game_state.puzzle_progress:
+            available_tasks = game_state.puzzle_progress.get_available_tasks(game_state.inventory)
             
-        if 'forge' in context.lower():
-            examples.add("Examine the forge")
-            examples.add("Watch the blacksmiths work")
-            
-        if 'market' in context.lower() or 'merchant' in context.lower():
-            examples.add("Browse goods")
-            examples.add("Negotiate prices")
-            
-        if any(item in context.lower() for item in ['box', 'contraption', 'device']):
-            examples.add("Investigate the item")
-            examples.add("Pick up the item")
-            
-        # Add inventory-based examples if relevant
-        for item in game_state.inventory:
-            if item in context.lower():
-                examples.add(f"Use {item}")
+            # Add simplified versions of available tasks
+            for task in available_tasks:
+                # Extract key action from task
+                task_words = task.description.lower().split()
+                key_verbs = {'use', 'activate', 'defend', 'lead', 'coordinate', 'establish', 'rally', 'create'}
                 
-        # Add location-based examples
-        if keywords['locations']:
-            location = random.choice(keywords['locations'])
-            examples.add(f"Explore the {location}")
+                for verb in key_verbs:
+                    if verb in task_words:
+                        # Create simplified action based on verb and required item
+                        if task.required_item != 'All items':
+                            action = f"{verb.title()} {task.required_item}"
+                            examples.add(action)
+                            break
             
-        # Always include at least one general action
-        general_actions = ["Look around", "Rest", "Check surroundings"]
+            # Add inventory-based suggestions
+            for item in game_state.inventory:
+                if any(task.required_item == item for task in available_tasks):
+                    examples.add(f"Use {item}")
+        
+        # Add contextual actions
+        keywords = extract_keywords(context)
+        if keywords['npcs']:
+            examples.add(f"Talk to {random.choice(keywords['npcs'])}")
+        
+        if keywords['locations']:
+            examples.add(f"Explore {random.choice(keywords['locations'])}")
+            
+        # Always include some general actions
+        general_actions = ["Look around", "Check inventory", "View current tasks"]
         examples.add(random.choice(general_actions))
         
-        return jsonify({'examples': list(examples)[:4]})  # Return max 4 examples
+        # Convert to list and limit size
+        example_list = list(examples)[:4]
+        
+        # If we have active tasks but no task-related examples, add one
+        if available_tasks and not any('use' in ex.lower() for ex in example_list):
+            task = random.choice(available_tasks)
+            hint = f"Try using {task.required_item}"
+            example_list[0] = hint
+        
+        return jsonify({'examples': example_list})
         
     except Exception as e:
         logging.error(f"Error generating examples: {e}")
-        return jsonify({'examples': ['Look around', 'Rest', 'Talk']})
+        return jsonify({'examples': ['Look around', 'Talk', 'Explore']})
     
+
 if __name__ == '__main__':
     print("\n=== Game Ready to Start ===")
     print("\nAccess the game at http://localhost:5000")
