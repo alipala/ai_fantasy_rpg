@@ -245,3 +245,124 @@ class GameMasterAgent:
         Location: {game_state.current_location['description']}
         Inventory: {game_state.inventory}
         Latest history: {game_state.history[-1] if game_state.history else 'None'}"""
+    
+
+    def generate_completion_image(self, game_state: GameState) -> Optional[Dict]:
+        """Generate a final image capturing the player's journey and achievements"""
+        try:
+            # Build a story summary from game history
+            story_summary = self._build_story_summary(game_state)
+            
+            # Get character info correctly from the dictionary
+            character_name = game_state.character.get('name')  # Changed from game_state.character.name
+            
+            if not character_name:
+                logging.error("Character name not found in game state")
+                return None
+                
+            # Craft a detailed prompt based on the story and achievements
+            prompt = (
+                f"A grand epic fantasy scene showing {character_name} in {game_state.world['name']} "
+                f"after saving the realm. {story_summary} "
+                f"The scene shows the restored celestial anchors of {game_state.world['name']}, "
+                f"with {character_name} standing triumphant among magical crystals and "
+                f"stabilized floating islands. Epic fantasy art style with dramatic lighting, "
+                f"glowing magical energies, floating islands in the background, and a "
+                f"sense of achievement and celebration. The hero is surrounded by magical "
+                f"artifacts they used in their quest: enchanted shield, warrior's medallion, "
+                f"healing poultice, and courage charm."
+            )
+            
+            try:
+                # Generate image using OpenAI's DALL-E
+                response = self.openai_client.images.generate(
+                    model="dall-e-3",
+                    prompt=prompt,
+                    n=1,
+                    size="1024x1024",
+                    quality="hd",
+                    style="vivid"
+                )
+                
+                if response.data:
+                    return {
+                        'url': response.data[0].url,
+                        'type': 'completion_shot',
+                        'context': {
+                            'character': character_name,
+                            'world': game_state.world['name'],
+                            'achievements': self._get_achievement_summary(game_state)
+                        }
+                    }
+                    
+            except Exception as e:
+                logging.error(f"DALL-E image generation error: {e}")
+                return None
+                
+        except Exception as e:
+            logging.error(f"Completion image generation error: {str(e)}")
+            return None
+
+    def _build_story_summary(self, game_state: GameState) -> str:
+        """Build a narrative summary from the game history"""
+        try:
+            # Get character name safely
+            character_name = game_state.character.get('name', 'the hero')
+            
+            key_moments = []
+            task_descriptions = set()
+            
+            # Analyze game history for key moments and completed tasks
+            for entry in game_state.history:
+                if "completed" in entry.get('response', '').lower():
+                    key_moments.append(entry['response'])
+                    
+                # Extract task descriptions
+                if game_state.puzzle_progress:
+                    for task in game_state.puzzle_progress.tasks.values():
+                        if task.completed and task.description not in task_descriptions:
+                            task_descriptions.add(task.description)
+            
+            # Build the summary
+            summary = f"Throughout their journey, {character_name} "
+            
+            # Add task achievements
+            if task_descriptions:
+                task_list = list(task_descriptions)
+                if len(task_list) > 1:
+                    summary += f"{', '.join(task_list[:-1])}, and {task_list[-1]}. "
+                else:
+                    summary += f"{task_list[0]}. "
+            
+            # Add world-specific context
+            world_contexts = {
+                "Etherion": "stabilizing the floating islands",
+                "Mechanica": "restoring the great clockwork",
+                "Aquaria": "healing the coral kingdoms",
+                "Ignisia": "harmonizing the volcanic networks"
+            }
+            
+            if game_state.world['name'] in world_contexts:
+                summary += f"Their efforts succeeded in {world_contexts[game_state.world['name']]}. "
+            
+            return summary
+        except Exception as e:
+            logging.error(f"Error building story summary: {e}")
+            return "completed their epic quest and saved the realm."
+
+
+    def _get_achievement_summary(self, game_state: GameState) -> List[str]:
+        """Get a list of major achievements from the game"""
+        achievements = []
+        
+        if game_state.puzzle_progress:
+            # Add completed tasks as achievements
+            for task in game_state.puzzle_progress.tasks.values():
+                if task.completed:
+                    achievements.append(task.title)
+            
+            # Add overall completion if puzzle is solved
+            if game_state.puzzle_progress.is_puzzle_solved():
+                achievements.append(f"Saved {game_state.world['name']}")
+                
+        return achievements

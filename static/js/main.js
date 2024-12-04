@@ -422,7 +422,12 @@ async function submitAction() {
         
         const result = await response.json();
         
-        // Handle response
+        if (result.error) {
+            showError(result.error);
+            return;
+        }
+        
+        // Display bot response
         displayBotMessage(result);
         
         // Update game state
@@ -433,9 +438,9 @@ async function submitAction() {
             updatePuzzleProgress(result.puzzle_progress);
         }
         
-        // Handle puzzle completion
+        // Handle puzzle completion with completion image
         if (result.puzzle_solved) {
-            handlePuzzleCompletion();
+            handlePuzzleCompletion(result);
         }
 
         // Clear input
@@ -446,25 +451,168 @@ async function submitAction() {
         
     } catch (error) {
         console.error('Error:', error);
-        showError('Sorry, something went wrong');
+        showError('Sorry, something went wrong. Please try again.');
     } finally {
         disableGameControls(false);
         input.focus();
     }
 }
 
-function handlePuzzleCompletion() {
-    // Create completion overlay
+function fadeOutGameContainer() {
+    const gameContainer = document.getElementById('gameContainer');
+    gameContainer.style.opacity = '0';
+    gameContainer.style.transition = 'opacity 0.3s ease';
+    setTimeout(() => {
+        gameContainer.style.display = 'none';
+    }, 300);
+}
+
+function fadeOutGame() {
+    return new Promise(resolve => {
+        const gameContainer = document.getElementById('gameContainer');
+        const puzzleProgress = document.getElementById('puzzleProgress');
+        
+        // Fade out both elements
+        gameContainer.style.opacity = '0';
+        puzzleProgress.style.opacity = '0';
+        
+        setTimeout(() => {
+            gameContainer.style.display = 'none';
+            puzzleProgress.style.display = 'none';
+            resolve();
+        }, 300);
+    });
+}
+
+async function handlePuzzleCompletion(result) {
+    // 1. Fade out game completely
+    await fadeOutGame();
+    
+    // 2. Create and show loading overlay
     const overlay = document.createElement('div');
     overlay.className = 'completion-overlay';
+    
+    // 3. Show initial completion message with loading
     overlay.innerHTML = `
-        <div class="completion-message">
-            <h2>Congratulations!</h2>
-            <p>You have solved the puzzle and saved the realm!</p>
-            <button onclick="location.reload()">Play Again</button>
+        <div class="completion-content">
+            <div class="completion-header">
+                <h2>Victory in ${result.world.name}!</h2>
+                <p class="completion-subtitle">The realm has been saved by ${result.character.name}</p>
+            </div>
+            <div class="victory-loading-container">
+                <div class="loading-spinner"></div>
+                <p class="loading-text">Creating your legendary victory scene...</p>
+            </div>
         </div>
     `;
+    
     document.body.appendChild(overlay);
+    requestAnimationFrame(() => overlay.classList.add('visible'));
+    
+    // 4. Request completion image
+    try {
+        const imageResponse = await fetch('/generate-completion', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        
+        const imageData = await imageResponse.json();
+        
+        if (imageData.success && imageData.completion_image) {
+            // 5. Load image
+            const img = new Image();
+            img.onload = () => {
+                // 6. Show final victory screen
+                overlay.classList.add('transitioning');
+                setTimeout(() => {
+                    overlay.innerHTML = `
+                        <div class="completion-content">
+                            <div class="completion-header">
+                                <h2>Victory in ${result.world.name}!</h2>
+                                <p class="completion-subtitle">The realm has been saved by ${result.character.name}</p>
+                            </div>
+                            <div class="completion-image-container">
+                                <img src="${imageData.completion_image.url}" 
+                                     alt="Victory scene in ${result.world.name}"
+                                     class="completion-image"
+                                />
+                                <div class="completion-image-caption">
+                                    <h3>The Legend of ${result.character.name}</h3>
+                                    <p>Savior of ${result.world.name}</p>
+                                    <div class="achievement-badges">
+                                        ${imageData.completion_image.context.achievements.map(achievement => 
+                                            `<span class="achievement-badge">${achievement}</span>`
+                                        ).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="completion-summary">
+                                <p>${result.response}</p>
+                            </div>
+                            <div class="completion-actions">
+                                <button onclick="location.reload()" class="completion-button replay-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M3 12a9 9 0 1 1 9 9 9 9 0 0 1-9-9z"/>
+                                        <path d="M12 7v5l4 2"/>
+                                    </svg>
+                                    Play Again
+                                </button>
+                                <button onclick="shareStory()" class="completion-button share-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                                        <polyline points="16 6 12 2 8 6"/>
+                                        <line x1="12" y1="2" x2="12" y2="15"/>
+                                    </svg>
+                                    Share Story
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    overlay.classList.remove('transitioning');
+                }, 300);
+            };
+            img.src = imageData.completion_image.url;
+        }
+    } catch (error) {
+        console.error('Error generating completion image:', error);
+        // Show completion screen without image
+        showCompletionWithoutImage(result, overlay);
+    }
+}
+
+function showCompletionWithoutImage(result, overlay) {
+    overlay.classList.add('transitioning');
+    setTimeout(() => {
+        overlay.innerHTML = `
+            <div class="completion-content">
+                <h2>Victory in ${result.world.name}!</h2>
+                <p>${result.response}</p>
+                <div class="completion-actions">
+                    <button onclick="location.reload()" class="completion-button replay-button">Play Again</button>
+                    <button onclick="shareStory()" class="completion-button share-button">Share Story</button>
+                </div>
+            </div>
+        `;
+        overlay.classList.remove('transitioning');
+    }, 300);
+}
+
+// Add share functionality
+function shareStory() {
+    const shareData = {
+        title: `Victory in ${gameState.world.name}`,
+        text: `I just completed my quest as ${gameState.character.name} and saved ${gameState.world.name} from destruction!`,
+        url: window.location.href
+    };
+    
+    if (navigator.share) {
+        navigator.share(shareData)
+            .catch((err) => console.error('Error sharing:', err));
+    } else {
+        // Fallback for browsers that don't support sharing
+        const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareData.text)}&url=${encodeURIComponent(shareData.url)}`;
+        window.open(shareUrl, '_blank');
+    }
 }
 
 function disableGameControls(disabled) {

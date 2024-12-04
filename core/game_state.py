@@ -10,6 +10,7 @@ class GameState(BaseModel):
     inventory: Dict[str, int]
     history: List[Dict]
     puzzle_progress: Optional[PuzzleProgress] = None
+    character: Dict[str, Any] = {}
     
     def to_string(self):
         return f"""
