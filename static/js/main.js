@@ -68,8 +68,12 @@ function createPuzzleProgress() {
 function handleStartClick() {
     const startScreen = document.getElementById('startScreen');
     const selectionPhase = document.getElementById('selectionPhase');
-
+    const gameBackground = document.getElementById('gameBackground');
+ 
     startScreen.classList.add('fade-out');
+    gameBackground.style.opacity = '1';
+    gameBackground.style.visibility = 'visible';
+ 
     setTimeout(() => {
         startScreen.classList.add('hidden');
         selectionPhase.classList.remove('hidden');
@@ -81,7 +85,7 @@ function handleStartClick() {
         showScreen('worldSelect');
         startGame();
     }, 300);
-}
+ }
 
 // Screen Management Functions
 function showScreen(screenId) {
@@ -318,6 +322,9 @@ async function initializeGame(inventory) {
         document.getElementById('userInput').focus();
 
         console.log('Game data received:', data);
+        const gameBackground = document.getElementById('gameBackground');
+        gameBackground.classList.add('fade-out');
+        setTimeout(() => gameBackground.style.display = 'none', 500);
         console.log('Puzzle progress:', data.puzzle_progress);
         
     } catch (error) {
@@ -548,7 +555,7 @@ async function generateNewExamples(context) {
 
 function updateExamples(examples) {
     const container = document.getElementById('exampleActions');
-    container.innerHTML = '<h4>Possible Actions:</h4>';
+    container.innerHTML = '<h4>Possible Actions</h4>';
     
     examples.forEach(example => {
         const button = document.createElement('button');
