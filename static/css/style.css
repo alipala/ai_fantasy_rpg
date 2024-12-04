@@ -288,6 +288,30 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+.tooltip-text {
+    visibility: hidden;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 6px 10px;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    border-radius: 4px;
+    z-index: 20;
+    opacity: 0;
+    transition: all 0.2s ease;
+    pointer-events: none;
+    margin-bottom: 5px;
+}
+
+.inventory-item:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
 .item-count {
     position: absolute;
     top: -0.5rem;
