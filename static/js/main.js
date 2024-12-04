@@ -500,14 +500,14 @@ async function updateGameState(action, result) {
 
 function createInventoryItem(item, count) {
     return `
-        <div class="inventory-item relative p-2 bg-gray-800 rounded-lg transition-all duration-300">
+        <div class="inventory-item relative p-2 bg-gradient-to-r from-gray-800 to-gray-700 rounded-lg border border-gray-600">
             <div class="flex justify-between items-center">
                 <div class="flex flex-col flex-1">
                     <span class="text-white">${item}</span>
-                    <span class="text-xs text-gray-400">${getItemTooltip(item)}</span>
+                    <div class="tooltip-text">${getItemTooltip(item)}</div>
                 </div>
             </div>
-            <div class="item-count absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center bg-red-600 rounded-full text-white text-xs font-medium">
+            <div class="item-count absolute -top-2 -right-2 w-6 h-6 flex items-center justify-center bg-gradient-to-r from-red-500 to-red-600 rounded-full text-white text-xs font-medium shadow-lg">
                 ${count}
             </div>
         </div>
