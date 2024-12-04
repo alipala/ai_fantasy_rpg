@@ -458,70 +458,121 @@ async function submitAction() {
     }
 }
 
-// In main.js - Update handlePuzzleCompletion function
+function fadeOutGameContainer() {
+    const gameContainer = document.getElementById('gameContainer');
+    gameContainer.style.opacity = '0';
+    gameContainer.style.transition = 'opacity 0.3s ease';
+    setTimeout(() => {
+        gameContainer.style.display = 'none';
+    }, 300);
+}
+
 function handlePuzzleCompletion(result) {
-    // Create completion overlay with image if available
+    // First fade out the game container
+    fadeOutGameContainer();
+
+    // Create and show loading overlay
     const overlay = document.createElement('div');
     overlay.className = 'completion-overlay';
     
-    let completionContent = `
+    // Show loading state
+    const loadingContent = `
         <div class="completion-content">
             <div class="completion-header">
                 <h2>Victory in ${result.world.name}!</h2>
                 <p class="completion-subtitle">The realm has been saved by ${result.character.name}</p>
-            </div>`;
-    
-    // Add completion image if available
-    if (result.completion_image) {
-        completionContent += `
-            <div class="completion-image-container">
-                <img src="${result.completion_image.url}" 
-                     alt="Victory scene in ${result.completion_image.context.world}"
-                     class="completion-image"
-                />
-                <div class="completion-image-caption">
-                    <h3>The Legend of ${result.completion_image.context.character}</h3>
-                    <p>Savior of ${result.completion_image.context.world}</p>
-                    <div class="achievement-badges">
-                        ${result.completion_image.context.achievements.map(achievement => 
-                            `<span class="achievement-badge">${achievement}</span>`
-                        ).join('')}
-                    </div>
-                </div>
-            </div>`;
-    }
-
-    // Add story summary and buttons
-    completionContent += `
-            <div class="completion-summary">
-                <p>${result.response}</p>
             </div>
-            <div class="completion-actions">
-                <button onclick="location.reload()" class="completion-button replay-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="M3 12a9 9 0 1 1 9 9 9 9 0 0 1-9-9z"/>
-                        <path d="M12 7v5l4 2"/>
-                    </svg>
-                    Play Again
-                </button>
-                <button onclick="shareStory()" class="completion-button share-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
-                        <polyline points="16 6 12 2 8 6"/>
-                        <line x1="12" y1="2" x2="12" y2="15"/>
-                    </svg>
-                    Share Story
-                </button>
+            <div class="victory-loading-container">
+                <div class="loading-spinner"></div>
+                <p class="loading-text">Creating your legendary victory scene...</p>
             </div>
-        </div>`;
+        </div>
+    `;
     
-    overlay.innerHTML = completionContent;
+    overlay.innerHTML = loadingContent;
     document.body.appendChild(overlay);
     
-    // Add the visible class after a short delay for animation
-    requestAnimationFrame(() => {
+    // Show the overlay with a slight delay to ensure smooth animation
+    setTimeout(() => {
         overlay.classList.add('visible');
-    });
+        
+        // Handle image loading if available
+        if (result.completion_image) {
+            const img = new Image();
+            img.onload = () => {
+                // Prepare the final content
+                const completionContent = `
+                    <div class="completion-content">
+                        <div class="completion-header">
+                            <h2>Victory in ${result.world.name}!</h2>
+                            <p class="completion-subtitle">The realm has been saved by ${result.character.name}</p>
+                        </div>
+                        <div class="completion-image-container">
+                            <img src="${result.completion_image.url}" 
+                                 alt="Victory scene in ${result.completion_image.context.world}"
+                                 class="completion-image"
+                            />
+                            <div class="completion-image-caption">
+                                <h3>The Legend of ${result.completion_image.context.character}</h3>
+                                <p>Savior of ${result.completion_image.context.world}</p>
+                                <div class="achievement-badges">
+                                    ${result.completion_image.context.achievements.map(achievement => 
+                                        `<span class="achievement-badge">${achievement}</span>`
+                                    ).join('')}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="completion-summary">
+                            <p>${result.response}</p>
+                        </div>
+                        <div class="completion-actions">
+                            <button onclick="location.reload()" class="completion-button replay-button">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M3 12a9 9 0 1 1 9 9 9 9 0 0 1-9-9z"/>
+                                    <path d="M12 7v5l4 2"/>
+                                </svg>
+                                Play Again
+                            </button>
+                            <button onclick="shareStory()" class="completion-button share-button">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                                    <polyline points="16 6 12 2 8 6"/>
+                                    <line x1="12" y1="2" x2="12" y2="15"/>
+                                </svg>
+                                Share Story
+                            </button>
+                        </div>
+                    </div>`;
+
+                // Add transition class
+                overlay.classList.add('transitioning');
+                
+                // Update content after a short delay
+                setTimeout(() => {
+                    overlay.innerHTML = completionContent;
+                    overlay.classList.remove('transitioning');
+                }, 300);
+            };
+            
+            // Start loading the image
+            img.src = result.completion_image.url;
+        } else {
+            // If no image, show completion without loading state
+            overlay.classList.add('transitioning');
+            setTimeout(() => {
+                overlay.innerHTML = `
+                    <div class="completion-content">
+                        <h2>Victory in ${result.world.name}!</h2>
+                        <p>${result.response}</p>
+                        <div class="completion-actions">
+                            <button onclick="location.reload()" class="completion-button replay-button">Play Again</button>
+                            <button onclick="shareStory()" class="completion-button share-button">Share Story</button>
+                        </div>
+                    </div>`;
+                overlay.classList.remove('transitioning');
+            }, 300);
+        }
+    }, 100);
 }
 
 // Add share functionality

@@ -593,7 +593,40 @@ body {
     display: none;
 }
 
-/* Add to style.css */
+.victory-loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    gap: 2rem;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s linear infinite;
+}
+
+.loading-text {
+    color: #a8b3cf;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.completion-overlay.transitioning .completion-content {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
 
 .completion-overlay {
     position: fixed;
@@ -626,6 +659,8 @@ body {
     text-align: center;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     animation: slideUp 0.8s ease forwards;
+    opacity: 1;
+    transition: opacity 0.3s ease;
 }
 
 .completion-header {

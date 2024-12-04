@@ -460,19 +460,22 @@ def process_action():
                     puzzle_solved = game_state.puzzle_progress.is_puzzle_solved()
                     
                     if puzzle_solved:
-                        # Generate completion image first
+                        # First add completion message
+                        completion_message = "\n\nCongratulations! You have solved the puzzle and saved the realm!"
+                        response += completion_message
+                        
+                        # Then attempt to generate completion image
                         try:
                             completion_image = game_master.generate_completion_image(game_state)
-                            logging.info("Generated completion image successfully")
+                            if completion_image:
+                                completion_message = "\nA magical image captures your legendary achievement!"
+                                response += completion_message
+                                logging.info("Generated completion image successfully")
+                            else:
+                                logging.warning("Failed to generate completion image")
                         except Exception as img_error:
                             logging.error(f"Error generating completion image: {str(img_error)}")
                             completion_image = None
-                            
-                        # Add completion message
-                        completion_message = "\n\nCongratulations! You have solved the puzzle and saved the realm!"
-                        if completion_image:
-                            completion_message += "\nA magical image captures your legendary achievement!"
-                        response += completion_message
                     
                     # Log task completion
                     logging.info(f"Completed task: {matching_task.task_id}, Progress: {game_state.puzzle_progress.calculate_progress()}%")
@@ -528,7 +531,7 @@ def process_action():
             response_data['completion_image'] = completion_image
             logging.info("Added completion image to response")
         
-        # Add character context for frontend
+        # Add character and world context for frontend if puzzle is solved
         if puzzle_solved:
             response_data['character'] = {
                 'name': game_state.character['name'],
