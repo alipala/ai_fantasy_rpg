@@ -58,6 +58,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+function createPuzzleProgress() {
+    const progressDiv = document.createElement('div');
+    progressDiv.className = 'quest-progress-content';
+    progressDiv.innerHTML = '<div class="progress-steps"></div>';
+    return progressDiv;
+}
+
 function handleStartClick() {
     const startScreen = document.getElementById('startScreen');
     const selectionPhase = document.getElementById('selectionPhase');
@@ -495,13 +502,13 @@ function createInventoryItem(item, count) {
     return `
         <div class="inventory-item relative p-2 bg-gray-800 rounded-lg transition-all duration-300">
             <div class="flex justify-between items-center">
-                <div class="flex flex-col">
+                <div class="flex flex-col flex-1">
                     <span class="text-white">${item}</span>
                     <span class="text-xs text-gray-400">${getItemTooltip(item)}</span>
                 </div>
-                <span class="inline-flex items-center justify-center w-6 h-6 rounded-full ${count > 0 ? 'bg-green-500' : 'bg-red-500'}">
-                    ${count}
-                </span>
+            </div>
+            <div class="item-count absolute -top-2 -right-2 w-5 h-5 flex items-center justify-center bg-red-600 rounded-full text-white text-xs font-medium">
+                ${count}
             </div>
         </div>
     `;
@@ -559,37 +566,22 @@ function updatePuzzleProgress(puzzleData) {
     if (!progressContainer) return;
 
     const percentage = (puzzleData.completed_tasks / puzzleData.total_tasks) * 100;
-    const stepWidth = 100 / (puzzleData.total_tasks - 1);
     
-    const stepsHtml = Array.from({length: puzzleData.total_tasks}, (_, i) => {
-        const stepPercent = Math.round(i * stepWidth);
-        const isCompleted = percentage >= stepPercent;
-        return `
-            <div class="step-container relative">
-                <div class="step ${isCompleted ? 'completed' : ''}">${i + 1}</div>
-                ${i < puzzleData.total_tasks - 1 ? `<div class="connector ${isCompleted ? 'completed' : ''}"></div>` : ''}
-            </div>
-        `;
-    }).join('');
-
     progressContainer.innerHTML = `
-        <div class="puzzle-progress-container">
-            <div class="card w-full bg-gray-800 rounded-lg p-4 mb-4">
-                <div class="card-header border-none">
-                    <h3 class="text-sm font-medium text-white">Quest Progress</h3>
-                </div>
-                <div class="card-content p-4">
-                    <div class="space-y-4">
-                        <p class="puzzle-description text-sm text-gray-300">${puzzleData.main_puzzle}</p>
-                        <div class="progress-steps">
-                            ${stepsHtml}
-                        </div>
-                        <div class="text-xs text-gray-400 text-center">
-                            ${puzzleData.completed_tasks}/${puzzleData.total_tasks} tasks completed (${Math.round(percentage)}%)
-                        </div>
+        <div class="quest-progress-content">
+            <h2>Quest Progress</h2>
+            <p class="puzzle-description">${puzzleData.main_puzzle}</p>
+            <div class="progress-steps">
+                ${Array.from({length: puzzleData.total_tasks}, (_, i) => `
+                    <div class="step-container">
+                        <div class="step ${i < puzzleData.completed_tasks ? 'completed' : ''}">${i + 1}</div>
+                        ${i < puzzleData.total_tasks - 1 ? 
+                            `<div class="connector ${i < puzzleData.completed_tasks - 1 ? 'completed' : ''}"></div>` 
+                            : ''}
                     </div>
-                </div>
+                `).join('')}
             </div>
+            <p class="progress-text">${puzzleData.completed_tasks}/${puzzleData.total_tasks} tasks completed (${Math.round(percentage)}%)</p>
         </div>
     `;
 }
