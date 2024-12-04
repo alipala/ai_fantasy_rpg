@@ -507,47 +507,6 @@ function createInventoryItem(item, count) {
     `;
 }
 
-function createTaskProgress(progress, totalTasks, tasks) {
-    const steps = [
-        { name: 'Initial', threshold: 0.25 },
-        { name: 'Midway', threshold: 0.5 },
-        { name: 'Advanced', threshold: 0.75 },
-        { name: 'Final', threshold: 1 }
-    ];
-    
-    const percentage = (progress / totalTasks) * 100;
-    const currentStep = steps.findIndex(step => (progress / totalTasks) <= step.threshold);
-    
-    const stepsHtml = steps.map((step, idx) => `
-        <div class="flex flex-col items-center">
-            <div class="w-8 h-8 rounded-full flex items-center justify-center 
-                ${idx < currentStep ? 'bg-green-500' : 'bg-gray-300'} 
-                ${idx === currentStep ? 'ring-2 ring-green-400' : ''}">
-                ${idx + 1}
-            </div>
-            <span class="text-sm mt-2 text-white">${step.name}</span>
-        </div>
-    `).join('');
-
-    return `
-        <div class="w-full py-4 bg-gray-800 rounded-lg p-4">
-            <div class="flex justify-between mb-4">
-                ${stepsHtml}
-            </div>
-            <div class="h-2 bg-gray-200 rounded-full mt-4">
-                <div class="h-full bg-green-500 rounded-full transition-all duration-300" 
-                     style="width: ${percentage}%"></div>
-            </div>
-            ${tasks && tasks.length > 0 ? `
-                <div class="mt-4 text-sm text-gray-300">
-                    <p>Next objective hint:</p>
-                    <p class="italic">${tasks[0].description.split(' ').slice(0, 5).join(' ')}...</p>
-                </div>
-            ` : ''}
-        </div>
-    `;
-}
-
 function updateInventory(inventory) {
     const slots = document.getElementById('inventorySlots');
     slots.innerHTML = '';
