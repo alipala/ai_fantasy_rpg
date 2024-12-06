@@ -89,11 +89,22 @@ class GameMasterAgent:
             return None
 
     def _find_matching_task(self, action: str, available_tasks: List) -> Optional[Any]:
-        logging.info(f"Finding task match for action: {action}")
+        """Find matching task based on action description."""
+        action_words = set(action.lower().split())
+        
         for task in available_tasks:
-            if task.description.lower() in action.lower():
+            task_words = set(task.description.lower().split())
+            # Check for significant word overlap
+            if len(task_words.intersection(action_words)) >= 2:
                 logging.info(f"Found matching task: {task.description}")
                 return task
+                
+            # Check for item usage matching required item
+            if action.lower().startswith('use '):
+                item_name = action[4:].strip().lower()
+                if item_name in task.required_item.lower():
+                    return task
+                    
         logging.info("No matching task found")
         return None
 
@@ -124,13 +135,17 @@ class GameMasterAgent:
 
     def process_action(self, action: str, game_state: GameState) -> str:
         try:
+            # Check for examine/inspect actions first
             if any(word in action.lower() for word in ['examine', 'inspect', 'look', 'check']):
                 return self._generate_contextual_hints(game_state)
                 
+            # Handle item usage
             if action.lower().startswith('use '):
                 item_name = action[4:].strip()
                 return self._process_item_use(item_name, game_state)
-                
+            
+            # Try to match with puzzle tasks if puzzle exists
+            puzzle_response = None
             if game_state.puzzle_progress:
                 available_tasks = game_state.puzzle_progress.get_available_tasks(game_state.inventory)
                 matching_task = self._find_matching_task(action, available_tasks)
@@ -141,17 +156,27 @@ class GameMasterAgent:
                         self._consume_items(required_items, game_state.inventory)
                         reward = game_state.attempt_task(matching_task.task_id)
                         if reward:
-                            response = f"Task completed: {matching_task.description}. Received: {reward}"
+                            puzzle_response = f"Task completed: {matching_task.description}. Received: {reward}"
                             if game_state.puzzle_progress.is_puzzle_solved():
-                                response += "\n\nCongratulations! You have solved the puzzle and saved the realm!"
-                            return response
+                                puzzle_response += "\n\nCongratulations! You have solved the puzzle and saved the realm!"
+                            return puzzle_response
 
-            system_prompt = self._generate_system_prompt(game_state)
-            context = self._generate_action_context(action, game_state)
+            # If no puzzle match or no puzzle exists, generate contextual response
+            location_name = game_state.current_location.get('name', 'this area')
+            location_desc = game_state.current_location.get('description', '')
+            
+            system_prompt = f"""You are the Game Master of a fantasy RPG game. Current context:
+            Location: {location_name}
+            Description: {location_desc}
+            Available items: {', '.join(game_state.inventory.keys())}
+            Last action: {action}
+            
+            Respond in character as a game master, providing an engaging response to the player's action.
+            Keep response under 3 sentences. Include references to the location and available items when relevant."""
             
             messages = [
                 {"role": "system", "content": system_prompt},
-                {"role": "user", "content": context}
+                {"role": "user", "content": action}
             ]
             
             response = self.client.chat.completions.create(
@@ -163,8 +188,8 @@ class GameMasterAgent:
             return response.choices[0].message.content
             
         except Exception as e:
-            logging.error(f"Error processing action: {str(e)}")
-            return "Something went wrong. Please try again."
+            logging.error(f"Error in process_action: {str(e)}")
+            return "Something unexpected happened. Please try a different action."
         
     def _generate_contextual_hints(self, game_state: GameState) -> str:
         if not game_state.puzzle_progress:
@@ -230,10 +255,13 @@ class GameMasterAgent:
         return example_list[:4]
     
     def _generate_system_prompt(self, game_state: GameState) -> str:
-        """Generate context-aware system prompt for the game master."""
+        """Generate context-aware system prompt."""
+        location = game_state.current_location.get('name', 'this area')
+        character = game_state.character.get('name', 'Adventurer') if isinstance(game_state.character, dict) else 'Adventurer'
+        
         return f"""You are the Game Master for a fantasy RPG. Current context:
-        - Location: {game_state.current_location['name']}
-        - Character: {game_state.character.name if hasattr(game_state, 'character') else 'Unknown'}
+        - Location: {location}
+        - Character: {character}
         - Available items: {', '.join(game_state.inventory.keys())}
         
         Respond in character as a game master, providing rich narrative responses
@@ -242,7 +270,7 @@ class GameMasterAgent:
     def _generate_action_context(self, action: str, game_state: GameState) -> str:
         """Generate context for processing player actions."""
         return f"""Current action: {action}
-        Location: {game_state.current_location['description']}
+        Location: {game_state.current_location.get('description', '')}
         Inventory: {game_state.inventory}
         Latest history: {game_state.history[-1] if game_state.history else 'None'}"""
     
