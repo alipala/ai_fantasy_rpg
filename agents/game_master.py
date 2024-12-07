@@ -275,7 +275,6 @@ class GameMasterAgent:
         Inventory: {game_state.inventory}
         Latest history: {game_state.history[-1] if game_state.history else 'None'}"""
     
-
     def generate_completion_image(self, game_state: GameState) -> Optional[Dict]:
         """Generate a final image capturing the player's journey and achievements"""
         try:
@@ -288,10 +287,7 @@ class GameMasterAgent:
                 return None
                 
             prompt = f"A grand epic fantasy scene showing {character_name} in {game_state.world['name']} " \
-                    f"after saving the realm. {story_summary} " \
-                    f"The scene shows the restored celestial anchors of {game_state.world['name']}, " \
-                    f"with {character_name} standing triumphant among magical crystals and " \
-                    f"stabilized floating islands. Epic fantasy art style with dramatic lighting."
+                    f"after saving the realm. {story_summary}"
             
             try:
                 # Generate image using OpenAI's DALL-E
@@ -313,11 +309,12 @@ class GameMasterAgent:
                     # Store image data and get game_id
                     game_id = mongo_client.store_completion_image(
                         image_url=image_url,
+                        puzzle_text=game_state.puzzle_progress.main_puzzle if game_state.puzzle_progress else "",
                         world_name=game_state.world['name'],
-                        character_name=character_name,
-                        puzzle_text=game_state.puzzle_progress.main_puzzle if game_state.puzzle_progress else ""
+                        character_name=character_name
                     )
                     
+                    # Close MongoDB connection
                     mongo_client.close()
                     
                     return {

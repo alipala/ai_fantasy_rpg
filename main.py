@@ -1,7 +1,7 @@
 import os
 import logging
 import re
-from flask import Flask, render_template, request, jsonify, send_from_directory
+from flask import Flask, render_template, request, jsonify, send_from_directory, redirect, Response
 from dotenv import load_dotenv
 from agents.world_builder import WorldBuilderAgent
 from agents.game_master import GameMasterAgent
@@ -11,6 +11,8 @@ from datetime import datetime
 import random
 from typing import List, Dict
 from db.client import MongoDBClient
+import requests
+
 
 # Set up logging
 logging.basicConfig(
@@ -590,7 +592,33 @@ def generate_examples():
         logging.error(f"Error generating examples: {e}")
         return jsonify({'examples': ['Look around', 'Talk', 'Explore']})
     
+@app.route('/victory/<encoded_data>')
+def show_victory(encoded_data):
+    try:
+        # Decode the data
+        import base64
+        import json
+        decoded_data = json.loads(base64.b64decode(encoded_data))
+        
+        # Render victory page with decoded data
+        return render_template('victory.html', victory_data=decoded_data)
+    except Exception as e:
+        logging.error(f"Error displaying victory: {e}")
+        return redirect('/')
 
+@app.route('/proxy-image/<path:url>')
+def proxy_image(url):
+    try:
+        response = requests.get(url)
+        return Response(
+            response.content, 
+            mimetype=response.headers['Content-Type'],
+            headers={'Access-Control-Allow-Origin': '*'}
+        )
+    except Exception as e:
+        logging.error(f"Error proxying image: {e}")
+        return jsonify({'error': str(e)}), 500
+        
 if __name__ == '__main__':
     print("\n=== Game Ready to Start ===")
     print("\nAccess the game at http://localhost:5000")
