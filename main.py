@@ -513,6 +513,25 @@ def generate_completion():
         logging.error(f"Error generating completion image: {e}")
         return jsonify({'error': str(e)}), 500
 
+@app.route('/recent-completions', methods=['GET'])
+def get_recent_completions():
+    try:
+        mongo_client = MongoDBClient()
+        recent_completions = mongo_client.get_recent_completions(limit=10)
+        
+        # Convert ObjectId to string for JSON serialization
+        for completion in recent_completions:
+            completion['_id'] = str(completion['_id'])
+            completion['created_at'] = completion['created_at'].isoformat()
+            
+        return jsonify({
+            'success': True,
+            'completions': recent_completions
+        })
+    except Exception as e:
+        logging.error(f"Error fetching recent completions: {e}")
+        return jsonify({'error': str(e)}), 500
+    
 @app.route('/generate-examples', methods=['POST'])
 def generate_examples():
     try:
