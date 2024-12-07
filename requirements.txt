@@ -4,3 +4,5 @@ python-dotenv==1.0.1
 pydantic==2.8.2
 flask==3.0.0
 gunicorn==21.2.0
+pymongo==4.6.1
+python-dotenv==1.0.1

@@ -10,6 +10,7 @@ import json
 from datetime import datetime
 import random
 from typing import List, Dict
+from db.client import MongoDBClient
 
 # Set up logging
 logging.basicConfig(
