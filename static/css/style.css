@@ -801,6 +801,222 @@ body {
     transform: translateY(-2px);
 }
 
+/* Instagram Modal Styles */
+.instagram-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1200;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.instagram-modal.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.instagram-content {
+    background: linear-gradient(135deg, #1a1a2a 0%, #2a2a4a 100%);
+    border-radius: 20px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 400px;
+}
+
+.share-instructions {
+    margin: 1.5rem 0;
+    padding-left: 1.5rem;
+    color: #e2e8f0;
+    line-height: 1.6;
+}
+
+.instagram-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.instagram-actions button {
+    padding: 1rem;
+    border-radius: 12px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.download-button {
+    background: #22c55e;
+    color: white;
+}
+
+.instagram-button {
+    background: #E4405F;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 5px;
+}
+
+.instagram-button:hover {
+    background: #d63851;
+}
+
+.close-button {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.share-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.close-modal {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.share-preview {
+    margin-bottom: 2rem;
+}
+
+.share-image {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.qr-section {
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.share-link-container {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.share-link-input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.copy-link-btn, .download-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.copy-link-btn {
+    background: #4CAF50;
+    color: white;
+}
+
+.download-btn {
+    background: #2196F3;
+    color: white;
+    width: 100%;
+}
+
+.toast-message {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #4CAF50;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.toast-message.visible {
+    opacity: 1;
+    transform: translate(-50%, -20px);
+}
+
+.download-success {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #4CAF50;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    z-index: 2000;
+    animation: fadeInOut 3s ease forwards;
+}
+
+.share-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.share-modal.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.share-content {
+    background: linear-gradient(135deg, #1a1a2a 0%, #2a2a4a 100%);
+    border-radius: 20px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 600px;
+}
+
+.share-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translate(-50%, 20px); }
+    10% { opacity: 1; transform: translate(-50%, 0); }
+    90% { opacity: 1; transform: translate(-50%, 0); }
+    100% { opacity: 0; transform: translate(-50%, -20px); }
+}
+
 @keyframes slideUp {
     0% {
         opacity: 0;

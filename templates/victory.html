@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victory in {{ victory_data.world }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="victory-page">
+        <h1>Victory in {{ victory_data.world }}!</h1>
+        <p>{{ victory_data.character }} has saved the realm!</p>
+        <div class="victory-image">
+            <img src="{{ victory_data.completionImage }}" alt="Victory Scene">
+        </div>
+        <a href="/" class="back-to-game">Play Again</a>
+    </div>
+</body>
+</html>
