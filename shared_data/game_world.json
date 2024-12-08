@@ -100,8 +100,8 @@
                                   "name": "Ash the Brave",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Harbor, known throughout Etherion Kingdom Union for their mystical abilities."
                               },
-                              "Eira the Brave": {
-                                  "name": "Eira the Brave",
+                              "Draekor the Brave": {
+                                  "name": "Draekor the Brave",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Harbor, known throughout Etherion Kingdom Union for their bravery."
                               },
                               "Copper the Whisperer": {
@@ -118,8 +118,8 @@
                                   "name": "Wave the Builder",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Outpost, known throughout Etherion Kingdom Union for their kindness."
                               },
-                              "Eira the Brave": {
-                                  "name": "Eira the Brave",
+                              "Lyzoris the Brave": {
+                                  "name": "Lyzoris the Brave",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Outpost, known throughout Etherion Kingdom Union for their craftsmanship."
                               },
                               "Arveth Quillshade": {
@@ -200,8 +200,8 @@
                                   "name": "Driavor Veilforge",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Village, known throughout Etherion Kingdom Union for their wisdom."
                               },
-                              "Eira the Brave": {
-                                  "name": "Eira the Brave",
+                              "Serathra the Brave": {
+                                  "name": "Serathra the Brave",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Village, known throughout Etherion Kingdom Union for their kindness."
                               }
                           }
@@ -416,17 +416,13 @@
                                   "name": "Kael the Brave",
                                   "description": "A distinguished resident of Mechanica Kingdom Dynasty Town Harbor, known throughout Mechanica Kingdom Dynasty for their craftsmanship."
                               },
-                              "Eira the Brave": {
-                                  "name": "Eira the Brave",
+                              "Voryx the Brave": {
+                                  "name": "Voryx the Brave",
                                   "description": "A distinguished resident of Mechanica Kingdom Dynasty Town Harbor, known throughout Mechanica Kingdom Dynasty for their bravery."
                               },
                               "Myvani Dewpetal": {
                                   "name": "Myvani Dewpetal",
                                   "description": "A distinguished resident of Mechanica Kingdom Dynasty Town Harbor, known throughout Mechanica Kingdom Dynasty for their bravery."
-                              },
-                              "Liora the Brave": {
-                                  "name": "Liora the Brave",
-                                  "description": "A distinguished resident of Mechanica Kingdom Dynasty Town Harbor, known throughout Mechanica Kingdom Dynasty for their craftsmanship."
                               },
                               "Thorin the Builder": {
                                   "name": "Thorin the Builder",
@@ -530,8 +526,8 @@
                                   "name": "Seren the Whisperer",
                                   "description": "A distinguished resident of Mechanica Kingdom Union Town Crossing, known throughout Mechanica Kingdom Union for their mystical abilities."
                               },
-                              "Eira the Brave": {
-                                  "name": "Eira the Brave",
+                              "Kytherra the Brave": {
+                                  "name": "Kytherra the Brave",
                                   "description": "A distinguished resident of Mechanica Kingdom Union Town Crossing, known throughout Mechanica Kingdom Union for their kindness."
                               },
                               "Thorin the Brave": {
@@ -547,10 +543,6 @@
                               "Thorin the Brave": {
                                   "name": "Thorin the Brave",
                                   "description": "A distinguished resident of Mechanica Kingdom Union Town Harbor, known throughout Mechanica Kingdom Union for their mystical abilities."
-                              },
-                              "Seren the Wise": {
-                                  "name": "Seren the Wise",
-                                  "description": "A distinguished resident of Mechanica Kingdom Union Town Harbor, known throughout Mechanica Kingdom Union for their wisdom."
                               },
                               "Cogsworth the Builder": {
                                   "name": "Cogsworth the Builder",
@@ -714,6 +706,10 @@
                                   "name": "Kael the Whisperer",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Outpost, known throughout Aquaria Kingdom Dynasty for their wisdom."
                               },
+                              "Liora the Brave": {
+                                  "name": "Liora the Brave",
+                                  "description": "A distinguished resident of Mechanica Kingdom Dynasty Town Harbor, known throughout Mechanica Kingdom Dynasty for their craftsmanship."
+                              },
                               "Current the Wise": {
                                   "name": "Current the Wise",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Outpost, known throughout Aquaria Kingdom Dynasty for their bravery."
@@ -744,8 +740,8 @@
                                   "name": "Stormy the Wanderer",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Village, known throughout Aquaria Kingdom Dynasty for their mystical abilities."
                               },
-                              "Eira the Brave": {
-                                  "name": "Eira the Brave",
+                              "Alzareth the Brave": {
+                                  "name": "Alzareth the Brave",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Village, known throughout Aquaria Kingdom Dynasty for their craftsmanship."
                               },
                               "Marina the Builder": {
@@ -803,6 +799,11 @@
                               "Avelynn Shadowstep": {
                                   "name": "Avelynn Shadowstep",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Spire, known throughout Aquaria Kingdom Dynasty for their kindness."
+                              }
+                              ,
+                              "Seren the Wise": {
+                                  "name": "Seren the Wise",
+                                  "description": "A distinguished resident of Mechanica Kingdom Union Town Harbor, known throughout Mechanica Kingdom Union for their wisdom."
                               }
                           }
                       }
@@ -904,8 +905,8 @@
                                   "name": "Dravenor Skyscorch",
                                   "description": "A distinguished resident of Aquaria Kingdom Union Town Village, known throughout Aquaria Kingdom Union for their kindness."
                               },
-                              "Eira the Brave": {
-                                  "name": "Eira the Brave",
+                              "Lysandor the Brave": {
+                                  "name": "Lysandor the Brave",
                                   "description": "A distinguished resident of Aquaria Kingdom Union Town Village, known throughout Aquaria Kingdom Union for their wisdom."
                               },
                               "Caelion Windwhisper": {
@@ -1004,8 +1005,8 @@
                                   "name": "Flare the Wise",
                                   "description": "A distinguished resident of Ignisia Kingdom Union Town Outpost, known throughout Ignisia Kingdom Union for their bravery."
                               },
-                              "Eira the Brave": {
-                                  "name": "Eira the Brave",
+                              "Cyrathis the Brave": {
+                                  "name": "Cyrathis the Brave",
                                   "description": "A distinguished resident of Ignisia Kingdom Union Town Outpost, known throughout Ignisia Kingdom Union for their wisdom."
                               },
                               "Nerys Emberclaw": {
@@ -1056,8 +1057,8 @@
                                   "name": "Mist the Builder",
                                   "description": "A distinguished resident of Ignisia Kingdom Union Town Haven, known throughout Ignisia Kingdom Union for their kindness."
                               },
-                              "Eira the Brave": {
-                                  "name": "Eira the Brave",
+                              "Eryndra the Brave": {
+                                  "name": "Eryndra the Brave",
                                   "description": "A distinguished resident of Ignisia Kingdom Union Town Haven, known throughout Ignisia Kingdom Union for their wisdom."
                               },
                               "Cinder the Wise": {
@@ -1162,8 +1163,8 @@
                                   "name": "Vyxaros Soulpiercer",
                                   "description": "A distinguished resident of Ignisia Kingdom Dynasty Town Outpost, known throughout Ignisia Kingdom Dynasty for their craftsmanship."
                               },
-                              "Eira the Brave": {
-                                  "name": "Eira the Brave",
+                              "Zeylor the Brave": {
+                                  "name": "Zeylor the Brave",
                                   "description": "A distinguished resident of Ignisia Kingdom Dynasty Town Outpost, known throughout Ignisia Kingdom Dynasty for their bravery."
                               }
                           }
@@ -1364,8 +1365,8 @@
                           "name": "Terranova Kingdom Union Town Crossing",
                           "description": "A picturesque town in the kingdom of Terranova Kingdom Union, renowned for its history and charm.",
                           "npcs": {
-                              "Eira the Brave": {
-                                  "name": "Eira the Brave",
+                              "Thryss the Brave": {
+                                  "name": "Thryss the Brave",
                                   "description": "A distinguished resident of Terranova Kingdom Union Town Crossing, known throughout Terranova Kingdom Union for their craftsmanship."
                               },
                               "Taron Hawkseye": {
