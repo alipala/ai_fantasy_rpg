@@ -373,6 +373,228 @@
               "reward": "Master Constructor's Mark"
             }
           ]
+        },
+        "Seren the Wanderer": {
+          "role_tasks": [
+            {
+              "task_id": "SW1",
+              "title": "Sky Path Mapping",
+              "description": "Map safe paths between floating islands",
+              "required_item": "Sky compass",
+              "reward": "Sky Path Crystal"
+            },
+            {
+              "task_id": "SW2",
+              "title": "Wind Current Study",
+              "description": "Study and document wind current patterns",
+              "required_item": "Wind gauge",
+              "reward": "Wind Pattern Map"
+            },
+            {
+              "task_id": "SW3",
+              "title": "Island Connection",
+              "description": "Discover new routes between isolated islands",
+              "required_item": "Navigation crystal",
+              "reward": "Connection Chart"
+            },
+            {
+              "task_id": "SW4",
+              "title": "Safe Haven Location",
+              "description": "Locate safe havens during void storms",
+              "required_item": "Haven seeker",
+              "reward": "Haven Network Map"
+            },
+            {
+              "task_id": "SW5",
+              "title": "Route Stability Check",
+              "description": "Assess stability of travel routes",
+              "required_item": "Sky compass",
+              "reward": "Stability Matrix"
+            },
+            {
+              "task_id": "SW6",
+              "title": "Emergency Path Creation",
+              "description": "Create emergency escape routes",
+              "required_item": "Wind gauge",
+              "reward": "Emergency Route Crystal"
+            },
+            {
+              "task_id": "SW7",
+              "title": "Resource Path Planning",
+              "description": "Plan efficient resource transport routes",
+              "required_item": "Navigation crystal",
+              "reward": "Resource Route Map"
+            },
+            {
+              "task_id": "SW8",
+              "title": "Void Storm Navigation",
+              "description": "Develop void storm navigation techniques",
+              "required_item": "Haven seeker",
+              "reward": "Storm Navigation Guide"
+            },
+            {
+              "task_id": "SW9",
+              "title": "Network Integration",
+              "description": "Integrate all discovered paths into a network",
+              "required_item": "All items",
+              "reward": "Master Network Crystal"
+            },
+            {
+              "task_id": "SW10",
+              "title": "Final Path Creation",
+              "description": "Establish the final path to all anchor points",
+              "required_item": "All items",
+              "reward": "Sky Walker's Mark"
+            }
+          ]
+        },
+        "Eira the Wanderer": {
+          "role_tasks": [
+            {
+              "task_id": "EW1",
+              "title": "Celestial Path Finding",
+              "description": "Chart new paths through unstable sky regions",
+              "required_item": "Ethereal compass",
+              "reward": "Sky Path Crystal"
+            },
+            {
+              "task_id": "EW2",
+              "title": "Void Current Mapping",
+              "description": "Map safe passages through void currents",
+              "required_item": "Void meter",
+              "reward": "Current Chart"
+            },
+            {
+              "task_id": "EW3",
+              "title": "Island Discovery",
+              "description": "Locate and document new floating islands",
+              "required_item": "Scout's spyglass",
+              "reward": "Island Registry"
+            },
+            {
+              "task_id": "EW4",
+              "title": "Resource Location",
+              "description": "Find new sources of ethereal essence",
+              "required_item": "Essence detector",
+              "reward": "Resource Map"
+            },
+            {
+              "task_id": "EW5",
+              "title": "Emergency Route Planning",
+              "description": "Establish emergency evacuation routes",
+              "required_item": "Ethereal compass",
+              "reward": "Safety Route Crystal"
+            },
+            {
+              "task_id": "EW6",
+              "title": "Bridge Point Location",
+              "description": "Identify points for creating ethereal bridges",
+              "required_item": "Void meter",
+              "reward": "Bridge Network Plan"
+            },
+            {
+              "task_id": "EW7",
+              "title": "Hidden Path Discovery",
+              "description": "Uncover ancient sky paths between islands",
+              "required_item": "Scout's spyglass",
+              "reward": "Ancient Path Map"
+            },
+            {
+              "task_id": "EW8",
+              "title": "Safe Haven Marking",
+              "description": "Mark safe refuges during void storms",
+              "required_item": "Essence detector",
+              "reward": "Haven Directory"
+            },
+            {
+              "task_id": "EW9",
+              "title": "Route Integration",
+              "description": "Connect all discovered paths into a network",
+              "required_item": "All items",
+              "reward": "Master Route Matrix"
+            },
+            {
+              "task_id": "EW10",
+              "title": "Final Journey",
+              "description": "Lead the expedition to all anchor points",
+              "required_item": "All items",
+              "reward": "Sky Walker's Mark"
+            }
+          ]
+        },
+        "Eira the Whisperer": {
+          "role_tasks": [
+            {
+              "task_id": "EWh1",
+              "title": "Void Echo Reading",
+              "description": "Interpret void storm patterns through mystical echoes",
+              "required_item": "Echo crystal",
+              "reward": "Storm Pattern Matrix"
+            },
+            {
+              "task_id": "EWh2",
+              "title": "Island Spirit Communication",
+              "description": "Commune with floating island spirits",
+              "required_item": "Spirit bell",
+              "reward": "Spirit Wisdom Crystal"
+            },
+            {
+              "task_id": "EWh3",
+              "title": "Ethereal Current Sensing",
+              "description": "Sense and map ethereal energy flows",
+              "required_item": "Ethereal resonator",
+              "reward": "Current Map"
+            },
+            {
+              "task_id": "EWh4",
+              "title": "Anchor Point Attunement",
+              "description": "Attune with celestial anchor points",
+              "required_item": "Attunement sphere",
+              "reward": "Anchor Crystal"
+            },
+            {
+              "task_id": "EWh5",
+              "title": "Voice of the Void",
+              "description": "Listen to void whispers for danger signs",
+              "required_item": "Echo crystal",
+              "reward": "Void Warning System"
+            },
+            {
+              "task_id": "EWh6",
+              "title": "Spirit Network Creation",
+              "description": "Establish a network of guardian spirits",
+              "required_item": "Spirit bell",
+              "reward": "Spirit Web Crystal"
+            },
+            {
+              "task_id": "EWh7",
+              "title": "Energy Flow Guidance",
+              "description": "Guide ethereal energy to weakened areas",
+              "required_item": "Ethereal resonator",
+              "reward": "Energy Flow Map"
+            },
+            {
+              "task_id": "EWh8",
+              "title": "Celestial Harmonization",
+              "description": "Harmonize discordant celestial energies",
+              "required_item": "Attunement sphere",
+              "reward": "Harmony Crystal"
+            },
+            {
+              "task_id": "EWh9",
+              "title": "Mystic Network Integration",
+              "description": "Integrate all spiritual connections",
+              "required_item": "All items",
+              "reward": "Master Spirit Web"
+            },
+            {
+              "task_id": "EWh10",
+              "title": "Final Communion",
+              "description": "Achieve harmony with all anchor points",
+              "required_item": "All items",
+              "reward": "Grand Whisperer's Mark"
+            }
+          ]
         }
       }
     },
@@ -749,6 +971,80 @@
               "reward": "Master Whisperer's Mark"
             }
           ]
+        },
+        "Liora the Builder": {
+          "role_tasks": [
+            {
+              "task_id": "LB1",
+              "title": "Gear Network Construction",
+              "description": "Construct primary gear networks",
+              "required_item": "Builder's wrench",
+              "reward": "Gear Network Plans"
+            },
+            {
+              "task_id": "LB2",
+              "title": "Steam System Assembly",
+              "description": "Assemble steam distribution systems",
+              "required_item": "Steam gauge",
+              "reward": "Steam Network Matrix"
+            },
+            {
+              "task_id": "LB3",
+              "title": "Power Core Installation",
+              "description": "Install and calibrate power cores",
+              "required_item": "Core calibrator",
+              "reward": "Core Setup Guide"
+            },
+            {
+              "task_id": "LB4",
+              "title": "Structure Reinforcement",
+              "description": "Reinforce critical mechanical structures",
+              "required_item": "Structure scanner",
+              "reward": "Reinforcement Plans"
+            },
+            {
+              "task_id": "LB5",
+              "title": "Emergency Repair Systems",
+              "description": "Build emergency repair mechanisms",
+              "required_item": "Builder's wrench",
+              "reward": "Repair System Plans"
+            },
+            {
+              "task_id": "LB6",
+              "title": "Automation Implementation",
+              "description": "Implement automated maintenance systems",
+              "required_item": "Steam gauge",
+              "reward": "Automation Matrix"
+            },
+            {
+              "task_id": "LB7",
+              "title": "Power Distribution",
+              "description": "Construct power distribution networks",
+              "required_item": "Core calibrator",
+              "reward": "Power Grid Plans"
+            },
+            {
+              "task_id": "LB8",
+              "title": "Safety System Creation",
+              "description": "Create mechanical safety systems",
+              "required_item": "Structure scanner",
+              "reward": "Safety System Guide"
+            },
+            {
+              "task_id": "LB9",
+              "title": "System Integration",
+              "description": "Integrate all mechanical systems",
+              "required_item": "All items",
+              "reward": "Master System Matrix"
+            },
+            {
+              "task_id": "LB10",
+              "title": "Master Mechanism",
+              "description": "Construct the master control mechanism",
+              "required_item": "All items",
+              "reward": "Master Builder's Mark"
+            }
+          ]
         }
       }
     },
@@ -979,6 +1275,308 @@
               "description": "Complete the flame stabilization theory",
               "required_item": "All items",
               "reward": "Sage's Flame Crystal"
+            }
+          ]
+        }
+      }
+    },
+    "Terranova": {
+      "main_puzzle": "The Great Forest Awakening Crisis: The ancient world-tree that maintains the balance of nature is failing, threatening to destabilize the entire ecosystem.",
+      "solution_requirements": ["Restore the World-Tree's vitality", "Reestablish natural ley lines", "Harmonize the forest's life force"],
+      "characters": {
+        "Thorin the Wanderer": {
+          "role_tasks": [
+            {
+              "task_id": "TW1",
+              "title": "Path Finding",
+              "description": "Scout ancient forest paths to discover natural energy flows",
+              "required_item": "Traveler's compass",
+              "reward": "Path Map Crystal"
+            },
+            {
+              "task_id": "TW2",
+              "title": "Seed Collection",
+              "description": "Gather rare seeds from remote locations",
+              "required_item": "Seed pouch",
+              "reward": "Vital Seeds"
+            },
+            {
+              "task_id": "TW3",
+              "title": "Route Mapping",
+              "description": "Map the safest routes through unstable areas",
+              "required_item": "Cartographer's kit",
+              "reward": "Safety Route Map"
+            },
+            {
+              "task_id": "TW4",
+              "title": "Resource Location",
+              "description": "Locate essential resources for forest restoration",
+              "required_item": "Forest guide",
+              "reward": "Resource Chart"
+            },
+            {
+              "task_id": "TW5",
+              "title": "Network Exploration",
+              "description": "Explore and document ley line networks",
+              "required_item": "Traveler's compass",
+              "reward": "Ley Line Map"
+            },
+            {
+              "task_id": "TW6",
+              "title": "Sacred Site Discovery",
+              "description": "Discover forgotten sacred sites of natural power",
+              "required_item": "Seed pouch",
+              "reward": "Sacred Site Registry"
+            },
+            {
+              "task_id": "TW7",
+              "title": "Trail Blazing",
+              "description": "Create new paths to critical restoration areas",
+              "required_item": "Cartographer's kit",
+              "reward": "New Path Matrix"
+            },
+            {
+              "task_id": "TW8",
+              "title": "Wildlife Migration",
+              "description": "Track and guide wildlife to safer areas",
+              "required_item": "Forest guide",
+              "reward": "Migration Pattern Crystal"
+            },
+            {
+              "task_id": "TW9",
+              "title": "Connection Mapping",
+              "description": "Map connections between major forest nodes",
+              "required_item": "All items",
+              "reward": "Forest Network Map"
+            },
+            {
+              "task_id": "TW10",
+              "title": "Final Journey",
+              "description": "Lead the final expedition to the World-Tree",
+              "required_item": "All items",
+              "reward": "Master Wanderer's Mark"
+            }
+          ]
+        },
+        "Kael the Wanderer": {
+          "role_tasks": [
+            {
+              "task_id": "KW1",
+              "title": "Ancient Trail Recovery",
+              "description": "Rediscover lost paths to power sources",
+              "required_item": "Traveler's compass",
+              "reward": "Ancient Trail Map"
+            },
+            {
+              "task_id": "KW2",
+              "title": "Energy Point Location",
+              "description": "Locate and document natural energy points",
+              "required_item": "Energy dowser",
+              "reward": "Energy Point Chart"
+            },
+            {
+              "task_id": "KW3",
+              "title": "Remote Site Access",
+              "description": "Establish access to remote restoration sites",
+              "required_item": "Pathfinder's tools",
+              "reward": "Access Route Crystal"
+            },
+            {
+              "task_id": "KW4",
+              "title": "Resource Transport",
+              "description": "Plan efficient resource transport routes",
+              "required_item": "Route marker",
+              "reward": "Transport Network Map"
+            },
+            {
+              "task_id": "KW5",
+              "title": "Safe Passage Creation",
+              "description": "Create safe passages through unstable areas",
+              "required_item": "Traveler's compass",
+              "reward": "Safety Route Crystal"
+            },
+            {
+              "task_id": "KW6",
+              "title": "Connection Discovery",
+              "description": "Discover hidden connections between forest sections",
+              "required_item": "Energy dowser",
+              "reward": "Connection Matrix"
+            },
+            {
+              "task_id": "KW7",
+              "title": "Emergency Route Planning",
+              "description": "Establish emergency evacuation routes",
+              "required_item": "Pathfinder's tools",
+              "reward": "Emergency Route Map"
+            },
+            {
+              "task_id": "KW8",
+              "title": "Sanctuary Location",
+              "description": "Locate and mark wildlife sanctuaries",
+              "required_item": "Route marker",
+              "reward": "Sanctuary Chart"
+            },
+            {
+              "task_id": "KW9",
+              "title": "Path Network Creation",
+              "description": "Create an integrated network of safe paths",
+              "required_item": "All items",
+              "reward": "Master Path Matrix"
+            },
+            {
+              "task_id": "KW10",
+              "title": "World-Tree Journey",
+              "description": "Guide the final approach to the World-Tree",
+              "required_item": "All items",
+              "reward": "Master Explorer's Mark"
+            }
+          ]
+        },
+        "Liora the Wanderer": {
+          "role_tasks": [
+            {
+              "task_id": "LW1",
+              "title": "Forest Path Discovery",
+              "description": "Discover hidden paths through ancient forests",
+              "required_item": "Nature compass",
+              "reward": "Forest Path Crystal"
+            },
+            {
+              "task_id": "LW2",
+              "title": "Sacred Grove Location",
+              "description": "Locate and map sacred forest groves",
+              "required_item": "Grove pendulum",
+              "reward": "Sacred Site Map"
+            },
+            {
+              "task_id": "LW3",
+              "title": "Wildlife Trail Mapping",
+              "description": "Map and document wildlife migration routes",
+              "required_item": "Trail marker",
+              "reward": "Wildlife Path Chart"
+            },
+            {
+              "task_id": "LW4",
+              "title": "Resource Point Finding",
+              "description": "Locate vital natural resources",
+              "required_item": "Resource dowser",
+              "reward": "Resource Network Map"
+            },
+            {
+              "task_id": "LW5",
+              "title": "Safe Route Creation",
+              "description": "Establish safe routes through unstable areas",
+              "required_item": "Nature compass",
+              "reward": "Safety Route Crystal"
+            },
+            {
+              "task_id": "LW6",
+              "title": "Ancient Site Discovery",
+              "description": "Uncover forgotten sites of natural power",
+              "required_item": "Grove pendulum",
+              "reward": "Ancient Site Registry"
+            },
+            {
+              "task_id": "LW7",
+              "title": "Seasonal Path Planning",
+              "description": "Plan routes accounting for seasonal changes",
+              "required_item": "Trail marker",
+              "reward": "Seasonal Path Matrix"
+            },
+            {
+              "task_id": "LW8",
+              "title": "Emergency Route Creation",
+              "description": "Create emergency evacuation paths",
+              "required_item": "Resource dowser",
+              "reward": "Emergency Route Map"
+            },
+            {
+              "task_id": "LW9",
+              "title": "Path Network Integration",
+              "description": "Connect all discovered paths into a network",
+              "required_item": "All items",
+              "reward": "Master Path Crystal"
+            },
+            {
+              "task_id": "LW10",
+              "title": "World-Tree Journey",
+              "description": "Lead the final journey to the World-Tree",
+              "required_item": "All items",
+              "reward": "Forest Walker's Mark"
+            }
+          ]
+        },
+        "Thorin the Wise": {
+          "role_tasks": [
+            {
+              "task_id": "TW1",
+              "title": "Ancient Knowledge Study",
+              "description": "Study ancient texts about forest harmony",
+              "required_item": "Wisdom tome",
+              "reward": "Knowledge Crystal"
+            },
+            {
+              "task_id": "TW2",
+              "title": "Natural Pattern Analysis",
+              "description": "Analyze patterns of natural energy flow",
+              "required_item": "Pattern lens",
+              "reward": "Pattern Matrix"
+            },
+            {
+              "task_id": "TW3",
+              "title": "Ecological Research",
+              "description": "Research ecosystem interconnections",
+              "required_item": "Research journal",
+              "reward": "Ecosystem Map"
+            },
+            {
+              "task_id": "TW4",
+              "title": "Historical Record Study",
+              "description": "Study historical records of forest health",
+              "required_item": "Memory crystal",
+              "reward": "Historical Data"
+            },
+            {
+              "task_id": "TW5",
+              "title": "Solution Development",
+              "description": "Develop solutions for ecosystem restoration",
+              "required_item": "Wisdom tome",
+              "reward": "Solution Crystal"
+            },
+            {
+              "task_id": "TW6",
+              "title": "Knowledge Integration",
+              "description": "Integrate ancient and modern knowledge",
+              "required_item": "Pattern lens",
+              "reward": "Integrated Wisdom Crystal"
+            },
+            {
+              "task_id": "TW7",
+              "title": "Recovery Planning",
+              "description": "Plan systematic ecosystem recovery",
+              "required_item": "Research journal",
+              "reward": "Recovery Matrix"
+            },
+            {
+              "task_id": "TW8",
+              "title": "Future Projection",
+              "description": "Project future ecosystem scenarios",
+              "required_item": "Memory crystal",
+              "reward": "Future Sight Crystal"
+            },
+            {
+              "task_id": "TW9",
+              "title": "Wisdom Compilation",
+              "description": "Compile all gathered knowledge",
+              "required_item": "All items",
+              "reward": "Master Knowledge Matrix"
+            },
+            {
+              "task_id": "TW10",
+              "title": "Final Theory",
+              "description": "Complete the theory of forest restoration",
+              "required_item": "All items",
+              "reward": "Grand Sage's Mark"
             }
           ]
         }
