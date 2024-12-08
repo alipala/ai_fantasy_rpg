@@ -19,6 +19,10 @@ const triangleSvg = `
   </svg>
 `;
 
+function isMobileDevice() {
+    return window.innerWidth < 768;
+}
+
 // Initialize triangles when document loads
 document.addEventListener('DOMContentLoaded', () => {
     const triangles = document.querySelectorAll('.triangle');
@@ -69,11 +73,16 @@ function handleStartClick() {
     const startScreen = document.getElementById('startScreen');
     const selectionPhase = document.getElementById('selectionPhase');
     const gameBackground = document.getElementById('gameBackground');
- 
+    
     startScreen.classList.add('fade-out');
     gameBackground.style.opacity = '1';
     gameBackground.style.visibility = 'visible';
- 
+    
+    // Add mobile-specific class if needed
+    if (isMobileDevice()) {
+        selectionPhase.classList.add('mobile');
+    }
+    
     setTimeout(() => {
         startScreen.classList.add('hidden');
         selectionPhase.classList.remove('hidden');
@@ -85,7 +94,7 @@ function handleStartClick() {
         showScreen('worldSelect');
         startGame();
     }, 300);
- }
+}
 
 // Screen Management Functions
 function showScreen(screenId) {
@@ -302,7 +311,7 @@ async function initializeGame(inventory) {
         hideLoadingOverlay();
         transitionToGameScreen();
         
-        // Initialize puzzle progress if available in response
+        // Initialize puzzle progress if available
         const puzzleProgressContainer = document.querySelector('.puzzle-progress-container');
         if (puzzleProgressContainer && data.puzzle_progress) {
             puzzleProgressContainer.appendChild(createPuzzleProgress());
@@ -315,17 +324,18 @@ async function initializeGame(inventory) {
         // Display initial story and image
         displayInitialStory(data);
         
-        // Generate initial examples
-        await generateNewExamples(data.message);
+        // Generate initial examples only if not mobile
+        if (!isMobileDevice()) {
+            await generateNewExamples(data.message);
+        }
         
         // Focus input
         document.getElementById('userInput').focus();
 
-        console.log('Game data received:', data);
+        // Handle background transition
         const gameBackground = document.getElementById('gameBackground');
         gameBackground.classList.add('fade-out');
         setTimeout(() => gameBackground.style.display = 'none', 500);
-        console.log('Puzzle progress:', data.puzzle_progress);
         
     } catch (error) {
         console.error('Error initializing game:', error);
@@ -375,17 +385,16 @@ function displayInitialStory(data) {
 }
 
 function displayStoryImage(imageData) {
-    // Create container for image loading state
     const container = document.getElementById('storyImageContainer');
     container.innerHTML = '<div class="image-loading"></div>';
     
-    // Create image element
     const img = new Image();
     img.src = imageData.url;
     
     img.onload = () => {
+        const maxWidth = isMobileDevice() ? '100%' : '512px';
         container.innerHTML = `
-            <div class="story-image-wrapper">
+            <div class="story-image-wrapper" style="max-width: ${maxWidth}">
                 <img src="${imageData.url}" 
                      alt="Scene from ${imageData.context?.world || 'the story'}" 
                      class="story-image"
@@ -398,7 +407,7 @@ function displayStoryImage(imageData) {
     };
     
     img.onerror = () => {
-        container.innerHTML = ''; // Remove loading state if image fails
+        container.innerHTML = '';
     };
 }
 
@@ -904,11 +913,11 @@ async function updateGameState(action, result) {
 }
 
 function createInventoryItem(item, count) {
-    return `
+    const itemHtml = `
         <div class="inventory-item relative p-2 bg-gradient-to-r from-gray-800 to-gray-700 rounded-lg border border-gray-600">
             <div class="flex justify-between items-center">
                 <div class="flex flex-col flex-1">
-                    <span class="text-white">${item}</span>
+                    <span class="text-white ${isMobileDevice() ? 'text-lg' : ''}">${item}</span>
                     <div class="tooltip-text">${getItemTooltip(item)}</div>
                 </div>
             </div>
@@ -917,6 +926,7 @@ function createInventoryItem(item, count) {
             </div>
         </div>
     `;
+    return itemHtml;
 }
 
 function updateInventory(inventory) {
@@ -957,7 +967,7 @@ function updateExamples(examples) {
     
     examples.forEach(example => {
         const button = document.createElement('button');
-        button.className = 'example-button';
+        button.className = `example-button ${isMobileDevice() ? 'mobile-example-button' : ''}`;
         button.textContent = example;
         button.onclick = () => useExample(example);
         container.appendChild(button);
@@ -1017,5 +1027,13 @@ function showError(message) {
 
 function scrollToBottom() {
     const gameOutput = document.getElementById('gameOutput');
-    gameOutput.scrollTop = gameOutput.scrollHeight;
+    const lastMessage = gameOutput.lastElementChild;
+    
+    if (lastMessage) {
+        if (isMobileDevice()) {
+            lastMessage.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        } else {
+            gameOutput.scrollTop = gameOutput.scrollHeight;
+        }
+    }
 }

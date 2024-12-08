@@ -1084,3 +1084,102 @@ h3, h4 {
     color: #ffffff;
     margin-bottom: 8px;
 }
+
+@media (max-width: 1024px) {
+    .game-container {
+        width: 100%;
+        max-width: 900px;
+    }
+
+    .main-content {
+        gap: 0.5rem;
+    }
+
+    .sidebar {
+        width: 12rem;
+    }
+}
+
+/* Mobile devices */
+@media (max-width: 768px) {
+    body {
+        padding-top: 60px; /* Space for fixed mobile nav */
+    }
+
+    .game-wrapper {
+        padding: 0.5rem;
+    }
+
+    .game-container {
+        height: calc(100vh - 80px);
+        padding: 0.75rem;
+    }
+
+    .main-content {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        display: none; /* Hidden on mobile, shown in mobile menu instead */
+    }
+
+    .messages {
+        height: calc(100vh - 180px);
+    }
+
+    .message {
+        max-width: 90%;
+    }
+
+    .story-image-wrapper {
+        max-width: 100%;
+    }
+
+    .input-wrapper {
+        padding: 0.5rem;
+    }
+
+    .input-container {
+        gap: 0.5rem;
+    }
+
+    .game-input {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 0.75rem;
+    }
+
+    .action-button {
+        padding: 0 1rem;
+    }
+
+    /* Adjust completion overlay for mobile */
+    .completion-content {
+        width: 95%;
+        padding: 1.5rem;
+    }
+
+    .completion-header h2 {
+        font-size: 1.8rem;
+    }
+
+    .completion-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .completion-button {
+        width: 100%;
+    }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+    .mobile-menu__content {
+        width: 85%;
+    }
+
+    .message {
+        max-width: 95%;
+        font-size: 0.9rem;
+    }
+}
