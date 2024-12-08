@@ -1084,3 +1084,38 @@ h3, h4 {
     color: #ffffff;
     margin-bottom: 8px;
 }
+
+.selection-button.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: rgba(42, 42, 61, 0.5);
+    border-color: #2a2a3d;
+}
+
+.selection-button.disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.no-quest-badge {
+    display: inline-block;
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.loading-message {
+    text-align: center;
+    color: #a8b3cf;
+    padding: 1rem;
+}
+
+.error-message {
+    text-align: center;
+    color: #ef4444;
+    padding: 1rem;
+}

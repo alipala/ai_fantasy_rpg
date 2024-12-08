@@ -222,20 +222,49 @@ function selectTown(town) {
     displayCharacters(town);
 }
 
-function displayCharacters(town) {
+async function displayCharacters(town) {
     const characterList = document.getElementById('characterList');
     characterList.innerHTML = '';
     
-    Object.values(town.npcs).forEach(char => {
-        const button = document.createElement('button');
-        button.className = 'selection-button';
-        button.innerHTML = `
-            <h3>${char.name}</h3>
-            <p>${char.description.substring(0, 100)}...</p>
-        `;
-        button.onclick = () => selectCharacter(char);
-        characterList.appendChild(button);
-    });
+    // Show loading state while checking puzzles
+    characterList.innerHTML = '<div class="loading-message">Loading characters...</div>';
+    
+    try {
+        // Check puzzle availability for all characters
+        const characterEntries = Object.entries(town.npcs);
+        const characterData = await Promise.all(
+            characterEntries.map(async ([_, char]) => {
+                const hasPuzzle = await checkCharacterHasPuzzle(char.name);
+                return { ...char, hasPuzzle };
+            })
+        );
+        
+        // Clear loading message
+        characterList.innerHTML = '';
+        
+        // Create character buttons
+        characterData.forEach(char => {
+            const button = document.createElement('button');
+            button.className = `selection-button ${!char.hasPuzzle ? 'disabled' : ''}`;
+            button.innerHTML = `
+                <h3>${char.name}</h3>
+                <p>${char.description.substring(0, 100)}...</p>
+                ${!char.hasPuzzle ? '<span class="no-quest-badge">No Available Quests</span>' : ''}
+            `;
+            
+            if (char.hasPuzzle) {
+                button.onclick = () => selectCharacter(char);
+            } else {
+                button.disabled = true;
+            }
+            
+            characterList.appendChild(button);
+        });
+        
+    } catch (error) {
+        console.error('Error displaying characters:', error);
+        characterList.innerHTML = '<div class="error-message">Error loading characters</div>';
+    }
 }
 
 async function selectCharacter(character) {
@@ -1018,4 +1047,19 @@ function showError(message) {
 function scrollToBottom() {
     const gameOutput = document.getElementById('gameOutput');
     gameOutput.scrollTop = gameOutput.scrollHeight;
+}
+
+async function checkCharacterHasPuzzle(characterName) {
+    try {
+        const response = await fetch('/check-puzzle', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ character: characterName })
+        });
+        const data = await response.json();
+        return data.hasPuzzle;
+    } catch (error) {
+        console.error('Error checking character puzzles:', error);
+        return false;
+    }
 }
