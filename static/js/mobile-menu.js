@@ -7,8 +7,11 @@ class MobileMenu {
         this.closeButton = document.querySelector('.mobile-menu__close');
         this.tabs = document.querySelectorAll('.mobile-menu__tab');
         this.panels = document.querySelectorAll('.mobile-menu__panel');
+        this.questProgress = document.querySelector('.puzzle-progress-container');
+        this.setupQuestProgress();
         
         this.init();
+        this.setupDefaultActions();
     }
 
     init() {
@@ -22,6 +25,44 @@ class MobileMenu {
 
         this.setupResponsiveContent();
         window.addEventListener('resize', () => this.handleResize());
+    }
+
+    setupDefaultActions() {
+        const actionsPanel = document.querySelector('[data-panel="actions"]');
+        if (actionsPanel && actionsPanel.children.length === 0) {
+            const defaultActions = [
+                'Look around',
+                'Explore area',
+                'Check surroundings'
+            ];
+            
+            defaultActions.forEach(action => {
+                const button = document.createElement('button');
+                button.className = 'example-button';
+                button.textContent = action;
+                button.onclick = () => this.useAction(action);
+                actionsPanel.appendChild(button);
+            });
+        }
+    }
+
+    useAction(action) {
+        const input = document.getElementById('userInput');
+        if (input) {
+            input.value = action;
+            this.closeMenu();
+            // Optional: auto-submit the action
+            document.getElementById('submitBtn')?.click();
+        }
+    }
+
+    setupQuestProgress() {
+        if (this.questProgress) {
+            const mobileProgress = document.createElement('div');
+            mobileProgress.className = 'mobile-quest-progress';
+            mobileProgress.innerHTML = this.questProgress.innerHTML;
+            document.querySelector('.mobile-nav').after(mobileProgress);
+        }
     }
 
     toggleMenu() {

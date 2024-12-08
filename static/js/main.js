@@ -311,11 +311,20 @@ async function initializeGame(inventory) {
         hideLoadingOverlay();
         transitionToGameScreen();
         
-        // Initialize puzzle progress if available
+        // Initialize puzzle progress
         const puzzleProgressContainer = document.querySelector('.puzzle-progress-container');
         if (puzzleProgressContainer && data.puzzle_progress) {
+            // Create and append progress for desktop
             puzzleProgressContainer.appendChild(createPuzzleProgress());
             updatePuzzleProgress(data.puzzle_progress);
+
+            // Handle mobile puzzle progress
+            if (isMobileDevice()) {
+                const mobileProgress = document.createElement('div');
+                mobileProgress.className = 'mobile-quest-progress';
+                mobileProgress.innerHTML = puzzleProgressContainer.innerHTML;
+                document.querySelector('.mobile-nav')?.after(mobileProgress);
+            }
         }
         
         // Initialize game state
@@ -324,23 +333,88 @@ async function initializeGame(inventory) {
         // Display initial story and image
         displayInitialStory(data);
         
-        // Generate initial examples only if not mobile
-        if (!isMobileDevice()) {
-            await generateNewExamples(data.message);
+        // Generate and set up initial examples/actions
+        await generateNewExamples(data.message);
+        
+        // Handle mobile-specific setup for actions
+        if (isMobileDevice()) {
+            const mobileActionsPanel = document.querySelector('[data-panel="actions"]');
+            const exampleActions = document.getElementById('exampleActions');
+            
+            if (mobileActionsPanel && exampleActions) {
+                mobileActionsPanel.innerHTML = exampleActions.innerHTML;
+                
+                // If no actions were generated, add default ones
+                if (mobileActionsPanel.children.length <= 1) { // Only has header
+                    const defaultActions = [
+                        'Look around',
+                        'Explore the area',
+                        'Check surroundings',
+                        'Talk to nearby people'
+                    ];
+                    
+                    defaultActions.forEach(action => {
+                        const button = document.createElement('button');
+                        button.className = 'example-button';
+                        button.textContent = action;
+                        button.onclick = () => {
+                            document.getElementById('userInput').value = action;
+                            // Close mobile menu if open
+                            document.querySelector('.mobile-menu')?.classList.remove('active');
+                        };
+                        mobileActionsPanel.appendChild(button);
+                    });
+                }
+            }
         }
         
         // Focus input
-        document.getElementById('userInput').focus();
+        const userInput = document.getElementById('userInput');
+        if (userInput) {
+            userInput.disabled = false;
+            userInput.focus();
+            
+            // Adjust viewport on mobile when focusing input
+            if (isMobileDevice()) {
+                userInput.addEventListener('focus', () => {
+                    setTimeout(() => {
+                        window.scrollTo(0, document.body.scrollHeight);
+                    }, 100);
+                });
+            }
+        }
+
+        // Enable submit button
+        const submitBtn = document.getElementById('submitBtn');
+        if (submitBtn) {
+            submitBtn.disabled = false;
+        }
 
         // Handle background transition
         const gameBackground = document.getElementById('gameBackground');
-        gameBackground.classList.add('fade-out');
-        setTimeout(() => gameBackground.style.display = 'none', 500);
+        if (gameBackground) {
+            gameBackground.classList.add('fade-out');
+            setTimeout(() => {
+                gameBackground.style.display = 'none';
+            }, 500);
+        }
+
+        // Log initialization
+        console.log('Game initialized with data:', data);
+        
+        // Ensure proper initial scroll position
+        setTimeout(() => {
+            scrollToBottom();
+        }, 100);
         
     } catch (error) {
         console.error('Error initializing game:', error);
         showError('Failed to initialize game');
         hideLoadingOverlay();
+        
+        // Re-enable controls in case of error
+        document.getElementById('userInput').disabled = false;
+        document.getElementById('submitBtn').disabled = false;
     }
 }
 
@@ -1031,7 +1105,13 @@ function scrollToBottom() {
     
     if (lastMessage) {
         if (isMobileDevice()) {
-            lastMessage.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            lastMessage.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'end',
+                inline: 'nearest'
+            });
+            // Add extra scroll to account for input area
+            window.scrollBy(0, 60);
         } else {
             gameOutput.scrollTop = gameOutput.scrollHeight;
         }
