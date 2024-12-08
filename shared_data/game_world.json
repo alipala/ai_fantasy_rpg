@@ -60,8 +60,8 @@
                           "name": "Etherion Kingdom Dominion Town Spire",
                           "description": "A picturesque town in the kingdom of Etherion Kingdom Dominion, renowned for its history and charm.",
                           "npcs": {
-                              "Thorin the Wanderer": {
-                                  "name": "Thorin the Wanderer",
+                              "Magma the Wanderer": {
+                                  "name": "Magma the Wanderer",
                                   "description": "A distinguished resident of Etherion Kingdom Dominion Town Spire, known throughout Etherion Kingdom Dominion for their craftsmanship."
                               },
                               "Liora the Wise": {
@@ -72,8 +72,8 @@
                                   "name": "Thorin the Brave",
                                   "description": "A distinguished resident of Etherion Kingdom Dominion Town Spire, known throughout Etherion Kingdom Dominion for their bravery."
                               },
-                              "Liora the Builder": {
-                                  "name": "Liora the Builder",
+                              "Pearl the Builder": {
+                                  "name": "Pearl the Builder",
                                   "description": "A distinguished resident of Etherion Kingdom Dominion Town Spire, known throughout Etherion Kingdom Dominion for their craftsmanship."
                               }
                           }
@@ -96,16 +96,16 @@
                                   "name": "Liora the Wise",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Harbor, known throughout Etherion Kingdom Union for their kindness."
                               },
-                              "Liora the Brave": {
-                                  "name": "Liora the Brave",
+                              "Ash the Brave": {
+                                  "name": "Ash the Brave",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Harbor, known throughout Etherion Kingdom Union for their mystical abilities."
                               },
                               "Eira the Brave": {
                                   "name": "Eira the Brave",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Harbor, known throughout Etherion Kingdom Union for their bravery."
                               },
-                              "Thorin the Whisperer": {
-                                  "name": "Thorin the Whisperer",
+                              "Copper the Whisperer": {
+                                  "name": "Copper the Whisperer",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Harbor, known throughout Etherion Kingdom Union for their kindness."
                               }
                           }
@@ -114,20 +114,20 @@
                           "name": "Etherion Kingdom Union Town Outpost",
                           "description": "A picturesque town in the kingdom of Etherion Kingdom Union, renowned for its history and charm.",
                           "npcs": {
-                              "Liora the Builder": {
-                                  "name": "Liora the Builder",
+                              "Wave the Builder": {
+                                  "name": "Wave the Builder",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Outpost, known throughout Etherion Kingdom Union for their kindness."
                               },
                               "Eira the Brave": {
                                   "name": "Eira the Brave",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Outpost, known throughout Etherion Kingdom Union for their craftsmanship."
                               },
-                              "Liora the Wanderer": {
-                                  "name": "Liora the Wanderer",
+                              "Arveth Quillshade": {
+                                  "name": "Arveth Quillshade",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Outpost, known throughout Etherion Kingdom Union for their bravery."
                               },
-                              "Kael the Wise": {
-                                  "name": "Kael the Wise",
+                              "Oryndal Shadefen": {
+                                  "name": "Oryndal Shadefen",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Outpost, known throughout Etherion Kingdom Union for their craftsmanship."
                               },
                               "Liora the Wise": {
@@ -140,12 +140,12 @@
                           "name": "Etherion Kingdom Union Town Crossing",
                           "description": "A picturesque town in the kingdom of Etherion Kingdom Union, renowned for its history and charm.",
                           "npcs": {
-                              "Thorin the Builder": {
-                                  "name": "Thorin the Builder",
+                              "Finn the Builder": {
+                                  "name": "Finn the Builder",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Crossing, known throughout Etherion Kingdom Union for their craftsmanship."
                               },
-                              "Kael the Wise": {
-                                  "name": "Kael the Wise",
+                              "Cyris Duskwrithe": {
+                                  "name": "Cyris Duskwrithe",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Crossing, known throughout Etherion Kingdom Union for their bravery."
                               },
                               "Seren the Whisperer": {
@@ -156,8 +156,8 @@
                                   "name": "Seren the Brave",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Crossing, known throughout Etherion Kingdom Union for their wisdom."
                               },
-                              "Liora the Wanderer": {
-                                  "name": "Liora the Wanderer",
+                              "Zerrilith Lumenshroud": {
+                                  "name": "Zerrilith Lumenshroud",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Crossing, known throughout Etherion Kingdom Union for their kindness."
                               }
                           }
@@ -174,8 +174,8 @@
                                   "name": "Liora the Wise",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Spire, known throughout Etherion Kingdom Union for their craftsmanship."
                               },
-                              "Liora the Wanderer": {
-                                  "name": "Liora the Wanderer",
+                              "Caladra Solphyra": {
+                                  "name": "Caladra Solphyra",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Spire, known throughout Etherion Kingdom Union for their bravery."
                               },
                               "Thorin the Wise": {
@@ -188,16 +188,16 @@
                           "name": "Etherion Kingdom Union Town Village",
                           "description": "A picturesque town in the kingdom of Etherion Kingdom Union, renowned for its history and charm.",
                           "npcs": {
-                              "Kael the Wise": {
-                                  "name": "Kael the Wise",
+                              "Lythara Voidpetal": {
+                                  "name": "Lythara Voidpetal",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Village, known throughout Etherion Kingdom Union for their craftsmanship."
                               },
                               "Seren the Whisperer": {
                                   "name": "Seren the Whisperer",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Village, known throughout Etherion Kingdom Union for their wisdom."
                               },
-                              "Liora the Wanderer": {
-                                  "name": "Liora the Wanderer",
+                              "Driavor Veilforge": {
+                                  "name": "Driavor Veilforge",
                                   "description": "A distinguished resident of Etherion Kingdom Union Town Village, known throughout Etherion Kingdom Union for their wisdom."
                               },
                               "Eira the Brave": {
@@ -216,16 +216,16 @@
                           "name": "Etherion Kingdom Dynasty Town Harbor",
                           "description": "A picturesque town in the kingdom of Etherion Kingdom Dynasty, renowned for its history and charm.",
                           "npcs": {
-                              "Eira the Builder": {
-                                  "name": "Eira the Builder",
+                              "Depth the Wiser": {
+                                  "name": "Depth the Wise",
                                   "description": "A distinguished resident of Etherion Kingdom Dynasty Town Harbor, known throughout Etherion Kingdom Dynasty for their bravery."
                               },
                               "Thorin the Wise": {
                                   "name": "Thorin the Wise",
                                   "description": "A distinguished resident of Etherion Kingdom Dynasty Town Harbor, known throughout Etherion Kingdom Dynasty for their bravery."
                               },
-                              "Thorin the Wanderer": {
-                                  "name": "Thorin the Wanderer",
+                              "Leaf the Wanderer": {
+                                  "name": "Leaf the Wanderer",
                                   "description": "A distinguished resident of Etherion Kingdom Dynasty Town Harbor, known throughout Etherion Kingdom Dynasty for their craftsmanship."
                               },
                               "Eira the Wanderer": {
@@ -238,24 +238,24 @@
                           "name": "Etherion Kingdom Dynasty Town Haven",
                           "description": "A picturesque town in the kingdom of Etherion Kingdom Dynasty, renowned for its history and charm.",
                           "npcs": {
-                              "Thorin the Whisperer": {
-                                  "name": "Thorin the Whisperer",
+                              "Iron the Whisperer": {
+                                  "name": "Iron the Whisperer",
                                   "description": "A distinguished resident of Etherion Kingdom Dynasty Town Haven, known throughout Etherion Kingdom Dynasty for their wisdom."
                               },
-                              "Eira the Builder": {
-                                  "name": "Eira the Builder",
+                              "Current the Whisperer": {
+                                  "name": "Current the Whisperer",
                                   "description": "A distinguished resident of Etherion Kingdom Dynasty Town Haven, known throughout Etherion Kingdom Dynasty for their bravery."
                               },
                               "Thorin the Brave": {
                                   "name": "Thorin the Brave",
                                   "description": "A distinguished resident of Etherion Kingdom Dynasty Town Haven, known throughout Etherion Kingdom Dynasty for their mystical abilities."
                               },
-                              "Liora the Wanderer": {
-                                  "name": "Liora the Wanderer",
+                              "Myrvannis Duskchain": {
+                                  "name": "Myrvannis Duskchain",
                                   "description": "A distinguished resident of Etherion Kingdom Dynasty Town Haven, known throughout Etherion Kingdom Dynasty for their kindness."
                               },
-                              "Liora the Builder": {
-                                  "name": "Liora the Builder",
+                              "Tide the Builder": {
+                                  "name": "Tide the Builder",
                                   "description": "A distinguished resident of Etherion Kingdom Dynasty Town Haven, known throughout Etherion Kingdom Dynasty for their kindness."
                               }
                           }
@@ -268,16 +268,16 @@
                                   "name": "Seren the Brave",
                                   "description": "A distinguished resident of Etherion Kingdom Dynasty Town Outpost, known throughout Etherion Kingdom Dynasty for their mystical abilities."
                               },
-                              "Liora the Builder": {
-                                  "name": "Liora the Builder",
+                              "Shell the Builder": {
+                                  "name": "Shell the Builder",
                                   "description": "A distinguished resident of Etherion Kingdom Dynasty Town Outpost, known throughout Etherion Kingdom Dynasty for their craftsmanship."
                               },
-                              "Eira the Wise": {
-                                  "name": "Eira the Wise",
+                              "Thalrik Ironfist": {
+                                  "name": "Thalrik Ironfist",
                                   "description": "A distinguished resident of Etherion Kingdom Dynasty Town Outpost, known throughout Etherion Kingdom Dynasty for their bravery."
                               },
-                              "Kael the Brave": {
-                                  "name": "Kael the Brave",
+                              "Echo the Brave": {
+                                  "name": "Echo the Brave",
                                   "description": "A distinguished resident of Etherion Kingdom Dynasty Town Outpost, known throughout Etherion Kingdom Dynasty for their kindness."
                               },
                               "Seren the Whisperer": {
@@ -290,20 +290,20 @@
                           "name": "Etherion Kingdom Dynasty Town Crossing",
                           "description": "A picturesque town in the kingdom of Etherion Kingdom Dynasty, renowned for its history and charm.",
                           "npcs": {
-                              "Kael the Brave": {
-                                  "name": "Kael the Brave",
+                              "Atlas the Wise": {
+                                  "name": "Atlas the Wise",
                                   "description": "A distinguished resident of Etherion Kingdom Dynasty Town Crossing, known throughout Etherion Kingdom Dynasty for their craftsmanship."
                               },
-                              "Kael the Wanderer": {
-                                  "name": "Kael the Wanderer",
+                              "Brogan Forgebeard": {
+                                  "name": "Brogan Forgebeard",
                                   "description": "A distinguished resident of Etherion Kingdom Dynasty Town Crossing, known throughout Etherion Kingdom Dynasty for their craftsmanship."
                               },
                               "Seren the Builder": {
                                   "name": "Seren the Builder",
                                   "description": "A distinguished resident of Etherion Kingdom Dynasty Town Crossing, known throughout Etherion Kingdom Dynasty for their craftsmanship."
                               },
-                              "Seren the Wise": {
-                                  "name": "Seren the Wise",
+                              "Storm the Wise": {
+                                  "name": "Storm the Wise",
                                   "description": "A distinguished resident of Etherion Kingdom Dynasty Town Crossing, known throughout Etherion Kingdom Dynasty for their craftsmanship."
                               },
                               "Seren the Brave": {
@@ -334,8 +334,8 @@
                                   "name": "Eira the Whisperer",
                                   "description": "A distinguished resident of Etherion Kingdom Empire Town Spire, known throughout Etherion Kingdom Empire for their craftsmanship."
                               },
-                              "Kael the Builder": {
-                                  "name": "Kael the Builder",
+                              "Aerilith Sunstride": {
+                                  "name": "Aerilith Sunstride",
                                   "description": "A distinguished resident of Etherion Kingdom Empire Town Spire, known throughout Etherion Kingdom Empire for their bravery."
                               },
                               "Thorin the Brave": {
@@ -352,20 +352,20 @@
                                   "name": "Kael the Whisperer",
                                   "description": "A distinguished resident of Etherion Kingdom Empire Town Harbor, known throughout Etherion Kingdom Empire for their bravery."
                               },
-                              "Thorin the Builder": {
-                                  "name": "Thorin the Builder",
+                              "Sage the Builder": {
+                                  "name": "Sage the Builder",
                                   "description": "A distinguished resident of Etherion Kingdom Empire Town Harbor, known throughout Etherion Kingdom Empire for their bravery."
                               },
-                              "Thorin the Wanderer": {
-                                  "name": "Thorin the Wanderer",
+                              "Grove the Wanderer": {
+                                  "name": "Grove the Wanderer",
                                   "description": "A distinguished resident of Etherion Kingdom Empire Town Harbor, known throughout Etherion Kingdom Empire for their wisdom."
                               },
-                              "Eira the Whisperer": {
-                                  "name": "Eira the Whisperer",
+                              "Veyrath Nightbane": {
+                                  "name": "Veyrath Nightbane",
                                   "description": "A distinguished resident of Etherion Kingdom Empire Town Harbor, known throughout Etherion Kingdom Empire for their craftsmanship."
                               },
-                              "Kael the Builder": {
-                                  "name": "Kael the Builder",
+                              "Thalion Moonrunner": {
+                                  "name": "Thalion Moonrunner",
                                   "description": "A distinguished resident of Etherion Kingdom Empire Town Harbor, known throughout Etherion Kingdom Empire for their bravery."
                               }
                           }
@@ -374,24 +374,24 @@
                           "name": "Etherion Kingdom Empire Town Outpost",
                           "description": "A picturesque town in the kingdom of Etherion Kingdom Empire, renowned for its history and charm.",
                           "npcs": {
-                              "Kael the Brave": {
-                                  "name": "Kael the Brave",
+                              "Nova the Whisperer": {
+                                  "name": "Nova the Whisperer",
                                   "description": "A distinguished resident of Etherion Kingdom Empire Town Outpost, known throughout Etherion Kingdom Empire for their kindness."
                               },
                               "Seren the Brave": {
                                   "name": "Seren the Brave",
                                   "description": "A distinguished resident of Etherion Kingdom Empire Town Outpost, known throughout Etherion Kingdom Empire for their wisdom."
                               },
-                              "Eira the Wise": {
-                                  "name": "Eira the Wise",
+                              "Kaelith Strongshield": {
+                                  "name": "Kaelith Strongshield",
                                   "description": "A distinguished resident of Etherion Kingdom Empire Town Outpost, known throughout Etherion Kingdom Empire for their craftsmanship."
                               },
-                              "Thorin the Whisperer": {
-                                  "name": "Thorin the Whisperer",
+                              "Volt the Whisperer": {
+                                  "name": "Volt the Whisperer",
                                   "description": "A distinguished resident of Etherion Kingdom Empire Town Outpost, known throughout Etherion Kingdom Empire for their craftsmanship."
                               },
-                              "Eira the Wanderer": {
-                                  "name": "Eira the Wanderer",
+                              "Atlasian the Wanderer": {
+                                  "name": "Atlasian the Wanderer",
                                   "description": "A distinguished resident of Etherion Kingdom Empire Town Outpost, known throughout Etherion Kingdom Empire for their craftsmanship."
                               }
                           }
@@ -442,20 +442,20 @@
                                   "name": "Eira the Builder",
                                   "description": "A distinguished resident of Mechanica Kingdom Dynasty Town Outpost, known throughout Mechanica Kingdom Dynasty for their mystical abilities."
                               },
-                              "Eira the Wanderer": {
-                                  "name": "Eira the Wanderer",
+                              "Novan the Wanderer": {
+                                  "name": "Novan the Wanderer",
                                   "description": "A distinguished resident of Mechanica Kingdom Dynasty Town Outpost, known throughout Mechanica Kingdom Dynasty for their bravery."
                               },
-                              "Liora the Brave": {
-                                  "name": "Liora the Brave",
+                              "Blaze the Brave": {
+                                  "name": "Blaze the Brave",
                                   "description": "A distinguished resident of Mechanica Kingdom Dynasty Town Outpost, known throughout Mechanica Kingdom Dynasty for their wisdom."
                               },
-                              "Thorin the Builder": {
-                                  "name": "Thorin the Builder",
+                              "Valor the Builder": {
+                                  "name": "Valor the Builder",
                                   "description": "A distinguished resident of Mechanica Kingdom Dynasty Town Outpost, known throughout Mechanica Kingdom Dynasty for their mystical abilities."
                               },
-                              "Thorin the Wanderer": {
-                                  "name": "Thorin the Wanderer",
+                              "Valor the Wanderer": {
+                                  "name": "Valor the Wanderer",
                                   "description": "A distinguished resident of Mechanica Kingdom Dynasty Town Outpost, known throughout Mechanica Kingdom Dynasty for their wisdom."
                               }
                           }
@@ -468,20 +468,20 @@
                                   "name": "Thorin the Brave",
                                   "description": "A distinguished resident of Mechanica Kingdom Dynasty Town Crossing, known throughout Mechanica Kingdom Dynasty for their mystical abilities."
                               },
-                              "Kael the Wise": {
-                                  "name": "Kael the Wise",
+                              "Zekarios Riftspire": {
+                                  "name": "Zekarios Riftspire",
                                   "description": "A distinguished resident of Mechanica Kingdom Dynasty Town Crossing, known throughout Mechanica Kingdom Dynasty for their craftsmanship."
                               },
-                              "Thorin the Builder": {
-                                  "name": "Thorin the Builder",
+                              "Orion the Builder": {
+                                  "name": "Orion the Builder",
                                   "description": "A distinguished resident of Mechanica Kingdom Dynasty Town Crossing, known throughout Mechanica Kingdom Dynasty for their wisdom."
                               },
-                              "Eira the Builder": {
-                                  "name": "Eira the Builder",
-                                  "description": "A distinguished resident of Mechanica Kingdom Dynasty Town Crossing, known throughout Mechanica Kingdom Dynasty for their craftsmanship."
+                              "Shore the Brave": {
+                                "name": "Shore the Brave",
+                                "description": "A distinguished resident known for coastal protection."
                               },
-                              "Eira the Whisperer": {
-                                  "name": "Eira the Whisperer",
+                              "Draezar Blackthorn": {
+                                  "name": "Draezar Blackthorn",
                                   "description": "A distinguished resident of Mechanica Kingdom Dynasty Town Crossing, known throughout Mechanica Kingdom Dynasty for their mystical abilities."
                               }
                           }
@@ -490,8 +490,8 @@
                           "name": "Mechanica Kingdom Dynasty Town Haven",
                           "description": "A picturesque town in the kingdom of Mechanica Kingdom Dynasty, renowned for its history and charm.",
                           "npcs": {
-                              "Seren the Wanderer": {
-                                  "name": "Seren the Wanderer",
+                              "Lirith Nightshade": {
+                                  "name": "Lirith Nightshade",
                                   "description": "A distinguished resident of Mechanica Kingdom Dynasty Town Haven, known throughout Mechanica Kingdom Dynasty for their mystical abilities."
                               },
                               "Liora the Wise": {
@@ -552,16 +552,16 @@
                                   "name": "Seren the Wise",
                                   "description": "A distinguished resident of Mechanica Kingdom Union Town Harbor, known throughout Mechanica Kingdom Union for their wisdom."
                               },
-                              "Thorin the Builder": {
-                                  "name": "Thorin the Builder",
+                              "Cogsworth the Builder": {
+                                  "name": "Cogsworth the Builder",
                                   "description": "A distinguished resident of Mechanica Kingdom Union Town Harbor, known throughout Mechanica Kingdom Union for their kindness."
                               },
                               "Thorin the Wise": {
                                   "name": "Thorin the Wise",
                                   "description": "A distinguished resident of Mechanica Kingdom Union Town Harbor, known throughout Mechanica Kingdom Union for their mystical abilities."
                               },
-                              "Thorin the Wanderer": {
-                                  "name": "Thorin the Wanderer",
+                              "Magnus the Wanderer": {
+                                  "name": "Magnus the Wanderer",
                                   "description": "A distinguished resident of Mechanica Kingdom Union Town Harbor, known throughout Mechanica Kingdom Union for their craftsmanship."
                               }
                           }
@@ -570,16 +570,16 @@
                           "name": "Mechanica Kingdom Union Town Village",
                           "description": "A picturesque town in the kingdom of Mechanica Kingdom Union, renowned for its history and charm.",
                           "npcs": {
-                              "Eira the Wanderer": {
-                                  "name": "Eira the Wanderer",
+                              "Forgeb the Wanderer": {
+                                  "name": "Forgeb the Wanderer",
                                   "description": "A distinguished resident of Mechanica Kingdom Union Town Village, known throughout Mechanica Kingdom Union for their bravery."
                               },
                               "Liora the Whisperer": {
                                   "name": "Liora the Whisperer",
                                   "description": "A distinguished resident of Mechanica Kingdom Union Town Village, known throughout Mechanica Kingdom Union for their wisdom."
                               },
-                              "Kael the Brave": {
-                                  "name": "Kael the Brave",
+                              "Reef the Wanderer": {
+                                  "name": "Reef the Wanderer",
                                   "description": "A distinguished resident of Mechanica Kingdom Union Town Village, known throughout Mechanica Kingdom Union for their kindness."
                               },
                               "Thorin the Wise": {
@@ -610,12 +610,12 @@
                                   "name": "Liora the Whisperer",
                                   "description": "A distinguished resident of Mechanica Kingdom Sanctuary Town Crossing, known throughout Mechanica Kingdom Sanctuary for their craftsmanship."
                               },
-                              "Thorin the Whisperer": {
-                                  "name": "Thorin the Whisperer",
+                              "Alloy the Whisperer": {
+                                  "name": "Alloy the Whisperer",
                                   "description": "A distinguished resident of Mechanica Kingdom Sanctuary Town Crossing, known throughout Mechanica Kingdom Sanctuary for their kindness."
                               },
-                              "Seren the Wanderer": {
-                                  "name": "Seren the Wanderer",
+                              "Kaedyn Swiftstrike": {
+                                  "name": "Kaedyn Swiftstrike",
                                   "description": "A distinguished resident of Mechanica Kingdom Sanctuary Town Crossing, known throughout Mechanica Kingdom Sanctuary for their bravery."
                               }
                           }
@@ -628,20 +628,20 @@
                                   "name": "Thorin the Wise",
                                   "description": "A distinguished resident of Mechanica Kingdom Sanctuary Town Harbor, known throughout Mechanica Kingdom Sanctuary for their craftsmanship."
                               },
-                              "Thorin the Builder": {
-                                  "name": "Thorin the Builder",
+                              "Gear the Builder": {
+                                  "name": "Gear the Builder",
                                   "description": "A distinguished resident of Mechanica Kingdom Sanctuary Town Harbor, known throughout Mechanica Kingdom Sanctuary for their craftsmanship."
                               },
-                              "Eira the Whisperer": {
-                                  "name": "Eira the Whisperer",
+                              "Seryxa Voidspire": {
+                                  "name": "Seryxa Voidspire",
                                   "description": "A distinguished resident of Mechanica Kingdom Sanctuary Town Harbor, known throughout Mechanica Kingdom Sanctuary for their bravery."
                               },
-                              "Kael the Brave": {
-                                  "name": "Kael the Brave",
+                              "Mist the Brave": {
+                                  "name": "Mist the Brave",
                                   "description": "A distinguished resident of Mechanica Kingdom Sanctuary Town Harbor, known throughout Mechanica Kingdom Sanctuary for their wisdom."
                               },
-                              "Seren the Wise": {
-                                  "name": "Seren the Wise",
+                              "Depth the Wise": {
+                                  "name": "Depth the Wise",
                                   "description": "A distinguished resident of Mechanica Kingdom Sanctuary Town Harbor, known throughout Mechanica Kingdom Sanctuary for their craftsmanship."
                               }
                           }
@@ -650,16 +650,16 @@
                           "name": "Mechanica Kingdom Sanctuary Town Haven",
                           "description": "A picturesque town in the kingdom of Mechanica Kingdom Sanctuary, renowned for its history and charm.",
                           "npcs": {
-                              "Liora the Wanderer": {
-                                  "name": "Liora the Wanderer",
+                              "Elythar Starforge": {
+                                  "name": "Elythar Starforge",
                                   "description": "A distinguished resident of Mechanica Kingdom Sanctuary Town Haven, known throughout Mechanica Kingdom Sanctuary for their kindness."
                               },
-                              "Eira the Builder": {
-                                  "name": "Eira the Builder",
+                              "Meira the Builder": {
+                                  "name": "Meira the Builder",
                                   "description": "A distinguished resident of Mechanica Kingdom Sanctuary Town Haven, known throughout Mechanica Kingdom Sanctuary for their craftsmanship."
                               },
-                              "Kael the Wise": {
-                                  "name": "Kael the Wise",
+                              "Thranok Ironroot": {
+                                  "name": "Thranok Ironroot",
                                   "description": "A distinguished resident of Mechanica Kingdom Sanctuary Town Haven, known throughout Mechanica Kingdom Sanctuary for their craftsmanship."
                               },
                               "Seren the Builder": {
@@ -672,24 +672,24 @@
                           "name": "Mechanica Kingdom Sanctuary Town Village",
                           "description": "A picturesque town in the kingdom of Mechanica Kingdom Sanctuary, renowned for its history and charm.",
                           "npcs": {
-                              "Kael the Builder": {
-                                  "name": "Kael the Builder",
+                              "Sylvaris Eclipsedancer": {
+                                  "name": "Sylvaris Eclipsedancer",
                                   "description": "A distinguished resident of Mechanica Kingdom Sanctuary Town Village, known throughout Mechanica Kingdom Sanctuary for their bravery."
                               },
-                              "Eira the Wise": {
-                                  "name": "Eira the Wise",
+                              "Dargan Thunderblade": {
+                                  "name": "Dargan Thunderblade",
                                   "description": "A distinguished resident of Mechanica Kingdom Sanctuary Town Village, known throughout Mechanica Kingdom Sanctuary for their wisdom."
                               },
                               "Seren the Brave": {
                                   "name": "Seren the Brave",
                                   "description": "A distinguished resident of Mechanica Kingdom Sanctuary Town Village, known throughout Mechanica Kingdom Sanctuary for their mystical abilities."
                               },
-                              "Thorin the Wanderer": {
-                                  "name": "Thorin the Wanderer",
+                              "Valor the Wanderer": {
+                                  "name": "Valor the Wanderer",
                                   "description": "A distinguished resident of Mechanica Kingdom Sanctuary Town Village, known throughout Mechanica Kingdom Sanctuary for their craftsmanship."
                               },
-                              "Eira the Whisperer": {
-                                  "name": "Eira the Whisperer",
+                              "Vraxior Flamewing": {
+                                  "name": "Vraxior Flamewing",
                                   "description": "A distinguished resident of Mechanica Kingdom Sanctuary Town Village, known throughout Mechanica Kingdom Sanctuary for their craftsmanship."
                               }
                           }
@@ -714,20 +714,20 @@
                                   "name": "Kael the Whisperer",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Outpost, known throughout Aquaria Kingdom Dynasty for their wisdom."
                               },
-                              "Seren the Wise": {
-                                  "name": "Seren the Wise",
+                              "Current the Wise": {
+                                  "name": "Current the Wise",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Outpost, known throughout Aquaria Kingdom Dynasty for their bravery."
                               },
-                              "Liora the Brave": {
-                                  "name": "Liora the Brave",
+                              "Flare the Brave": {
+                                  "name": "Flare the Brave",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Outpost, known throughout Aquaria Kingdom Dynasty for their mystical abilities."
                               },
-                              "Eira the Whisperer": {
-                                  "name": "Eira the Whisperer",
+                              "Zeylthra Frostfang": {
+                                  "name": "Zeylthra Frostfang",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Outpost, known throughout Aquaria Kingdom Dynasty for their kindness."
                               },
-                              "Thorin the Whisperer": {
-                                  "name": "Thorin the Whisperer",
+                              "Brass the Whisperer": {
+                                  "name": "Brass the Whisperer",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Outpost, known throughout Aquaria Kingdom Dynasty for their mystical abilities."
                               }
                           }
@@ -736,24 +736,24 @@
                           "name": "Aquaria Kingdom Dynasty Town Village",
                           "description": "A picturesque town in the kingdom of Aquaria Kingdom Dynasty, renowned for its history and charm.",
                           "npcs": {
-                              "Kael the Brave": {
-                                  "name": "Kael the Brave",
+                              "Coast the Builder": {
+                                  "name": "Coast the Builder",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Village, known throughout Aquaria Kingdom Dynasty for their kindness."
                               },
-                              "Eira the Wanderer": {
-                                  "name": "Eira the Wanderer",
+                              "Stormy the Wanderer": {
+                                  "name": "Stormy the Wanderer",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Village, known throughout Aquaria Kingdom Dynasty for their mystical abilities."
                               },
                               "Eira the Brave": {
                                   "name": "Eira the Brave",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Village, known throughout Aquaria Kingdom Dynasty for their craftsmanship."
                               },
-                              "Liora the Builder": {
-                                  "name": "Liora the Builder",
+                              "Marina the Builder": {
+                                  "name": "Marina the Builder",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Village, known throughout Aquaria Kingdom Dynasty for their wisdom."
                               },
-                              "Seren the Wanderer": {
-                                  "name": "Seren the Wanderer",
+                              "Silas Duskmire": {
+                                  "name": "Silas Duskmire",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Village, known throughout Aquaria Kingdom Dynasty for their craftsmanship."
                               }
                           }
@@ -762,24 +762,24 @@
                           "name": "Aquaria Kingdom Dynasty Town Haven",
                           "description": "A picturesque town in the kingdom of Aquaria Kingdom Dynasty, renowned for its history and charm.",
                           "npcs": {
-                              "Kael the Wise": {
-                                  "name": "Kael the Wise",
+                              "Vaelthys Stormhowl": {
+                                  "name": "Vaelthys Stormhowl",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Haven, known throughout Aquaria Kingdom Dynasty for their bravery."
                               },
-                              "Eira the Wanderer": {
-                                  "name": "Eira the Wanderer",
+                              "Riverte the Wanderer": {
+                                  "name": "Riverte the Wanderer",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Haven, known throughout Aquaria Kingdom Dynasty for their mystical abilities."
                               },
-                              "Thorin the Whisperer": {
-                                  "name": "Thorin the Whisperer",
+                              "Tesla the Whisperer": {
+                                  "name": "Tesla the Whisperer",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Haven, known throughout Aquaria Kingdom Dynasty for their wisdom."
                               },
                               "Thorin the Wise": {
                                   "name": "Thorin the Wise",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Haven, known throughout Aquaria Kingdom Dynasty for their bravery."
                               },
-                              "Liora the Wanderer": {
-                                  "name": "Liora the Wanderer",
+                              "Veysera Dawnveil": {
+                                  "name": "Veysera Dawnveil",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Haven, known throughout Aquaria Kingdom Dynasty for their kindness."
                               }
                           }
@@ -796,12 +796,12 @@
                                   "name": "Thorin the Brave",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Spire, known throughout Aquaria Kingdom Dynasty for their wisdom."
                               },
-                              "Kael the Brave": {
-                                  "name": "Kael the Brave",
+                              "Drift the Wanderer": {
+                                  "name": "Drift the Wanderer",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Spire, known throughout Aquaria Kingdom Dynasty for their craftsmanship."
                               },
-                              "Seren the Wanderer": {
-                                  "name": "Seren the Wanderer",
+                              "Avelynn Shadowstep": {
+                                  "name": "Avelynn Shadowstep",
                                   "description": "A distinguished resident of Aquaria Kingdom Dynasty Town Spire, known throughout Aquaria Kingdom Dynasty for their kindness."
                               }
                           }
@@ -816,20 +816,20 @@
                           "name": "Aquaria Kingdom Sanctuary Town Haven",
                           "description": "A picturesque town in the kingdom of Aquaria Kingdom Sanctuary, renowned for its history and charm.",
                           "npcs": {
-                              "Thorin the Builder": {
-                                  "name": "Thorin the Builder",
+                              "Steam the Builder": {
+                                  "name": "Steam the Builder",
                                   "description": "A distinguished resident of Aquaria Kingdom Sanctuary Town Haven, known throughout Aquaria Kingdom Sanctuary for their kindness."
                               },
-                              "Kael the Builder": {
-                                  "name": "Kael the Builder",
+                              "Myrielle Starbranch": {
+                                  "name": "Myrielle Starbranch",
                                   "description": "A distinguished resident of Aquaria Kingdom Sanctuary Town Haven, known throughout Aquaria Kingdom Sanctuary for their mystical abilities."
                               },
-                              "Seren the Wanderer": {
-                                  "name": "Seren the Wanderer",
+                              "Amara Lightbloom": {
+                                  "name": "Amara Lightbloom",
                                   "description": "A distinguished resident of Aquaria Kingdom Sanctuary Town Haven, known throughout Aquaria Kingdom Sanctuary for their craftsmanship."
                               },
-                              "Eira the Wanderer": {
-                                  "name": "Eira the Wanderer",
+                              "Waves the Wanderer": {
+                                  "name": "Waves the Wanderer",
                                   "description": "A distinguished resident of Aquaria Kingdom Sanctuary Town Haven, known throughout Aquaria Kingdom Sanctuary for their kindness."
                               }
                           }
@@ -838,16 +838,16 @@
                           "name": "Aquaria Kingdom Sanctuary Town Spire",
                           "description": "A picturesque town in the kingdom of Aquaria Kingdom Sanctuary, renowned for its history and charm.",
                           "npcs": {
-                              "Liora the Brave": {
-                                  "name": "Liora the Brave",
+                              "Grove the Brave": {
+                                  "name": "Grove the Brave",
                                   "description": "A distinguished resident of Aquaria Kingdom Sanctuary Town Spire, known throughout Aquaria Kingdom Sanctuary for their mystical abilities."
                               },
-                              "Thorin the Builder": {
-                                  "name": "Thorin the Builder",
+                              "Bolt the Builder": {
+                                  "name": "Bolt the Builder",
                                   "description": "A distinguished resident of Aquaria Kingdom Sanctuary Town Spire, known throughout Aquaria Kingdom Sanctuary for their kindness."
                               },
-                              "Liora the Builder": {
-                                  "name": "Liora the Builder",
+                              "Reef the Builder": {
+                                  "name": "Reef the Builder",
                                   "description": "A distinguished resident of Aquaria Kingdom Sanctuary Town Spire, known throughout Aquaria Kingdom Sanctuary for their craftsmanship."
                               },
                               "Seren the Brave": {
@@ -868,16 +868,16 @@
                                   "name": "Kael the Whisperer",
                                   "description": "A distinguished resident of Aquaria Kingdom Sanctuary Town Outpost, known throughout Aquaria Kingdom Sanctuary for their wisdom."
                               },
-                              "Thorin the Wanderer": {
-                                  "name": "Thorin the Wanderer",
+                              "Sea the Wanderer": {
+                                  "name": "Sea the Wanderer",
                                   "description": "A distinguished resident of Aquaria Kingdom Sanctuary Town Outpost, known throughout Aquaria Kingdom Sanctuary for their mystical abilities."
                               },
                               "Liora the Whisperer": {
                                   "name": "Liora the Whisperer",
                                   "description": "A distinguished resident of Aquaria Kingdom Sanctuary Town Outpost, known throughout Aquaria Kingdom Sanctuary for their wisdom."
                               },
-                              "Kael the Wise": {
-                                  "name": "Kael the Wise",
+                              "Fyrva Emberclaw": {
+                                  "name": "Fyrva Emberclaw",
                                   "description": "A distinguished resident of Aquaria Kingdom Sanctuary Town Outpost, known throughout Aquaria Kingdom Sanctuary for their bravery."
                               }
                           }
@@ -900,16 +900,16 @@
                                   "name": "Liora the Wise",
                                   "description": "A distinguished resident of Aquaria Kingdom Union Town Village, known throughout Aquaria Kingdom Union for their mystical abilities."
                               },
-                              "Eira the Whisperer": {
-                                  "name": "Eira the Whisperer",
+                              "Dravenor Skyscorch": {
+                                  "name": "Dravenor Skyscorch",
                                   "description": "A distinguished resident of Aquaria Kingdom Union Town Village, known throughout Aquaria Kingdom Union for their kindness."
                               },
                               "Eira the Brave": {
                                   "name": "Eira the Brave",
                                   "description": "A distinguished resident of Aquaria Kingdom Union Town Village, known throughout Aquaria Kingdom Union for their wisdom."
                               },
-                              "Kael the Builder": {
-                                  "name": "Kael the Builder",
+                              "Caelion Windwhisper": {
+                                  "name": "Caelion Windwhisper",
                                   "description": "A distinguished resident of Aquaria Kingdom Union Town Village, known throughout Aquaria Kingdom Union for their craftsmanship."
                               }
                           }
@@ -918,20 +918,20 @@
                           "name": "Aquaria Kingdom Union Town Crossing",
                           "description": "A picturesque town in the kingdom of Aquaria Kingdom Union, renowned for its history and charm.",
                           "npcs": {
-                              "Thorin the Builder": {
-                                  "name": "Thorin the Builder",
+                              "Forge the Builder": {
+                                  "name": "Forge the Builder",
                                   "description": "A distinguished resident of Aquaria Kingdom Union Town Crossing, known throughout Aquaria Kingdom Union for their bravery."
                               },
-                              "Kael the Brave": {
-                                  "name": "Kael the Brave",
+                              "Storm the Wise": {
+                                  "name": "Storm the Wise",
                                   "description": "A distinguished resident of Aquaria Kingdom Union Town Crossing, known throughout Aquaria Kingdom Union for their mystical abilities."
                               },
-                              "Seren the Wise": {
-                                  "name": "Seren the Wise",
+                              "Shore the Wise": {
+                                  "name": "Shore the Wise",
                                   "description": "A distinguished resident of Aquaria Kingdom Union Town Crossing, known throughout Aquaria Kingdom Union for their mystical abilities."
                               },
-                              "Liora the Brave": {
-                                  "name": "Liora the Brave",
+                              "Leaf the Brave": {
+                                  "name": "Leaf the Brave",
                                   "description": "A distinguished resident of Aquaria Kingdom Union Town Crossing, known throughout Aquaria Kingdom Union for their kindness."
                               },
                               "Kael the Whisperer": {
@@ -956,8 +956,8 @@
                                   "name": "Thorin the Wise",
                                   "description": "A distinguished resident of Aquaria Kingdom Union Town Outpost, known throughout Aquaria Kingdom Union for their mystical abilities."
                               },
-                              "Thorin the Whisperer": {
-                                  "name": "Thorin the Whisperer",
+                              "Motor the Whisperer": {
+                                  "name": "Motor the Whisperer",
                                   "description": "A distinguished resident of Aquaria Kingdom Union Town Outpost, known throughout Aquaria Kingdom Union for their bravery."
                               }
                           }
@@ -966,20 +966,20 @@
                           "name": "Aquaria Kingdom Union Town Haven",
                           "description": "A picturesque town in the kingdom of Aquaria Kingdom Union, renowned for its history and charm.",
                           "npcs": {
-                              "Thorin the Whisperer": {
-                                  "name": "Thorin the Whisperer",
+                              "Spark the Whisperer": {
+                                  "name": "Spark the Whisperer",
                                   "description": "A distinguished resident of Aquaria Kingdom Union Town Haven, known throughout Aquaria Kingdom Union for their craftsmanship."
                               },
-                              "Eira the Builder": {
-                                  "name": "Eira the Builder",
+                              "Valor the Builder": {
+                                  "name": "Valor the Builder",
                                   "description": "A distinguished resident of Aquaria Kingdom Union Town Haven, known throughout Aquaria Kingdom Union for their wisdom."
                               },
                               "Seren the Builder": {
                                   "name": "Seren the Builder",
                                   "description": "A distinguished resident of Aquaria Kingdom Union Town Haven, known throughout Aquaria Kingdom Union for their craftsmanship."
                               },
-                              "Thorin the Builder": {
-                                  "name": "Thorin the Builder",
+                              "Sprocket the Builder": {
+                                  "name": "Sprocket the Builder",
                                   "description": "A distinguished resident of Aquaria Kingdom Union Town Haven, known throughout Aquaria Kingdom Union for their bravery."
                               }
                           }
@@ -1000,16 +1000,16 @@
                           "name": "Ignisia Kingdom Union Town Outpost",
                           "description": "A picturesque town in the kingdom of Ignisia Kingdom Union, renowned for its history and charm.",
                           "npcs": {
-                              "Seren the Wise": {
-                                  "name": "Seren the Wise",
+                              "Flare the Wise": {
+                                  "name": "Flare the Wise",
                                   "description": "A distinguished resident of Ignisia Kingdom Union Town Outpost, known throughout Ignisia Kingdom Union for their bravery."
                               },
                               "Eira the Brave": {
                                   "name": "Eira the Brave",
                                   "description": "A distinguished resident of Ignisia Kingdom Union Town Outpost, known throughout Ignisia Kingdom Union for their wisdom."
                               },
-                              "Eira the Whisperer": {
-                                  "name": "Eira the Whisperer",
+                              "Nerys Emberclaw": {
+                                  "name": "Nerys Emberclaw",
                                   "description": "A distinguished resident of Ignisia Kingdom Union Town Outpost, known throughout Ignisia Kingdom Union for their mystical abilities."
                               },
                               "Liora the Whisperer": {
@@ -1030,8 +1030,8 @@
                                   "name": "Thorin the Wise",
                                   "description": "A distinguished resident of Ignisia Kingdom Union Town Spire, known throughout Ignisia Kingdom Union for their mystical abilities."
                               },
-                              "Seren the Wanderer": {
-                                  "name": "Seren the Wanderer",
+                              "Fenwick Dawnveil": {
+                                  "name": "Fenwick Dawnveil",
                                   "description": "A distinguished resident of Ignisia Kingdom Union Town Spire, known throughout Ignisia Kingdom Union for their wisdom."
                               },
                               "Thorin the Brave": {
@@ -1052,20 +1052,20 @@
                                   "name": "Thorin the Wise",
                                   "description": "A distinguished resident of Ignisia Kingdom Union Town Haven, known throughout Ignisia Kingdom Union for their bravery."
                               },
-                              "Liora the Builder": {
-                                  "name": "Liora the Builder",
+                              "Mist the Builder": {
+                                  "name": "Mist the Builder",
                                   "description": "A distinguished resident of Ignisia Kingdom Union Town Haven, known throughout Ignisia Kingdom Union for their kindness."
                               },
                               "Eira the Brave": {
                                   "name": "Eira the Brave",
                                   "description": "A distinguished resident of Ignisia Kingdom Union Town Haven, known throughout Ignisia Kingdom Union for their wisdom."
                               },
-                              "Seren the Wise": {
-                                  "name": "Seren the Wise",
+                              "Cinder the Wise": {
+                                  "name": "Cinder the Wise",
                                   "description": "A distinguished resident of Ignisia Kingdom Union Town Haven, known throughout Ignisia Kingdom Union for their wisdom."
                               },
-                              "Eira the Wise": {
-                                  "name": "Eira the Wise",
+                              "Bryndra the Unyielding": {
+                                  "name": "Bryndra the Unyielding",
                                   "description": "A distinguished resident of Ignisia Kingdom Union Town Haven, known throughout Ignisia Kingdom Union for their mystical abilities."
                               }
                           }
@@ -1084,16 +1084,16 @@
                                   "name": "Thorin the Wise",
                                   "description": "A distinguished resident of Ignisia Kingdom Dynasty Town Harbor, known throughout Ignisia Kingdom Dynasty for their bravery."
                               },
-                              "Seren the Wanderer": {
-                                  "name": "Seren the Wanderer",
+                              "Serelis Lifewarden": {
+                                  "name": "Serelis Lifewarden",
                                   "description": "A distinguished resident of Ignisia Kingdom Dynasty Town Harbor, known throughout Ignisia Kingdom Dynasty for their wisdom."
                               },
                               "Seren the Whisperer": {
                                   "name": "Seren the Whisperer",
                                   "description": "A distinguished resident of Ignisia Kingdom Dynasty Town Harbor, known throughout Ignisia Kingdom Dynasty for their craftsmanship."
                               },
-                              "Eira the Whisperer": {
-                                  "name": "Eira the Whisperer",
+                              "Kaelvyr Shadowscale": {
+                                  "name": "Kaelvyr Shadowscale",
                                   "description": "A distinguished resident of Ignisia Kingdom Dynasty Town Harbor, known throughout Ignisia Kingdom Dynasty for their kindness."
                               }
                           }
@@ -1102,8 +1102,8 @@
                           "name": "Ignisia Kingdom Dynasty Town Village",
                           "description": "A picturesque town in the kingdom of Ignisia Kingdom Dynasty, renowned for its history and charm.",
                           "npcs": {
-                              "Eira the Whisperer": {
-                                  "name": "Eira the Whisperer",
+                              "Orvalis Dreambinder": {
+                                  "name": "Orvalis Dreambinder",
                                   "description": "A distinguished resident of Ignisia Kingdom Dynasty Town Village, known throughout Ignisia Kingdom Dynasty for their craftsmanship."
                               },
                               "Seren the Whisperer": {
@@ -1114,8 +1114,8 @@
                                   "name": "Thorin the Wise",
                                   "description": "A distinguished resident of Ignisia Kingdom Dynasty Town Village, known throughout Ignisia Kingdom Dynasty for their wisdom."
                               },
-                              "Eira the Builder": {
-                                  "name": "Eira the Builder",
+                              "Forge the Builder": {
+                                  "name": "Forge the Builder",
                                   "description": "A distinguished resident of Ignisia Kingdom Dynasty Town Village, known throughout Ignisia Kingdom Dynasty for their wisdom."
                               }
                           }
@@ -1124,20 +1124,20 @@
                           "name": "Ignisia Kingdom Dynasty Town Spire",
                           "description": "A picturesque town in the kingdom of Ignisia Kingdom Dynasty, renowned for its history and charm.",
                           "npcs": {
-                              "Kael the Wise": {
-                                  "name": "Kael the Wise",
+                              "Sylvara Moonthorn": {
+                                  "name": "Sylvara Moonthorn",
                                   "description": "A distinguished resident of Ignisia Kingdom Dynasty Town Spire, known throughout Ignisia Kingdom Dynasty for their kindness."
                               },
-                              "Eira the Wanderer": {
-                                  "name": "Eira the Wanderer",
+                              "Ashly the Wanderer": {
+                                  "name": "Ashly the Wanderer",
                                   "description": "A distinguished resident of Ignisia Kingdom Dynasty Town Spire, known throughout Ignisia Kingdom Dynasty for their mystical abilities."
                               },
-                              "Liora the Wanderer": {
-                                  "name": "Liora the Wanderer",
+                              "Thalindar Skybrand": {
+                                  "name": "Thalindar Skybrand",
                                   "description": "A distinguished resident of Ignisia Kingdom Dynasty Town Spire, known throughout Ignisia Kingdom Dynasty for their bravery."
                               },
-                              "Seren the Wise": {
-                                  "name": "Seren the Wise",
+                              "Inferno the Wise": {
+                                  "name": "Inferno the Wise",
                                   "description": "A distinguished resident of Ignisia Kingdom Dynasty Town Spire, known throughout Ignisia Kingdom Dynasty for their kindness."
                               },
                               "Seren the Builder": {
@@ -1186,16 +1186,16 @@
                                   "name": "Seren the Builder",
                                   "description": "A distinguished resident of Ignisia Kingdom Empire Town Outpost, known throughout Ignisia Kingdom Empire for their kindness."
                               },
-                              "Thorin the Wanderer": {
-                                  "name": "Thorin the Wanderer",
+                              "Tempeste the Wanderer": {
+                                  "name": "Tempeste the Wanderer",
                                   "description": "A distinguished resident of Ignisia Kingdom Empire Town Outpost, known throughout Ignisia Kingdom Empire for their bravery."
                               },
                               "Eira the Wise": {
                                   "name": "Eira the Wise",
                                   "description": "A distinguished resident of Ignisia Kingdom Empire Town Outpost, known throughout Ignisia Kingdom Empire for their bravery."
                               },
-                              "Seren the Wanderer": {
-                                  "name": "Seren the Wanderer",
+                              "Thalyra Soulmender": {
+                                  "name": "Thalyra Soulmender",
                                   "description": "A distinguished resident of Ignisia Kingdom Empire Town Outpost, known throughout Ignisia Kingdom Empire for their bravery."
                               }
                           }
@@ -1208,20 +1208,20 @@
                                   "name": "Liora the Whisperer",
                                   "description": "A distinguished resident of Ignisia Kingdom Empire Town Village, known throughout Ignisia Kingdom Empire for their craftsmanship."
                               },
-                              "Liora the Wanderer": {
-                                  "name": "Liora the Wanderer",
+                              "Seraphyx Aetherborn": {
+                                  "name": "Seraphyx Aetherborn",
                                   "description": "A distinguished resident of Ignisia Kingdom Empire Town Village, known throughout Ignisia Kingdom Empire for their craftsmanship."
                               },
-                              "Eira the Builder": {
-                                  "name": "Eira the Builder",
+                              "Storm the Builder": {
+                                  "name": "Storm the Builder",
                                   "description": "A distinguished resident of Ignisia Kingdom Empire Town Village, known throughout Ignisia Kingdom Empire for their bravery."
                               },
-                              "Thorin the Whisperer": {
-                                  "name": "Thorin the Whisperer",
+                              "Coil the Whisperer": {
+                                  "name": "Coil the Whisperer",
                                   "description": "A distinguished resident of Ignisia Kingdom Empire Town Village, known throughout Ignisia Kingdom Empire for their wisdom."
                               },
-                              "Seren the Wanderer": {
-                                  "name": "Seren the Wanderer",
+                              "Oryn Silverflow": {
+                                  "name": "Oryn Silverflow",
                                   "description": "A distinguished resident of Ignisia Kingdom Empire Town Village, known throughout Ignisia Kingdom Empire for their wisdom."
                               }
                           }
@@ -1230,24 +1230,24 @@
                           "name": "Ignisia Kingdom Empire Town Harbor",
                           "description": "A picturesque town in the kingdom of Ignisia Kingdom Empire, renowned for its history and charm.",
                           "npcs": {
-                              "Liora the Builder": {
-                                  "name": "Liora the Builder",
+                              "Coast the Builder": {
+                                  "name": "Coast the Builder",
                                   "description": "A distinguished resident of Ignisia Kingdom Empire Town Harbor, known throughout Ignisia Kingdom Empire for their bravery."
                               },
-                              "Eira the Whisperer": {
-                                  "name": "Eira the Whisperer",
+                              "Syrrin Mythglade": {
+                                  "name": "Syrrin Mythglade",
                                   "description": "A distinguished resident of Ignisia Kingdom Empire Town Harbor, known throughout Ignisia Kingdom Empire for their mystical abilities."
                               },
                               "Seren the Builder": {
                                   "name": "Seren the Builder",
                                   "description": "A distinguished resident of Ignisia Kingdom Empire Town Harbor, known throughout Ignisia Kingdom Empire for their mystical abilities."
                               },
-                              "Eira the Wanderer": {
-                                  "name": "Eira the Wanderer",
+                              "Umbert the Wanderer": {
+                                  "name": "Umbert the Wanderer",
                                   "description": "A distinguished resident of Ignisia Kingdom Empire Town Harbor, known throughout Ignisia Kingdom Empire for their craftsmanship."
                               },
-                              "Thorin the Whisperer": {
-                                  "name": "Thorin the Whisperer",
+                              "Spring the Whisperer": {
+                                  "name": "Spring the Whisperer",
                                   "description": "A distinguished resident of Ignisia Kingdom Empire Town Harbor, known throughout Ignisia Kingdom Empire for their kindness."
                               }
                           }
@@ -1256,16 +1256,16 @@
                           "name": "Ignisia Kingdom Empire Town Haven",
                           "description": "A picturesque town in the kingdom of Ignisia Kingdom Empire, renowned for its history and charm.",
                           "npcs": {
-                              "Kael the Builder": {
-                                  "name": "Kael the Builder",
+                              "Maltherion Bloodshade": {
+                                  "name": "Maltherion Bloodshade",
                                   "description": "A distinguished resident of Ignisia Kingdom Empire Town Haven, known throughout Ignisia Kingdom Empire for their mystical abilities."
                               },
-                              "Seren the Wanderer": {
-                                  "name": "Seren the Wanderer",
+                              "Eryndor Wildsong": {
+                                  "name": "Eryndor Wildsong",
                                   "description": "A distinguished resident of Ignisia Kingdom Empire Town Haven, known throughout Ignisia Kingdom Empire for their mystical abilities."
                               },
-                              "Eira the Wise": {
-                                  "name": "Eira the Wise",
+                              "Vorax Steelheart": {
+                                  "name": "Vorax Steelheart",
                                   "description": "A distinguished resident of Ignisia Kingdom Empire Town Haven, known throughout Ignisia Kingdom Empire for their kindness."
                               },
                               "Liora the Whisperer": {
@@ -1278,24 +1278,24 @@
                           "name": "Ignisia Kingdom Empire Town Spire",
                           "description": "A picturesque town in the kingdom of Ignisia Kingdom Empire, renowned for its history and charm.",
                           "npcs": {
-                              "Eira the Builder": {
-                                  "name": "Eira the Builder",
+                              "Mist the Builder": {
+                                  "name": "Mist the Builder",
                                   "description": "A distinguished resident of Ignisia Kingdom Empire Town Spire, known throughout Ignisia Kingdom Empire for their craftsmanship."
                               },
-                              "Thorin the Builder": {
-                                  "name": "Thorin the Builder",
+                              "Circuit the Builder": {
+                                  "name": "Circuit the Builder",
                                   "description": "A distinguished resident of Ignisia Kingdom Empire Town Spire, known throughout Ignisia Kingdom Empire for their craftsmanship."
                               },
-                              "Liora the Wanderer": {
-                                  "name": "Liora the Wanderer",
+                              "Kaelris Novaheart": {
+                                  "name": "Kaelris Novaheart",
                                   "description": "A distinguished resident of Ignisia Kingdom Empire Town Spire, known throughout Ignisia Kingdom Empire for their bravery."
                               },
-                              "Eira the Wise": {
-                                  "name": "Eira the Wise",
+                              "Elyndra Starweaver": {
+                                  "name": "Elyndra Starweaver",
                                   "description": "A distinguished resident of Ignisia Kingdom Empire Town Spire, known throughout Ignisia Kingdom Empire for their kindness."
                               },
-                              "Kael the Wise": {
-                                  "name": "Kael the Wise",
+                              "Dorvaxx Stonebreaker": {
+                                  "name": "Dorvaxx Stonebreaker",
                                   "description": "A distinguished resident of Ignisia Kingdom Empire Town Spire, known throughout Ignisia Kingdom Empire for their craftsmanship."
                               }
                           }
@@ -1316,20 +1316,20 @@
                           "name": "Terranova Kingdom Union Town Village",
                           "description": "A picturesque town in the kingdom of Terranova Kingdom Union, renowned for its history and charm.",
                           "npcs": {
-                              "Seren the Wanderer": {
-                                  "name": "Seren the Wanderer",
+                              "Shyla Thornblade": {
+                                  "name": "Shyla Thornblade",
                                   "description": "A distinguished resident of Terranova Kingdom Union Town Village, known throughout Terranova Kingdom Union for their bravery."
                               },
-                              "Kael the Builder": {
-                                  "name": "Kael the Builder",
+                              "Zynthar Soulreaper": {
+                                  "name": "Zynthar Soulreaper",
                                   "description": "A distinguished resident of Terranova Kingdom Union Town Village, known throughout Terranova Kingdom Union for their kindness."
                               },
-                              "Thorin the Whisperer": {
-                                  "name": "Thorin the Whisperer",
+                              "Valve the Whisperer": {
+                                  "name": "Valve the Whisperer",
                                   "description": "A distinguished resident of Terranova Kingdom Union Town Village, known throughout Terranova Kingdom Union for their kindness."
                               },
-                              "Liora the Builder": {
-                                  "name": "Liora the Builder",
+                              "Drift the Builder": {
+                                  "name": "Drift the Builder",
                                   "description": "A distinguished resident of Terranova Kingdom Union Town Village, known throughout Terranova Kingdom Union for their bravery."
                               }
                           }
@@ -1338,16 +1338,16 @@
                           "name": "Terranova Kingdom Union Town Outpost",
                           "description": "A picturesque town in the kingdom of Terranova Kingdom Union, renowned for its history and charm.",
                           "npcs": {
-                              "Eira the Wise": {
-                                  "name": "Eira the Wise",
+                              "Mordain Shadowflame": {
+                                  "name": "Mordain Shadowflame",
                                   "description": "A distinguished resident of Terranova Kingdom Union Town Outpost, known throughout Terranova Kingdom Union for their kindness."
                               },
                               "Seren the Brave": {
                                   "name": "Seren the Brave",
                                   "description": "A distinguished resident of Terranova Kingdom Union Town Outpost, known throughout Terranova Kingdom Union for their craftsmanship."
                               },
-                              "Thorin the Builder": {
-                                  "name": "Thorin the Builder",
+                              "Piston the Builder": {
+                                  "name": "Piston the Builder",
                                   "description": "A distinguished resident of Terranova Kingdom Union Town Outpost, known throughout Terranova Kingdom Union for their bravery."
                               },
                               "Kael the Whisperer": {
@@ -1368,12 +1368,12 @@
                                   "name": "Eira the Brave",
                                   "description": "A distinguished resident of Terranova Kingdom Union Town Crossing, known throughout Terranova Kingdom Union for their craftsmanship."
                               },
-                              "Seren the Wanderer": {
-                                  "name": "Seren the Wanderer",
+                              "Taron Hawkseye": {
+                                  "name": "Taron Hawkseye",
                                   "description": "A distinguished resident of Terranova Kingdom Union Town Crossing, known throughout Terranova Kingdom Union for their craftsmanship."
                               },
-                              "Eira the Wise": {
-                                  "name": "Eira the Wise",
+                              "Calineth Frostspark": {
+                                  "name": "Calineth Frostspark",
                                   "description": "A distinguished resident of Terranova Kingdom Union Town Crossing, known throughout Terranova Kingdom Union for their mystical abilities."
                               },
                               "Kael the Wanderer": {
@@ -1386,12 +1386,12 @@
                           "name": "Terranova Kingdom Union Town Harbor",
                           "description": "A picturesque town in the kingdom of Terranova Kingdom Union, renowned for its history and charm.",
                           "npcs": {
-                              "Thorin the Whisperer": {
-                                  "name": "Thorin the Whisperer",
+                              "Engine the Whisperer": {
+                                  "name": "Engine the Whisperer",
                                   "description": "A distinguished resident of Terranova Kingdom Union Town Harbor, known throughout Terranova Kingdom Union for their bravery."
                               },
-                              "Thorin the Builder": {
-                                  "name": "Thorin the Builder",
+                              "Chrome the Builder": {
+                                  "name": "Chrome the Builder",
                                   "description": "A distinguished resident of Terranova Kingdom Union Town Harbor, known throughout Terranova Kingdom Union for their wisdom."
                               },
                               "Kael the Whisperer": {
@@ -1420,12 +1420,12 @@
                                   "name": "Seren the Whisperer",
                                   "description": "A distinguished resident of Terranova Kingdom Union Town Haven, known throughout Terranova Kingdom Union for their kindness."
                               },
-                              "Eira the Wanderer": {
-                                  "name": "Eira the Wanderer",
+                              "Florence the Wanderer": {
+                                  "name": "Florence the Wanderer",
                                   "description": "A distinguished resident of Terranova Kingdom Union Town Haven, known throughout Terranova Kingdom Union for their craftsmanship."
                               },
-                              "Thorin the Whisperer": {
-                                  "name": "Thorin the Whisperer",
+                              "Coral the Whisperer": {
+                                  "name": "Coral the Whisperer",
                                   "description": "A distinguished resident of Terranova Kingdom Union Town Haven, known throughout Terranova Kingdom Union for their wisdom."
                               }
                           }
@@ -1444,12 +1444,12 @@
                                   "name": "Seren the Whisperer",
                                   "description": "A distinguished resident of Terranova Kingdom Sanctuary Town Village, known throughout Terranova Kingdom Sanctuary for their wisdom."
                               },
-                              "Kael the Wanderer": {
-                                  "name": "Kael the Wanderer",
+                              "Darna Stonemantle": {
+                                  "name": "Darna Stonemantle",
                                   "description": "A distinguished resident of Terranova Kingdom Sanctuary Town Village, known throughout Terranova Kingdom Sanctuary for their bravery."
                               },
-                              "Eira the Builder": {
-                                  "name": "Eira the Builder",
+                              "Wave the Builder": {
+                                  "name": "Wave the Builder",
                                   "description": "A distinguished resident of Terranova Kingdom Sanctuary Town Village, known throughout Terranova Kingdom Sanctuary for their kindness."
                               },
                               "Liora the Wise": {
@@ -1466,16 +1466,16 @@
                                   "name": "Liora the Whisperer",
                                   "description": "A distinguished resident of Terranova Kingdom Sanctuary Town Crossing, known throughout Terranova Kingdom Sanctuary for their kindness."
                               },
-                              "Thorin the Builder": {
-                                  "name": "Thorin the Builder",
+                              "Dynamo the Builder": {
+                                  "name": "Dynamo the Builder",
                                   "description": "A distinguished resident of Terranova Kingdom Sanctuary Town Crossing, known throughout Terranova Kingdom Sanctuary for their kindness."
                               },
-                              "Eira the Builder": {
-                                  "name": "Eira the Builder",
+                              "River the Builder": {
+                                  "name": "River the Builder",
                                   "description": "A distinguished resident of Terranova Kingdom Sanctuary Town Crossing, known throughout Terranova Kingdom Sanctuary for their craftsmanship."
                               },
-                              "Seren the Wanderer": {
-                                  "name": "Seren the Wanderer",
+                              "Vaelis Leafshadow": {
+                                  "name": "Vaelis Leafshadow",
                                   "description": "A distinguished resident of Terranova Kingdom Sanctuary Town Crossing, known throughout Terranova Kingdom Sanctuary for their mystical abilities."
                               }
                           }
@@ -1484,16 +1484,16 @@
                           "name": "Terranova Kingdom Sanctuary Town Haven",
                           "description": "A picturesque town in the kingdom of Terranova Kingdom Sanctuary, renowned for its history and charm.",
                           "npcs": {
-                              "Thorin the Wanderer": {
-                                  "name": "Thorin the Wanderer",
+                              "Atlas the Wanderer": {
+                                  "name": "Atlas the Wanderer",
                                   "description": "A distinguished resident of Terranova Kingdom Sanctuary Town Haven, known throughout Terranova Kingdom Sanctuary for their bravery."
                               },
-                              "Thorin the Builder": {
-                                  "name": "Thorin the Builder",
+                              "Steel the Builder": {
+                                  "name": "Steel the Builder",
                                   "description": "A distinguished resident of Terranova Kingdom Sanctuary Town Haven, known throughout Terranova Kingdom Sanctuary for their mystical abilities."
                               },
-                              "Eira the Wise": {
-                                  "name": "Eira the Wise",
+                              "Zalaris Moonwhisper": {
+                                  "name": "Zalaris Moonwhisper",
                                   "description": "A distinguished resident of Terranova Kingdom Sanctuary Town Haven, known throughout Terranova Kingdom Sanctuary for their bravery."
                               },
                               "Thorin the Brave": {
@@ -1520,8 +1520,8 @@
                                   "name": "Liora the Wanderer",
                                   "description": "A distinguished resident of Terranova Kingdom Dynasty Town Crossing, known throughout Terranova Kingdom Dynasty for their kindness."
                               },
-                              "Eira the Whisperer": {
-                                  "name": "Eira the Whisperer",
+                              "Faelora Moonpetal": {
+                                  "name": "Faelora Moonpetal",
                                   "description": "A distinguished resident of Terranova Kingdom Dynasty Town Crossing, known throughout Terranova Kingdom Dynasty for their craftsmanship."
                               },
                               "Liora the Whisperer": {
@@ -1546,12 +1546,12 @@
                                   "name": "Liora the Wise",
                                   "description": "A distinguished resident of Terranova Kingdom Dynasty Town Harbor, known throughout Terranova Kingdom Dynasty for their kindness."
                               },
-                              "Kael the Wanderer": {
-                                  "name": "Kael the Wanderer",
+                              "Garrick Deepdelve": {
+                                  "name": "Garrick Deepdelve",
                                   "description": "A distinguished resident of Terranova Kingdom Dynasty Town Harbor, known throughout Terranova Kingdom Dynasty for their bravery."
                               },
-                              "Seren the Wanderer": {
-                                  "name": "Seren the Wanderer",
+                              "Kynara Windstalker": {
+                                  "name": "Kynara Windstalker",
                                   "description": "A distinguished resident of Terranova Kingdom Dynasty Town Harbor, known throughout Terranova Kingdom Dynasty for their bravery."
                               },
                               "Thorin the Wise": {
@@ -1564,8 +1564,8 @@
                           "name": "Terranova Kingdom Dynasty Town Village",
                           "description": "A picturesque town in the kingdom of Terranova Kingdom Dynasty, renowned for its history and charm.",
                           "npcs": {
-                              "Liora the Wanderer": {
-                                  "name": "Liora the Wanderer",
+                              "Veyloris Nightbloom": {
+                                  "name": "Veyloris Nightbloom",
                                   "description": "A distinguished resident of Terranova Kingdom Dynasty Town Village, known throughout Terranova Kingdom Dynasty for their craftsmanship."
                               },
                               "Seren the Builder": {
@@ -1576,12 +1576,12 @@
                                   "name": "Liora the Whisperer",
                                   "description": "A distinguished resident of Terranova Kingdom Dynasty Town Village, known throughout Terranova Kingdom Dynasty for their kindness."
                               },
-                              "Eira the Builder": {
-                                  "name": "Eira the Builder",
+                              "Tempest the Builder": {
+                                  "name": "Tempest the Builder",
                                   "description": "A distinguished resident of Terranova Kingdom Dynasty Town Village, known throughout Terranova Kingdom Dynasty for their mystical abilities."
                               },
-                              "Kael the Wanderer": {
-                                  "name": "Kael the Wanderer",
+                              "Thorla Gemhammer": {
+                                  "name": "Thorla Gemhammer",
                                   "description": "A distinguished resident of Terranova Kingdom Dynasty Town Village, known throughout Terranova Kingdom Dynasty for their craftsmanship."
                               }
                           }
@@ -1590,20 +1590,20 @@
                           "name": "Terranova Kingdom Dynasty Town Outpost",
                           "description": "A picturesque town in the kingdom of Terranova Kingdom Dynasty, renowned for its history and charm.",
                           "npcs": {
-                              "Kael the Wanderer": {
-                                  "name": "Kael the Wanderer",
+                              "Ulric Mountainborn": {
+                                  "name": "Ulric Mountainborn",
                                   "description": "A distinguished resident of Terranova Kingdom Dynasty Town Outpost, known throughout Terranova Kingdom Dynasty for their mystical abilities."
                               },
-                              "Thorin the Builder": {
-                                  "name": "Thorin the Builder",
+                              "Wrench the Builder": {
+                                  "name": "Wrench the Builder",
                                   "description": "A distinguished resident of Terranova Kingdom Dynasty Town Outpost, known throughout Terranova Kingdom Dynasty for their mystical abilities."
                               },
-                              "Eira the Wise": {
-                                  "name": "Eira the Wise",
+                              "Venaros Voidcaller": {
+                                  "name": "Venaros Voidcaller",
                                   "description": "A distinguished resident of Terranova Kingdom Dynasty Town Outpost, known throughout Terranova Kingdom Dynasty for their mystical abilities."
                               },
-                              "Eira the Builder": {
-                                  "name": "Eira the Builder",
+                              "Ember the Builder": {
+                                  "name": "Ember the Builder",
                                   "description": "A distinguished resident of Terranova Kingdom Dynasty Town Outpost, known throughout Terranova Kingdom Dynasty for their wisdom."
                               }
                           }

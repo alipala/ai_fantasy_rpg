@@ -284,6 +284,13 @@ def start_game():
         try:
             with open('shared_data/puzzle_data.json', 'r') as f:
                 world_puzzles = json.load(f)['world_puzzles']
+
+                logging.info(f"Attempting to initialize puzzle for world: {world_name}")
+                logging.info(f"Attempting to initialize puzzle for character: {character_name}")
+                logging.info(f"Available worlds in puzzle data: {list(world_puzzles.keys())}")
+                if world_name in world_puzzles:
+                    logging.info(f"Available characters in {world_name}: {list(world_puzzles[world_name]['characters'].keys())}")
+
                 if world_name in world_puzzles and character_name in world_puzzles[world_name]['characters']:
                     puzzle_data = world_puzzles[world_name]['characters'][character_name]
         except Exception as e:
@@ -619,6 +626,29 @@ def proxy_image(url):
         logging.error(f"Error proxying image: {e}")
         return jsonify({'error': str(e)}), 500
         
+@app.route('/check-puzzle', methods=['POST'])
+def check_character_puzzle():
+    try:
+        data = request.json
+        character_name = data.get('character')
+        
+        # Load puzzle data
+        with open('shared_data/puzzle_data.json', 'r') as f:
+            puzzle_data = json.load(f)
+            
+        has_puzzle = False
+        # Check if character has puzzles in any world
+        for world_puzzles in puzzle_data['world_puzzles'].values():
+            if character_name in world_puzzles.get('characters', {}):
+                has_puzzle = True
+                break
+                
+        return jsonify({'hasPuzzle': has_puzzle})
+        
+    except Exception as e:
+        logging.error(f"Error checking character puzzles: {e}")
+        return jsonify({'error': str(e)}), 500
+
 if __name__ == '__main__':
     print("\n=== Game Ready to Start ===")
     print("\nAccess the game at http://localhost:5000")
