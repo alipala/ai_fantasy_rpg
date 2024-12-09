@@ -472,20 +472,78 @@ body {
 }
 
 .selection-button {
-    background: rgba(42, 42, 61, 0.9); /* Semi-transparent background */
-    border: 1px solid #3a3a4d;
-    border-radius: 8px;
-    padding: 16px;
-    color: white;
+    position: relative;
+    width: 100%;
+    padding: 1.2rem;
+    margin: 0.4rem 0;
+    background: linear-gradient(
+        135deg,
+        rgba(48, 38, 71, 0.95) 0%,
+        rgba(28, 22, 41, 0.95) 100%
+    );
+    border: 2px solid;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(
+        to right,
+        #a67c00,
+        #deb761,
+        #a67c00
+    );
+    color: #fff;
     cursor: pointer;
-    transition: all 0.2s ease;
     text-align: left;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    transform: perspective(1000px) rotateX(0deg);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.selection-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.05) 50%,
+        transparent 100%
+    );
+    transition: transform 0.5s ease;
+    transform: translateX(-100%);
 }
 
 .selection-button:hover {
-    transform: translateX(10px);
-    background: #3a3a4d;
-    box-shadow: 0 4px 12px rgba(42, 42, 61, 0.3);
+    transform: perspective(1000px) rotateX(5deg) translateY(-5px);
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(218, 165, 32, 0.2);
+}
+
+.selection-button:hover::before {
+    transform: translateX(100%);
+}
+
+.selection-button h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.6rem;
+    color: #deb761;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.selection-button p {
+    font-size: 0.95rem;
+    color: #e0e0e0;
+    margin: 0;
+    line-height: 1.5;
+    transition: color 0.3s ease;
+}
+
+.selection-button:hover p {
+    color: #ffffff;
 }
 
 /* Game Container */
@@ -1422,27 +1480,40 @@ h3, h4 {
     margin-bottom: 8px;
 }
 
+/* Disabled state */
 .selection-button.disabled {
     opacity: 0.6;
     cursor: not-allowed;
-    background: rgba(42, 42, 61, 0.5);
-    border-color: #2a2a3d;
+    background: linear-gradient(
+        135deg,
+        rgba(40, 40, 40, 0.95) 0%,
+        rgba(20, 20, 20, 0.95) 100%
+    );
+    border-image-source: linear-gradient(
+        to right,
+        #4a4a4a,
+        #6a6a6a,
+        #4a4a4a
+    );
+    transform: none;
 }
 
 .selection-button.disabled:hover {
     transform: none;
-    box-shadow: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .no-quest-badge {
     display: inline-block;
-    background: rgba(239, 68, 68, 0.2);
-    color: #ef4444;
+    margin-top: 0.75rem;
     padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
-    font-size: 0.75rem;
-    margin-top: 0.5rem;
+    background: rgba(239, 68, 68, 0.2);
     border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 4px;
+    color: #ef4444;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .loading-message {
