@@ -58,6 +58,65 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// Landing Page Initialization
+function initializeLandingPage() {
+    const initialStartBtn = document.getElementById('initialStartBtn');
+    const finalStartBtn = document.getElementById('finalStartBtn');
+    
+    // Add smooth scroll behavior
+    document.querySelector('.start-screen').addEventListener('scroll', () => {
+        const sections = document.querySelectorAll('.landing-section');
+        sections.forEach(section => {
+            const rect = section.getBoundingClientRect();
+            if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
+                section.classList.add('active');
+            } else {
+                section.classList.remove('active');
+            }
+        });
+    });
+
+    // Handle start button clicks
+    [initialStartBtn, finalStartBtn].forEach(btn => {
+        btn.addEventListener('click', startGameTransition);
+    });
+}
+
+function startGameTransition() {
+    const startScreen = document.getElementById('startScreen');
+    const selectionPhase = document.getElementById('selectionPhase');
+    const gameBackground = document.getElementById('gameBackground');
+
+    // Add fade-out animation
+    startScreen.style.opacity = '0';
+    
+    // Show game background
+    gameBackground.style.opacity = '1';
+    gameBackground.style.visibility = 'visible';
+
+    // Transition to selection phase after animation
+    setTimeout(() => {
+        startScreen.classList.add('hidden');
+        selectionPhase.classList.remove('hidden');
+        
+        // Force reflow
+        void selectionPhase.offsetWidth;
+        
+        // Add visible class
+        selectionPhase.classList.add('visible');
+        
+        // Update game state
+        gameState.currentScreen = 'worldSelect';
+        showScreen('worldSelect');
+        startGame();
+    }, 300);
+}
+
+// Initialize landing page when document loads
+document.addEventListener('DOMContentLoaded', () => {
+    initializeLandingPage();
+});
+
 function createPuzzleProgress() {
     const progressDiv = document.createElement('div');
     progressDiv.className = 'quest-progress-content';

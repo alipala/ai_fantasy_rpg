@@ -24,12 +24,111 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    z-index: 300;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    background: #000;
+    z-index: 1000;
 }
+
+.landing-section {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    scroll-snap-align: start;
+    overflow: hidden;
+}
+
+.section-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+.landing-first .section-background {
+    background-image: url('../images/fantasy-bg1.png');
+}
+
+.landing-second .section-background {
+    background-image: url('../images/fantasy-bg2.png');
+}
+
+.landing-third .section-background {
+    background-image: url('../images/fantasy-bg3.png');
+}
+
+.section-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+/* First Section Styles */
+.landing-first h1 {
+    font-size: 3.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.section-description {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    max-width: 800px;
+}
+
+/* Feature Cards Styles */
+.feature-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    width: 100%;
+}
+
+.feature-card {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    padding: 2rem;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-number {
+    font-size: 2.5rem;
+    color: #ffd700;
+    margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #ffd700;
+}
+
+.feature-card p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #e0e0e0;
+}
+
 
 .game-background {
     position: fixed;
@@ -38,7 +137,7 @@ body {
     right: 0;
     bottom: 0;
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                url('../images/fantasy-bg.png');
+                url('../images/fantasy-bg1.png');
     background-size: cover;
     background-position: center;
     z-index: 250;
@@ -52,21 +151,83 @@ body {
     visibility: hidden;
     pointer-events: none;
  }
+
 .start-button {
-    padding: 20px 40px;
-    font-size: 24px;
-    background: #4CAF50;
-    color: white;
+    background: #ffd700;
+    color: #000;
+    font-size: 1.25rem;
+    font-weight: bold;
+    padding: 1rem 2.5rem;
     border: none;
-    border-radius: 12px;
+    border-radius: 0.5rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .start-button:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(76, 175, 80, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+}
+
+/* Contact Info Styles */
+.contact-info {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.contact-info p {
+    margin: 0.5rem 0;
+    color: #e0e0e0;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+    animation: bounce 2s infinite;
+}
+
+.scroll-arrow {
+    width: 20px;
+    height: 20px;
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
+    transform: rotate(45deg);
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .landing-first h1 {
+        font-size: 2.5rem;
+    }
+
+    .section-description {
+        font-size: 1.25rem;
+    }
+
+    .feature-cards {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Selection Phase */
@@ -156,7 +317,8 @@ body {
 .game-wrapper {
     width: 100%;
     height: 100vh;
-    background: #111827;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                url('../images/fantasy-bg1.png');    display: flex;
     display: flex;
     flex-direction: column;
     align-items: center;
