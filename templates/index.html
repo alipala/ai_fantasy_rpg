@@ -3,57 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adventure Game</title>
+    <title>Fantasy Adventure Game</title>
     <link rel="stylesheet" href="static/css/style.css">
     <link rel="stylesheet" href="static/css/loading-overlay.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="/static/favicon/site.webmanifest">
 </head>
 <body>
-    <!-- Start Screen -->
+    <!-- Start Screen with Landing Page -->
     <div id="startScreen" class="start-screen">
-        <button id="initialStartBtn" class="start-button">Start Adventure</button>
+        <!-- First Section -->
+        <section class="landing-section landing-first">
+            <div class="section-background"></div>
+            <div class="section-content">
+                <h1>Save your epic world with your unique character</h1>
+                <p class="section-description">A story you direct, brought to life by AI.</p>
+                <button id="initialStartBtn" class="start-button">Start Adventure</button>
+            </div>
+            <div class="scroll-indicator">
+                <span>Scroll to explore</span>
+                <div class="scroll-arrow"></div>
+            </div>
+        </section>
+
+        <!-- Second Section -->
+        <section class="landing-section landing-second">
+            <div class="section-background"></div>
+            <div class="section-content">
+                <div class="feature-cards">
+                    <div class="feature-card">
+                        <div class="card-number">1</div>
+                        <h3>Define your world</h3>
+                        <p>Pick a character, a world, or a story from thousands of community-made scenarios, or create your own! The AI will fill in the details for your unique adventure.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="card-number">2</div>
+                        <h3>Take actions</h3>
+                        <p>You can decide what your character says or does. The AI will produce responses from other characters or world events for you to respond to. Every adventure is unique and unexpected.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="card-number">3</div>
+                        <h3>Make it yours</h3>
+                        <p>Customize your adventure with custom theme combinations and advanced AI tweaks. Create cards for characters, locations, and more!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Third Section -->
+        <section class="landing-section landing-third">
+            <div class="section-background"></div>
+            <div class="section-content">
+                <button id="finalStartBtn" class="start-button">Start Adventure</button>
+                <div class="contact-info">
+                    <p class="email">Contact: info@fantasygame.com</p>
+                    <p class="project-info">Created with CrewAI and Together AI</p>
+                    <p class="copyright">© 2024 Fantasy Game. All rights reserved.</p>
+                </div>
+            </div>
+        </section>
     </div>
-    
+
+    <!-- Game Background -->
     <div id="gameBackground" class="game-background"></div>
 
     <!-- Selection Phase -->
     <div id="selectionPhase" class="selection-phase hidden">
-        <button id="backButton" class="back-button hidden">← Back</button>
+        <button id="backButton" class="back-button">← Back</button>
 
+        <!-- World Selection -->
         <div id="worldSelect" class="selection-screen hidden">
             <h2>Choose Your World</h2>
             <div id="worldList" class="selection-list"></div>
         </div>
 
+        <!-- Kingdom Selection -->
         <div id="kingdomSelect" class="selection-screen hidden">
             <h2>Choose Your Kingdom</h2>
             <div id="kingdomList" class="selection-list"></div>
         </div>
 
+        <!-- Town Selection -->
         <div id="townSelect" class="selection-screen hidden">
             <h2>Choose Your Town</h2>
             <div id="townList" class="selection-list"></div>
         </div>
 
+        <!-- Character Selection -->
         <div id="characterSelect" class="selection-screen hidden">
             <h2>Choose Your Character</h2>
             <div id="characterList" class="selection-list"></div>
         </div>
     </div>
 
+    <!-- Game Container -->
     <div class="game-wrapper">
-        <!-- Quest Progress -->
+        <!-- Puzzle Progress Section -->
         <div id="puzzleProgress" class="puzzle-progress-container">
-            <h2 class="text-white text-lg mb-2">Quest Progress</h2>
+            <h2 id="quest-progress" class="text-white text-lg mb-2">Quest Progress</h2>
             <div class="progress-container">
                 <div class="progress-bar" role="progressbar"></div>
             </div>
-            <div class="step-container">
-                <!-- Steps will be populated by JS -->
-            </div>
+            <div class="step-container"></div>
         </div>
 
-        <!-- Game Container -->
+        <!-- Main Game Container -->
         <div id="gameContainer" class="game-container hidden">
             <div class="main-content">
                 <div id="gameOutput" class="messages">
@@ -65,16 +121,16 @@
                         <h3>Inventory</h3>
                         <div id="inventorySlots" class="inventory-slots"></div>
                     </div>
-                    
                     <div id="exampleActions" class="examples">
                         <h4>Possible Actions</h4>
                     </div>
                 </div>
             </div>
 
+            <!-- Input Area -->
             <div class="input-wrapper">
-                <input type="text" id="userInput" class="game-input" placeholder="What would you like to do?">
-                <button id="submitBtn" class="action-button">Send</button>
+                <input type="text" id="userInput" class="game-input" placeholder="Type your action..." disabled>
+                <button id="submitBtn" class="action-button" disabled>Send</button>
             </div>
         </div>
     </div>
@@ -91,6 +147,7 @@
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src="static/js/main.js"></script>
 </body>
 </html>

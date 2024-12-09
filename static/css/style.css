@@ -1,9 +1,13 @@
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:wght@400;500&display=swap');
+
 /* Base styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Alegreya', serif;
 }
 
 body {
@@ -24,12 +28,158 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    z-index: 300;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    background: #000;
+    z-index: 1000;
 }
+
+.landing-section {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    scroll-snap-align: start;
+    overflow: hidden;
+}
+
+.section-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+.landing-first {
+    position: relative;
+}
+
+.landing-first::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.6) 0%,
+        rgba(0, 0, 0, 0.5) 50%,
+        rgba(0, 0, 0, 0.6) 100%
+    );
+    z-index: 1;
+}
+.landing-first .section-background {
+    background-image: linear-gradient(
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0.2)
+    ), url('../images/fantasy-bg1.png');
+}
+
+.landing-second .section-background {
+    background-image: linear-gradient(
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0.2)
+    ), url('../images/fantasy-bg2.png');}
+
+.landing-third .section-background {
+    background-image: linear-gradient(
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0.2)
+    ), url('../images/fantasy-bg3.png');}
+
+.section-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+/* First Section Styles */
+.landing-first h1 {
+    position: relative;
+    font-size: 4.5rem;
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+    text-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.6),
+        0 4px 8px rgba(0, 0, 0, 0.4),
+        0 8px 16px rgba(0, 0, 0, 0.4);
+    line-height: 1.2;
+    letter-spacing: 2px;
+    z-index: 2;
+    padding: 0 20px;
+}
+
+.section-description {
+    position: relative;
+    font-size: 1.8rem;
+    font-family: 'Alegreya', serif;
+    font-weight: 500;
+    text-align: center;
+    margin: 1rem auto 3rem;
+    max-width: 800px;
+    color: #ffffff;
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 0.5px;
+    z-index: 2;
+    padding: 0 20px;
+    text-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.6),
+        0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Feature Cards Styles */
+.feature-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    width: 100%;
+}
+
+.feature-card {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    padding: 2rem;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-number {
+    font-size: 2.5rem;
+    color: #ffd700;
+    margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #ffd700;
+}
+
+.feature-card p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #e0e0e0;
+}
+
 
 .game-background {
     position: fixed;
@@ -38,7 +188,7 @@ body {
     right: 0;
     bottom: 0;
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                url('../images/fantasy-bg.png');
+                url('../images/fantasy-bg1.png');
     background-size: cover;
     background-position: center;
     z-index: 250;
@@ -52,21 +202,207 @@ body {
     visibility: hidden;
     pointer-events: none;
  }
-.start-button {
-    padding: 20px 40px;
-    font-size: 24px;
-    background: #4CAF50;
-    color: white;
+
+ .start-button {
+    position: relative;
+    padding: 1.2rem 3.5rem;
+    font-size: 1.5rem;
+    font-family: 'Alegreya', serif;
+    font-weight: 500;    
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #1a2e1a;
+    background: linear-gradient(135deg, #4ade80, #22c55e);
     border: none;
-    border-radius: 12px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+    clip-path: polygon(
+        0 15%,      /* Top left indent */
+        15px 0,     /* Top left slope */
+        calc(100% - 15px) 0,    /* Top right */
+        100% 15%,   /* Top right indent */
+        100% 85%,   /* Bottom right indent */
+        calc(100% - 15px) 100%, /* Bottom right slope */
+        15px 100%,  /* Bottom left slope */
+        0 85%       /* Bottom left indent */
+    );
+    transform: perspective(500px) rotateX(0deg);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 4px 15px rgba(34, 197, 94, 0.3),
+        0 0 30px rgba(34, 197, 94, 0.2),
+        inset 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+.start-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 60%);
+    transform: rotate(45deg);
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
 }
 
 .start-button:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(76, 175, 80, 0.6);
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    transform: perspective(500px) rotateX(5deg) translateY(-3px);
+}
+
+.start-button:hover::before {
+    opacity: 1;
+    animation: buttonGlow 1.5s infinite;
+}
+
+.start-button:active {
+    transform: perspective(500px) rotateX(5deg) translateY(1px);
+}
+
+/* Animations */
+@keyframes titleGlow {
+    0% {
+        text-shadow: 
+            0 2px 10px rgba(0, 0, 0, 0.5),
+            0 0 20px rgba(255, 215, 0, 0.3),
+            0 0 30px rgba(255, 215, 0, 0.2);
+    }
+    100% {
+        text-shadow: 
+            0 2px 10px rgba(0, 0, 0, 0.5),
+            0 0 30px rgba(255, 215, 0, 0.5),
+            0 0 50px rgba(255, 215, 0, 0.3);
+    }
+}
+
+@keyframes buttonGlow {
+    0% {
+        transform: rotate(45deg) translateY(-50%) translateX(-50%);
+    }
+    100% {
+        transform: rotate(45deg) translateY(50%) translateX(50%);
+    }
+}
+
+/* Contact Info Styles */
+.contact-info {
+    position: relative;
+    margin-top: 2rem;
+    text-align: center;
+    z-index: 2;
+}
+
+.contact-info p {
+    position: relative;
+    margin: 0.8rem 0;
+    color: #ffffff;
+    font-family: 'Alegreya', serif;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    letter-spacing: 0.5px;
+    text-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.6),
+        0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.contact-info .email {
+    font-weight: 500;
+}
+
+.contact-info .project-info {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.contact-info .copyright {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+    animation: bounce 2s infinite;
+}
+
+.scroll-arrow {
+    width: 20px;
+    height: 20px;
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
+    transform: rotate(45deg);
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .landing-first h1 {
+        font-size: 3rem;
+    }
+
+    .section-description {
+        font-size: 1.4rem;
+        margin: 1rem auto 2rem;
+    }
+
+    .start-button {
+        font-size: 1.2rem;
+        padding: 1rem 2.5rem;
+    }
+
+    .contact-info p {
+        font-size: 1.1rem;
+    }
+    
+    .contact-info .project-info {
+        font-size: 1rem;
+    }
+    
+    .contact-info .copyright {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .landing-first h1 {
+        font-size: 2.5rem;
+    }
+
+    .section-description {
+        font-size: 1.2rem;
+        margin: 0.8rem auto 1.5rem;
+    }
+
+    .contact-info p {
+        font-size: 1rem;
+    }
+    
+    .contact-info .project-info {
+        font-size: 0.9rem;
+    }
+    
+    .contact-info .copyright {
+        font-size: 0.8rem;
+    }
 }
 
 /* Selection Phase */
@@ -136,27 +472,86 @@ body {
 }
 
 .selection-button {
-    background: rgba(42, 42, 61, 0.9); /* Semi-transparent background */
-    border: 1px solid #3a3a4d;
-    border-radius: 8px;
-    padding: 16px;
-    color: white;
+    position: relative;
+    width: 100%;
+    padding: 1.2rem;
+    margin: 0.4rem 0;
+    background: linear-gradient(
+        135deg,
+        rgba(48, 38, 71, 0.95) 0%,
+        rgba(28, 22, 41, 0.95) 100%
+    );
+    border: 2px solid;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(
+        to right,
+        #a67c00,
+        #deb761,
+        #a67c00
+    );
+    color: #fff;
     cursor: pointer;
-    transition: all 0.2s ease;
     text-align: left;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    transform: perspective(1000px) rotateX(0deg);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.selection-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.05) 50%,
+        transparent 100%
+    );
+    transition: transform 0.5s ease;
+    transform: translateX(-100%);
 }
 
 .selection-button:hover {
-    transform: translateX(10px);
-    background: #3a3a4d;
-    box-shadow: 0 4px 12px rgba(42, 42, 61, 0.3);
+    transform: perspective(1000px) rotateX(5deg) translateY(-5px);
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(218, 165, 32, 0.2);
+}
+
+.selection-button:hover::before {
+    transform: translateX(100%);
+}
+
+.selection-button h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.6rem;
+    color: #deb761;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.selection-button p {
+    font-size: 0.95rem;
+    color: #e0e0e0;
+    margin: 0;
+    line-height: 1.5;
+    transition: color 0.3s ease;
+}
+
+.selection-button:hover p {
+    color: #ffffff;
 }
 
 /* Game Container */
 .game-wrapper {
     width: 100%;
     height: 100vh;
-    background: #111827;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                url('../images/fantasy-bg1.png');    display: flex;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1085,27 +1480,40 @@ h3, h4 {
     margin-bottom: 8px;
 }
 
+/* Disabled state */
 .selection-button.disabled {
     opacity: 0.6;
     cursor: not-allowed;
-    background: rgba(42, 42, 61, 0.5);
-    border-color: #2a2a3d;
+    background: linear-gradient(
+        135deg,
+        rgba(40, 40, 40, 0.95) 0%,
+        rgba(20, 20, 20, 0.95) 100%
+    );
+    border-image-source: linear-gradient(
+        to right,
+        #4a4a4a,
+        #6a6a6a,
+        #4a4a4a
+    );
+    transform: none;
 }
 
 .selection-button.disabled:hover {
     transform: none;
-    box-shadow: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .no-quest-badge {
     display: inline-block;
-    background: rgba(239, 68, 68, 0.2);
-    color: #ef4444;
+    margin-top: 0.75rem;
     padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
-    font-size: 0.75rem;
-    margin-top: 0.5rem;
+    background: rgba(239, 68, 68, 0.2);
     border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 4px;
+    color: #ef4444;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .loading-message {
