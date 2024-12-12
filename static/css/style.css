@@ -555,21 +555,25 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1.5rem;
-    gap: 1.5rem;
+    padding: 0.75rem;
+    gap: 0.5rem;
 }
 
 .game-container {
     width: 1000px;
-    height: 600px;
-    background: #1e1e2f;
+    height: 700px; 
+    background: linear-gradient(135deg, #1a1a2d 0%, #2d2d4d 100%);
+    border: 2px solid;
+    border-image: linear-gradient(45deg, #ffd700 0%, #c0962d 50%, #ffd700 100%) 1;
     border-radius: 0.75rem;
     display: flex;
     flex-direction: column;
-    padding: 1.5rem;
-    gap: 1rem;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    padding: 1.25rem;
+    gap: 0.75rem;
+    position: relative;
+    box-shadow: 
+        0 0 25px rgba(255, 215, 0, 0.1),
+        inset 0 0 30px rgba(0, 0, 0, 0.4);
 }
 
 .game-container.visible {
@@ -579,36 +583,53 @@ body {
 /* Messages Area */
 .messages {
     flex: 1;
-    background: #1f2937;
+    background: linear-gradient(135deg, #262640 0%, #32324f 100%);
+    border: 1px solid rgba(255, 215, 0, 0.15);
     border-radius: 0.5rem;
     padding: 1rem;
     overflow-y: auto;
-    padding: 1rem;
+    position: relative;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4);
 }
 
+/* Message Styles */
 .message {
     margin: 16px 0;
-    padding: 12px 16px;
+    padding: 14px 18px; /* Slightly increased padding to accommodate larger text */
     border-radius: 18px;
     max-width: 80%;
     animation: fadeIn 0.3s ease forwards;
-    font-size: 14px;
+    font-size: 1.1rem; /* Increased from 14px to match game input */
     line-height: 1.5;
     position: relative;
+    font-family: 'Alegreya', serif;
+    letter-spacing: 0.2px;
 }
 
+/* User Message */
 .user-message {
-    background: #4CAF50;
+    background: linear-gradient(135deg, #4a4f8c 0%, #3a3f6c 100%);
     margin-left: auto;
     color: #ffffff;
-    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        0 4px 12px rgba(74, 79, 140, 0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.1);
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 0 100%);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
+/*  Bot Message */
 .bot-message {
-    background: #2196F3;
+    background: linear-gradient(135deg, #695a2f 0%, #8b7355 100%);
     margin-right: auto;
     color: #ffffff;
-    box-shadow: 0 5px 15px rgba(33, 150, 243, 0.2);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    box-shadow: 
+        0 4px 12px rgba(139, 115, 85, 0.2),
+        inset 0 1px 2px rgba(255, 215, 0, 0.1);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 5% 100%, 0 85%);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* Story Image Container */
@@ -667,11 +688,15 @@ body {
 
 /* Inventory Section */
 .inventory-section {
-    background: linear-gradient(to right, #1f2937, #1a1a2a);
+    background: linear-gradient(135deg, #2d2d4d 0%, #1a1a2d 100%);
+    border: 1px solid rgba(255, 215, 0, 0.15);
     border-radius: 0.5rem;
     padding: 0.75rem;
     max-height: 45%;
     overflow-y: auto;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.2),
+        inset 0 0 20px rgba(0, 0, 0, 0.4);
 }
 
 .examples {
@@ -693,16 +718,16 @@ body {
 .inventory-item {
     position: relative;
     padding: 0.75rem;
-    background: linear-gradient(to right, rgb(31, 41, 55), rgb(35, 35, 45));
-    border: 1px solid rgb(75, 85, 99);
+    background: linear-gradient(135deg, #3a3a5a 0%, #2d2d4d 100%);
+    border: 1px solid rgba(255, 215, 0, 0.2);
     border-radius: 0.5rem;
     margin-bottom: 0.5rem;
     transition: all 0.2s ease;
 }
 
 .inventory-item:hover {
-    border-color: rgb(107, 114, 128);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 215, 0, 0.4);
+    box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.1);
 }
 
 .tooltip-text {
@@ -762,12 +787,16 @@ body {
 }
 
 .examples {
-    background: #1f2937;
+    background: linear-gradient(135deg, #2d2d4d 0%, #1a1a2d 100%);
+    border: 1px solid rgba(255, 215, 0, 0.15);
     border-radius: 0.5rem;
     padding: 0.75rem;
     flex: 1;
     overflow-y: auto;
     min-height: 0;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.2),
+        inset 0 0 20px rgba(0, 0, 0, 0.4);
 }
 
 .examples h4 {
@@ -777,24 +806,25 @@ body {
 }
 
 .example-button {
-    background: #1f2937;
-    border: 1px solid #374151;
+    background: linear-gradient(135deg, #3a3a5a 0%, #2d2d4d 100%);
+    border: 1px solid rgba(255, 215, 0, 0.2);
     border-radius: 0.375rem;
     padding: 0.5rem 0.75rem;
     margin: 0.25rem 0;
     color: #ffffff;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: background 0.2s ease, border-color 0.2s ease;
     font-size: 0.75rem;
     display: block;
     width: 100%;
     text-align: left;
+    position: relative;
+    will-change: background, border-color;
 }
 
 .example-button:hover {
-    background: #374151;
-    transform: translateX(4px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #4a4a6a 0%, #3d3d5d 100%);
+    border-color: rgba(255, 215, 0, 0.4);
 }
 
 .example-button:active {
@@ -803,33 +833,48 @@ body {
 }
 
 /* Input Container */
+/* Input Container */
 .input-container {
     grid-column: 1 / -1;
     grid-row: 2;
     display: flex;
     gap: 8px;
-    height: 40px;
+    height: 50px;  /* Increased from 40px */
 }
 
-/* Input Area - Now outside game container */
+/* Input Area */
 .input-wrapper {
     margin-top: auto;
     display: flex;
-    gap: 0.5rem;
-    height: 2.5rem;
+    gap: 0.75rem;
+    height: 3.5rem;  /* Increased from 2.5rem */
+    background: linear-gradient(135deg, #2d2d4d 0%, #1a1a2d 100%);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    border-radius: 0.5rem;
+    padding: 0.75rem;  /* Increased padding */
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4);
 }
 
 .game-input {
     flex: 1;
-    background: #1f2937;
+    background: rgba(26, 26, 45, 0.6);
+    border: 1px solid rgba(255, 215, 0, 0.2);
     border-radius: 0.5rem;
-    padding: 0 1rem;
+    padding: 0 1.25rem;
     color: white;
-    border: 1px solid #374151;
+    font-size: 1.1rem;  /* Increased font size */
+    line-height: 1.5;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.game-input:focus {
+    border-color: rgba(255, 215, 0, 0.4);
+    outline: none;
 }
 
 .game-input::placeholder {
     color: #8a8a8a;
+    font-size: 1.1rem;  /* Matched placeholder size */
 }
 
 .game-input:disabled {
@@ -837,23 +882,51 @@ body {
     cursor: not-allowed;
 }
 
+/* Adjusted send button to match new height */
 .action-button {
-    padding: 0 1.5rem;
-    background: #22c55e;
-    border-radius: 0.5rem;
-    color: white;
-    font-weight: 500;
+    padding: 0 1.75rem;
+    background: linear-gradient(135deg, #ffd700 0%, #c0962d 100%);
     border: none;
+    border-radius: 0.5rem;
+    color: #1a1a2d;
+    font-weight: 500;
+    font-size: 1.1rem;  /* Increased to match input */
+    transition: background 0.2s ease;
 }
 
 .action-button:hover:not(:disabled) {
-    background: #45a049;
-    transform: translateY(-2px);
+    background: linear-gradient(135deg, #ffe033 0%, #d4aa33 100%);
 }
 
 .action-button:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+}
+
+.messages::-webkit-scrollbar,
+.inventory-section::-webkit-scrollbar,
+.examples::-webkit-scrollbar {
+    width: 6px;
+}
+
+.messages::-webkit-scrollbar-track,
+.inventory-section::-webkit-scrollbar-track,
+.examples::-webkit-scrollbar-track {
+    background: rgba(26, 26, 45, 0.6);
+    border-radius: 3px;
+}
+
+.messages::-webkit-scrollbar-thumb,
+.inventory-section::-webkit-scrollbar-thumb,
+.examples::-webkit-scrollbar-thumb {
+    background: rgba(255, 215, 0, 0.2);
+    border-radius: 3px;
+}
+
+.messages::-webkit-scrollbar-thumb:hover,
+.inventory-section::-webkit-scrollbar-thumb:hover,
+.examples::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 215, 0, 0.3);
 }
 
 /* Loading States */
@@ -880,30 +953,44 @@ body {
 .main-content {
     flex: 1;
     display: flex;
-    gap: 1rem;
+    gap: 0.75rem;
     min-height: 0;
+    margin-top: 0.25rem;
 }
 
 /* Puzzle Progress Styles */
 .puzzle-progress-container {
     width: 1000px;
-    background: #1e1e2f;
+    background: linear-gradient(135deg, #1a1a2d 0%, #2d2d4d 100%);
+    border: 2px solid rgba(255, 215, 0, 0.15);
     border-radius: 0.75rem;
     overflow: hidden;
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.3),
+        inset 0 0 20px rgba(0, 0, 0, 0.4);
+    margin-bottom: 0.5rem;
+    padding: 0.4rem 1.25rem;
 }
 
+/* Quest Progress Bar Container */
 .progress-container {
     width: 100%;
-    height: 8px;
-    background-color: #2D3748;
-    border-radius: 4px;
+    height: 0.35rem;
+    background: rgba(45, 55, 72, 0.6);
+    border-radius: 0.25rem;
     overflow: hidden;
+    margin: 0.5rem 0;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
+/* Quest Progress Bar */
 .progress-bar {
     height: 100%;
-    background-color: #48BB78;
+    background: linear-gradient(90deg, #4c9227 0%, #38761d 100%);
     transition: width 0.3s ease-in-out;
+    box-shadow: 
+        0 1px 4px rgba(76, 146, 39, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2);
 }
 
 .card {
@@ -927,29 +1014,63 @@ body {
 }
 
 .quest-progress-content {
-    padding: 1.5rem;
+    /* Removed padding since container now has padding */
+    padding: 0;
+}
+
+.quest-progress-content h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffd700;
+    text-align: center;
+    margin-bottom: 0.3rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: 1px;
 }
 
 .puzzle-description {
     color: #e2e8f0;
-    font-size: 0.875rem;
+    font-size: 0.95rem;
     line-height: 1.5;
-    margin-bottom: 1.5rem;
-}
-
-.progress-text {
-    color: #9ca3af;
-    font-size: 0.875rem;
+    margin-bottom: 1rem;
     text-align: center;
+    padding: 0;
+    font-family: 'Alegreya', serif;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
+/* Progress Text */
+.progress-text {
+    color: #a0aec0;
+    font-size: 0.8rem;
+    margin: 0.3rem 0;
+    text-align: center;
+    margin-top: 0.5rem; 
+    font-family: 'Alegreya', serif;
+    position: relative;
+    display: block; 
+    padding: 0.15rem 0;
+    border-radius: 4px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+
+/* Progress Steps Container */
 .progress-steps {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    margin: 1.5rem 0;
+    gap: 0.3rem;
+    margin: 0.5rem 0;
+    padding: 0;
 }
 
+/* Step Container */
 .step-container {
     display: flex;
     align-items: center;
@@ -957,31 +1078,72 @@ body {
 }
 
 
+/* Step Circle */
 .step {
     width: 1.5rem;
     height: 1.5rem;
+    font-size: 0.75rem;
     border-radius: 9999px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #4b5563;
-    color: white;
-    font-size: 0.875rem;
+    background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+    color: #a0aec0;
+    font-size: 0.8rem;
+    border-width: 1px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
 }
 
+/* Completed Step */
 .step.completed {
-    background: #22c55e;
+    background: linear-gradient(135deg, #4c9227 0%, #38761d 100%);
+    color: #ffffff;
+    border-color: rgba(255, 215, 0, 0.4);
+    box-shadow: 
+        0 2px 8px rgba(76, 146, 39, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2);
 }
 
+/* Connector Line */
 .connector {
     flex: 1;
-    height: 0.125rem;
-    background: #4b5563;
-    margin: 0 0.25rem;
+    height: 0.08rem;
+    background: linear-gradient(90deg, 
+        rgba(45, 55, 72, 0.6) 0%,
+        rgba(26, 32, 44, 0.6) 100%
+    );
+    margin: 0 0.2rem;
+    border-radius: 1px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
 }
 
+/* Completed Connector */
 .connector.completed {
-    background: #22c55e;
+    background: linear-gradient(90deg, 
+        rgba(76, 146, 39, 0.8) 0%,
+        rgba(56, 118, 29, 0.8) 100%
+    );
+    box-shadow: 0 1px 4px rgba(76, 146, 39, 0.3);
+}
+
+/* Hover Effects */
+.step:hover {
+    transform: scale(1.05);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.step.completed:hover {
+    box-shadow: 
+        0 4px 12px rgba(76, 146, 39, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.3);
 }
 
 .step-container:last-child .connector {

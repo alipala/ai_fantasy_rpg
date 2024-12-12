@@ -1074,7 +1074,6 @@ function updatePuzzleProgress(puzzleData) {
                     </div>
                 `).join('')}
             </div>
-            <p class="progress-text">${puzzleData.completed_tasks}/${puzzleData.total_tasks} tasks completed (${Math.round(percentage)}%)</p>
         </div>
     `;
 }
