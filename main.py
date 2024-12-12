@@ -261,7 +261,7 @@ def world_info():
     try:
         with open(world_file, 'r') as f:
             worlds = json.load(f)
-            print("Serving worlds data:", worlds)  # Debug log
+            # print("Serving worlds data:", worlds)  # Debug log
             return jsonify(worlds)
     except Exception as e:
         logging.error(f"Error loading worlds: {e}")
@@ -412,7 +412,7 @@ def start_game():
         logging.info(f"Game started for character {character_name} in {world_name}")
 
         print("Starting game with character:", character_name)
-        print("Puzzle progress initialized:", game_state.puzzle_progress)
+        # print("Puzzle progress initialized:", game_state.puzzle_progress)
         
         return jsonify(response)
         

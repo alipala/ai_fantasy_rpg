@@ -434,7 +434,7 @@ body {
     padding: 10px 20px;
     background: #2a2a3d;
     border: none;
-    border-radius: 6px;
+    border-radius: 6px; 
     color: white;
     cursor: pointer;
     transition: all 0.2s ease;
