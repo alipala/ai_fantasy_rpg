@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import Dict, List, Optional
+import logging
 
 class TaskProgress(BaseModel):
     task_id: str
@@ -53,7 +54,18 @@ class PuzzleProgress(BaseModel):
 
     def get_available_tasks(self, inventory: Dict[str, int]) -> List[TaskProgress]:
         """Get list of tasks that can be performed with current inventory"""
-        return [
-            task for task in self.tasks.values()
-            if not task.completed and self.can_perform_task(task.task_id, inventory)
-        ]
+        logging.info(f"Getting available tasks with inventory: {inventory}")
+        
+        available = []
+        for task in self.tasks.values():
+            if not task.completed:  # Task hasn't been completed yet
+                # Log task checking
+                logging.info(f"Checking task: {task.task_id} - {task.title}")
+                
+                # Always include tasks at the beginning
+                available.append(task)
+                
+                logging.info(f"Added task to available list: {task.task_id}")
+        
+        logging.info(f"Number of available tasks: {len(available)}")
+        return available

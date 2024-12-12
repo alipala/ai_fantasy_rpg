@@ -56,15 +56,35 @@ class GameState(BaseModel):
         return True
 
     def load_character_inventory(self, character_name: str):
-        """Load character's starting inventory."""
+        """Load character's starting inventory"""
         try:
-            with open('shared_data/paste.txt', 'r') as f:
+            with open('shared_data/inventory.json', 'r') as f:
                 inventory_data = json.load(f)
-                character_items = inventory_data['inventories'].get(character_name, [])
-                self.inventory = {item: 1 for item in character_items}
+                
+            # Get character's inventory if exists"
+            if character_name in inventory_data['inventories']:
+                char_items = inventory_data['inventories'][character_name]
+                inventory = {}
+                
+                # Process items (convert "X gold" to number, other items to count of 1)
+                for item in char_items:
+                    if item.endswith('gold'):
+                        inventory['gold'] = int(item.split()[0])
+                    else:
+                        inventory[item] = 1
+                return inventory
+            else:
+                # Default inventory for characters not in inventory.json
+                return {
+                    "gold": 10,
+                    "Basic supplies": 1,
+                    "Adventurer's kit": 1,
+                    "Traveler's notes": 1
+                }
+                
         except Exception as e:
             logging.error(f"Error loading character inventory: {e}")
-            self.inventory = {}
+            return {"gold": 10}
 
     def add_to_history(self, action: str, response: str):
         """Add action and response to history."""
@@ -107,9 +127,16 @@ class GameState(BaseModel):
     def attempt_task(self, task_id: str) -> Optional[str]:
         """Attempt to complete a task and return reward if successful"""
         if not self.puzzle_progress:
+            logging.info("No puzzle progress available")
             return None
             
-        if self.puzzle_progress.can_perform_task(task_id, self.inventory):
-            return self.puzzle_progress.complete_task(task_id)
+        if task_id in self.puzzle_progress.tasks and not self.puzzle_progress.tasks[task_id].completed:
+            logging.info(f"Attempting to complete task: {task_id}")
+            self.puzzle_progress.tasks[task_id].completed = True
+            self.puzzle_progress.completed_tasks += 1
+            reward = self.puzzle_progress.tasks[task_id].reward
+            logging.info(f"Task completed successfully. Reward: {reward}")
+            return reward
             
+        logging.info(f"Task not available or already completed: {task_id}")
         return None

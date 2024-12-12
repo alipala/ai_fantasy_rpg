@@ -342,9 +342,12 @@ def start_game():
         
         # Initialize puzzle if data exists
         if puzzle_data:
-            game_state.initialize_puzzle(character_name, worlds_data)
-            logging.info(f"Initialized puzzle for {character_name}")
-            print(f"Initialized puzzle progress: {game_state.puzzle_progress}")
+            success = game_state.initialize_puzzle(character_name, worlds_data)
+            if success:
+                logging.info(f"Initialized puzzle for {character_name}")
+                print(f"Initialized puzzle progress: {game_state.puzzle_progress}")
+            else:
+                logging.warning(f"Failed to initialize puzzle for {character_name}")
         
         # Create initial welcome message
         welcome_message = (

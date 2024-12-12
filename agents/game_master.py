@@ -91,21 +91,50 @@ class GameMasterAgent:
 
     def _find_matching_task(self, action: str, available_tasks: List) -> Optional[Any]:
         """Find matching task based on action description."""
-        action_words = set(action.lower().split())
+        logging.info(f"Attempting to match action: {action}")
+        
+        # Clean up the action string - remove quotes and extra spaces
+        clean_action = action.strip('"\'').lower()
+        action_words = set(clean_action.split())
+        
+        logging.info(f"Cleaned action words: {action_words}")
         
         for task in available_tasks:
-            task_words = set(task.description.lower().split())
-            # Check for significant word overlap
-            if len(task_words.intersection(action_words)) >= 2:
-                logging.info(f"Found matching task: {task.description}")
+            # Clean up description and title
+            desc_words = set(task.description.lower().split())
+            title_words = set(task.title.lower().split())
+            
+            # Calculate word overlap
+            common_words = desc_words.intersection(action_words)
+            desc_matches = len(common_words)
+            
+            logging.info(f"\nChecking task: {task.title}")
+            logging.info(f"Task description words: {desc_words}")
+            logging.info(f"Common words: {common_words}")
+            logging.info(f"Number of matching words: {desc_matches}")
+            
+            # Calculate similarity percentage
+            total_words = len(desc_words.union(action_words))
+            similarity = desc_matches / total_words if total_words > 0 else 0
+            logging.info(f"Similarity percentage: {similarity:.2%}")
+
+            # First condition: exact match
+            exact_match = clean_action == task.description.lower()
+            
+            # Second condition: significant word overlap
+            word_overlap = desc_matches >= 4
+            
+            # Third condition: high similarity
+            high_similarity = similarity >= 0.5
+            
+            logging.info(f"Exact match: {exact_match}")
+            logging.info(f"Word overlap: {word_overlap}")
+            logging.info(f"High similarity: {high_similarity}")
+            
+            if exact_match or word_overlap or high_similarity:
+                logging.info(f"Found matching task - ID: {task.task_id}")
                 return task
-                
-            # Check for item usage matching required item
-            if action.lower().startswith('use '):
-                item_name = action[4:].strip().lower()
-                if item_name in task.required_item.lower():
-                    return task
-                    
+
         logging.info("No matching task found")
         return None
 
@@ -136,12 +165,16 @@ class GameMasterAgent:
 
     def process_action(self, action: str, game_state: GameState) -> str:
         try:
+            logging.info(f"\n=== Processing action: {action} ===")
+            
             # Check for examine/inspect actions first
             if any(word in action.lower() for word in ['examine', 'inspect', 'look', 'check']):
+                logging.info("Detected examine/inspect action")
                 return self._generate_contextual_hints(game_state)
                 
             # Handle item usage
             if action.lower().startswith('use '):
+                logging.info("Detected item usage action")
                 item_name = action[4:].strip()
                 return self._process_item_use(item_name, game_state)
             
@@ -149,19 +182,35 @@ class GameMasterAgent:
             puzzle_response = None
             if game_state.puzzle_progress:
                 available_tasks = game_state.puzzle_progress.get_available_tasks(game_state.inventory)
+                logging.info(f"Number of available tasks: {len(available_tasks)}")
+                logging.info(f"Available tasks: {[task.title for task in available_tasks]}")
+                
                 matching_task = self._find_matching_task(action, available_tasks)
                 
                 if matching_task:
-                    required_items = matching_task.required_item.split(', ')
-                    if self._verify_required_items(required_items, game_state.inventory):
-                        self._consume_items(required_items, game_state.inventory)
-                        reward = game_state.attempt_task(matching_task.task_id)
-                        if reward:
-                            puzzle_response = f"Task completed: {matching_task.description}. Received: {reward}"
-                            if game_state.puzzle_progress.is_puzzle_solved():
-                                puzzle_response += "\n\nCongratulations! You have solved the puzzle and saved the realm!"
-                            return puzzle_response
+                    logging.info(f"Found matching task: {matching_task.title}")
+                    logging.info(f"Attempting task completion for task ID: {matching_task.task_id}")
+                    
+                    # Attempt the task directly when found
+                    reward = game_state.attempt_task(matching_task.task_id)
+                    
+                    if reward:
+                        logging.info(f"Task completed successfully. Reward: {reward}")
+                        puzzle_response = f"Task completed: {matching_task.description}. Received: {reward}"
+                        
+                        if game_state.puzzle_progress.is_puzzle_solved():
+                            logging.info("Puzzle has been solved!")
+                            puzzle_response += "\n\nCongratulations! You have solved the puzzle and saved the realm!"
+                        
+                        # Log updated puzzle progress
+                        logging.info(f"Updated puzzle progress - Completed tasks: {game_state.puzzle_progress.completed_tasks}/{game_state.puzzle_progress.total_tasks}")
+                        return puzzle_response
+                    else:
+                        logging.info("Task attempt failed")
+                else:
+                    logging.info("No task matched for this action")
 
+            logging.info("Generating contextual response using LLM")
             # If no puzzle match or no puzzle exists, generate contextual response
             location_name = game_state.current_location.get('name', 'this area')
             location_desc = game_state.current_location.get('description', '')
@@ -186,10 +235,14 @@ class GameMasterAgent:
                 temperature=0.7
             )
             
-            return response.choices[0].message.content
+            llm_response = response.choices[0].message.content
+            logging.info(f"Generated LLM response: {llm_response}")
+            
+            return llm_response
             
         except Exception as e:
             logging.error(f"Error in process_action: {str(e)}")
+            logging.error(f"Full traceback: ", exc_info=True)
             return "Something unexpected happened. Please try a different action."
         
     def _generate_contextual_hints(self, game_state: GameState) -> str:
