@@ -975,6 +975,8 @@
       }
     },
     "Aquaria": {
+      "main_puzzle": "The Coral Kingdom Crisis: The mystical coral reefs that maintain ocean harmony are dying, threatening to destabilize all aquatic life.",
+      "solution_requirements": ["Restore the Master Coral","Purify the ocean waters","Reestablish marine life balance"],
       "characters": {
         "Seren the Wise": {
           "role_tasks": [
