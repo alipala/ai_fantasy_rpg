@@ -422,6 +422,51 @@ async function initializeGame(inventory) {
     }
 }
 
+function addHomeButton() {
+    // Create home button
+    const homeButton = document.createElement('button');
+    homeButton.id = 'homeButton';
+    homeButton.className = 'home-button';
+    homeButton.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="home-icon">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+    `;
+
+    // Create confirmation modal
+    const modal = document.createElement('div');
+    modal.id = 'homeConfirmModal';
+    modal.className = 'home-confirm-modal hidden';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <h3>Return to Home?</h3>
+            <p>Your current game progress will be lost.</p>
+            <div class="modal-actions">
+                <button id="confirmHome" class="confirm-button">Yes, Return Home</button>
+                <button id="cancelHome" class="cancel-button">Cancel</button>
+            </div>
+        </div>
+    `;
+
+    // Add button and modal to the game container
+    document.body.appendChild(modal);
+    document.querySelector('.game-wrapper').appendChild(homeButton);
+
+    // Add event listeners
+    homeButton.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+    });
+
+    document.getElementById('confirmHome').addEventListener('click', () => {
+        window.location.href = '/';
+    });
+
+    document.getElementById('cancelHome').addEventListener('click', () => {
+        modal.classList.add('hidden');
+    });
+}
+
 function transitionToGameScreen() {
     document.getElementById('selectionPhase').classList.add('fade-out');
     setTimeout(() => {
@@ -1033,6 +1078,12 @@ async function generateNewExamples(context) {
         
         const data = await response.json();
         updateExamples(data.examples);
+        
+        // Add home button if it doesn't exist yet
+        if (!document.getElementById('homeButton')) {
+            addHomeButton();
+        }
+
     } catch (error) {
         console.error('Error generating examples:', error);
         updateExamples(['Look around', 'Talk', 'Explore']);
