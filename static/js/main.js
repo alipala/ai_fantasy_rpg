@@ -10,6 +10,8 @@ let gameState = {
     examples: []
 };
 
+let googleAuthInitialized = false;
+
 // Triangle SVG template
 const triangleSvg = `
   <svg class="triangle-svg" viewBox="0 0 140 141">
@@ -56,6 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
     submitBtn.addEventListener('mouseleave', function() {
         this.style.transform = 'scale(1)';
     });
+
+    if (window.google && window.google.accounts) {
+        initGoogleAuth();
+    }
 });
 
 // Landing Page Initialization
@@ -652,6 +658,25 @@ async function handlePuzzleCompletion(result) {
         const imageData = await imageResponse.json();
         
         if (imageData.success && imageData.completion_image) {
+            // Check if user is logged in
+            const userResponse = await fetch('/auth/user');
+            const user = await userResponse.json();
+            
+            // If user is logged in, save completion to their account
+            if (user) {
+                try {
+                    await fetch('/add-completion', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            completion_id: imageData.completion_image.game_id
+                        })
+                    });
+                } catch (error) {
+                    console.error('Error saving completion to user account:', error);
+                }
+            }
+
             // 5. Load image
             const img = new Image();
             img.onload = () => {
@@ -690,15 +715,31 @@ async function handlePuzzleCompletion(result) {
                                     </svg>
                                     Play Again
                                 </button>
-                                <button onclick="shareStory()" class="completion-button share-button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
-                                        <polyline points="16 6 12 2 8 6"/>
-                                        <line x1="12" y1="2" x2="12" y2="15"/>
-                                    </svg>
-                                    Share Story
-                                </button>
+                                ${user ? `
+                                    <button onclick="shareStory()" class="completion-button share-button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                                            <polyline points="16 6 12 2 8 6"/>
+                                            <line x1="12" y1="2" x2="12" y2="15"/>
+                                        </svg>
+                                        Share Story
+                                    </button>
+                                ` : `
+                                    <button onclick="showAuthModal()" class="completion-button sign-in-button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                                            <polyline points="10 17 15 12 10 7"/>
+                                            <line x1="15" y1="12" x2="3" y2="12"/>
+                                        </svg>
+                                        Sign in to Save
+                                    </button>
+                                `}
                             </div>
+                            ${!user ? `
+                                <div class="auth-prompt">
+                                    <p>Sign in to save your victory and access it later!</p>
+                                </div>
+                            ` : ''}
                         </div>
                     `;
                     overlay.classList.remove('transitioning');
@@ -742,6 +783,7 @@ function generateShareableLink() {
     const encoded = btoa(JSON.stringify(shareData));
     return `${window.location.origin}/victory/${encoded}`;
 }
+
 
 function generateQRCode(shareUrl) {
     const qrContainer = document.createElement('div');
@@ -1171,4 +1213,307 @@ async function checkCharacterHasPuzzle(characterName) {
         console.error('Error checking character puzzles:', error);
         return false;
     }
+}
+
+function initializeAuth() {
+    console.log("Initializing auth...");
+    
+    // Check if user is already logged in
+    fetch('/auth/user')
+        .then(response => response.json())
+        .then(user => {
+            if (user) {
+                updateAuthState(user);
+            } else {
+                showAuthButton();
+            }
+        })
+        .catch(error => console.error('Error checking auth state:', error));
+}
+
+function initGoogleSignIn(buttonContainer) {
+    if (!window.google || !window.google.accounts) {
+        console.error('Google Sign-In API not loaded');
+        return;
+    }
+
+    if (!googleAuthInitialized) {
+        google.accounts.id.initialize({
+            client_id: window.GOOGLE_CLIENT_ID,
+            callback: handleCallback,
+            auto_select: false,
+            cancel_on_tap_outside: true
+        });
+        googleAuthInitialized = true;
+    }
+
+    // Render the button only if container exists
+    if (buttonContainer) {
+        google.accounts.id.renderButton(buttonContainer, {
+            type: 'standard',
+            theme: 'filled_black',
+            size: 'large',
+            text: 'signin_with',
+            shape: 'rectangular',
+            width: 280
+        });
+    }
+}
+
+function showAuthButton() {
+    const authContainer = document.getElementById('authContainer');
+    if (!authContainer.querySelector('.auth-button')) {
+        const button = document.createElement('button');
+        button.className = 'auth-button';
+        button.innerHTML = `
+            <svg class="auth-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                <polyline points="10 17 15 12 10 7"/>
+                <line x1="15" y1="12" x2="3" y2="12"/>
+            </svg>
+            Sign in with Google
+        `;
+        button.addEventListener('click', showAuthModal);
+        authContainer.innerHTML = '';
+        authContainer.appendChild(button);
+    }
+}
+
+function showAuthModal() {
+    const existingModal = document.querySelector('.auth-modal');
+    if (existingModal) existingModal.remove();
+
+    const modal = document.createElement('div');
+    modal.className = 'auth-modal';
+    modal.innerHTML = `
+        <div class="auth-content">
+            <button class="auth-close">&times;</button>
+            <h2 class="auth-title">Sign in to Play</h2>
+            <div class="google-signin-wrapper">
+                <div id="googleSignIn"></div>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+    
+    // Initialize sign-in button after modal is added to DOM
+    const buttonContainer = modal.querySelector('#googleSignIn');
+    if (buttonContainer) {
+        initGoogleSignIn(buttonContainer);
+    }
+
+    modal.querySelector('.auth-close').onclick = () => {
+        modal.classList.remove('visible');
+        setTimeout(() => modal.remove(), 300);
+    };
+
+    requestAnimationFrame(() => modal.classList.add('visible'));
+}
+
+// Update the event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize auth after DOM is loaded
+    initializeAuth();
+    
+    // Add click handler for sign-in button
+    document.getElementById('signInButton').addEventListener('click', showAuthModal);
+});
+
+// Initialize Google Sign In
+function initGoogleAuth() {
+    const button = document.getElementById('googleSignIn');
+    if (window.google && window.google.accounts) {
+        google.accounts.id.initialize({
+            client_id: window.GOOGLE_CLIENT_ID,
+            callback: handleCallback,
+            ux_mode: 'popup',
+            auto_select: false,
+        });
+
+        // Render the custom button
+        google.accounts.id.renderButton(
+            button, 
+            { 
+                type: 'standard',
+                theme: 'filled_black',
+                size: 'large',
+                text: 'continue_with',
+                shape: 'rectangular',
+            }
+        );
+    }
+}
+
+
+async function handleCallback(response) {
+    try {
+        const result = await fetch('/auth/google', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                token: response.credential
+            })
+        });
+
+        const data = await result.json();
+        
+        if (data.success) {
+            // Remove auth modal
+            const modal = document.querySelector('.auth-modal');
+            if (modal) modal.remove();
+            
+            // Update UI for logged in state
+            updateAuthState(data.user);
+            showToast('Successfully signed in!');
+        } else {
+            throw new Error(data.error || 'Authentication failed');
+        }
+    } catch (error) {
+        console.error('Authentication error:', error);
+        showToast('Sign in failed. Please try again.');
+    }
+}
+
+function initiateGoogleSignIn() {
+    if (window.google && window.google.accounts) {
+        try {
+            google.accounts.id.prompt((notification) => {
+                console.log("Prompt notification:", notification); // Add this for debugging
+                
+                if (notification.isNotDisplayed()) {
+                    console.log('Sign in not displayed:', notification.getNotDisplayedReason());
+                    showToast('Sign in not available. Please try again later.');
+                } else if (notification.isSkippedMoment()) {
+                    console.log('Sign in skipped:', notification.getSkippedReason());
+                } else {
+                    console.log('Sign in displayed');
+                }
+            });
+        } catch (error) {
+            console.error('Google Sign In error:', error);
+            showToast('Failed to initialize sign in');
+        }
+    } else {
+        console.error('Google Sign In not available');
+        showToast('Google Sign In not available');
+    }
+}
+
+window.onGoogleLibraryLoad = function() {
+    console.log("Google Sign-In API loaded");
+    googleAuthInitialized = false;  // Reset to ensure proper initialization
+    initializeAuth();
+};
+
+async function handleGoogleSignIn(response) {
+    try {
+        const result = await fetch('/auth/google', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                token: response.credential
+            })
+        });
+
+        const data = await result.json();
+        
+        if (data.success) {
+            // Remove auth modal
+            const modal = document.querySelector('.auth-modal');
+            if (modal) modal.remove();
+            
+            // Update UI for logged in state
+            updateAuthState(data.user);
+        }
+    } catch (error) {
+        console.error('Auth error:', error);
+    }
+}
+
+function updateAuthState(user) {
+    if (!user) return;
+
+    // Remove auth button and any existing user menu
+    const authContainer = document.getElementById('authContainer');
+    const existingMenu = document.querySelector('.user-menu');
+    if (existingMenu) existingMenu.remove();
+    authContainer.innerHTML = '';
+
+    // Create user menu
+    const userMenu = document.createElement('div');
+    userMenu.className = 'user-menu';
+    userMenu.innerHTML = `
+        <img src="${user.picture}" alt="${user.name}" class="user-avatar">
+        <div class="user-name">${user.name}</div>
+        <button class="sign-out-button">Sign Out</button>
+    `;
+
+    authContainer.appendChild(userMenu);
+
+    // Add sign out handler with confirmation
+    userMenu.querySelector('.sign-out-button').addEventListener('click', handleSignOut);
+}
+
+async function handleSignOut() {
+    // Create modal element
+    const modal = document.createElement('div');
+    modal.className = 'home-confirm-modal'; // Reuse existing modal styles
+    modal.innerHTML = `
+        <div class="modal-content">
+            <h3>Sign Out?</h3>
+            <p>Are you sure you want to sign out?</p>
+            <div class="modal-actions">
+                <button id="confirmSignOut" class="confirm-button">Yes, Sign Out</button>
+                <button id="cancelSignOut" class="cancel-button">Cancel</button>
+            </div>
+        </div>
+    `;
+
+    // Add modal to document
+    document.body.appendChild(modal);
+
+    // Show modal with animation
+    requestAnimationFrame(() => modal.classList.remove('hidden'));
+
+    // Handle button clicks
+    return new Promise((resolve) => {
+        const confirmBtn = modal.querySelector('#confirmSignOut');
+        const cancelBtn = modal.querySelector('#cancelSignOut');
+
+        const cleanup = () => {
+            modal.classList.add('hidden');
+            setTimeout(() => modal.remove(), 300);
+        };
+
+        confirmBtn.addEventListener('click', async () => {
+            cleanup();
+            try {
+                await fetch('/auth/logout');
+                showAuthButton();
+                showToast('Successfully signed out!');
+            } catch (error) {
+                console.error('Sign out error:', error);
+                showToast('Error signing out');
+            }
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            cleanup();
+        });
+    });
+}
+
+// Initialize auth when document loads
+document.addEventListener('DOMContentLoaded', initializeAuth);
+
+// Initialize when Google API loads
+window.onGoogleLibraryLoad = initializeAuth;
+
+function getBaseUrl() {
+    return window.location.origin; 
 }

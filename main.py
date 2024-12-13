@@ -12,6 +12,8 @@ import random
 from typing import List, Dict
 from db.client import MongoDBClient
 import requests
+from auth.routes import auth
+from datetime import datetime, timedelta
 
 
 # Set up logging
@@ -26,7 +28,15 @@ app = Flask(__name__,
     template_folder='templates'
 )
 
+app.secret_key = os.getenv('FLASK_SECRET_KEY', 'dev')  # Change this in production
+
+app.config['SESSION_COOKIE_SECURE'] = True  # Set to True in production
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
+
 load_dotenv()
+
+app.register_blueprint(auth)
 
 def save_world(world, filename):
     """Save world data to a JSON file."""
@@ -253,7 +263,8 @@ def send_static(path):
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    google_client_id = os.getenv('GOOGLE_CLIENT_ID')
+    return render_template('index.html', google_client_id=google_client_id)
 
 @app.route('/world-info')
 def world_info():
@@ -651,7 +662,7 @@ def check_character_puzzle():
     except Exception as e:
         logging.error(f"Error checking character puzzles: {e}")
         return jsonify({'error': str(e)}), 500
-
+    
 if __name__ == '__main__':
     print("\n=== Game Ready to Start ===")
     print("\nAccess the game at http://localhost:5000")

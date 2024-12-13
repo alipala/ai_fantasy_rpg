@@ -67,7 +67,19 @@
     </div>
 
     <!-- Game Background -->
+    <div id="authContainer" class="auth-container">
+        <button id="signInButton" class="auth-button">
+            <svg class="auth-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                <polyline points="10 17 15 12 10 7"/>
+                <line x1="15" y1="12" x2="3" y2="12"/>
+            </svg>
+            Sign in
+        </button>
+    </div>
+
     <div id="gameBackground" class="game-background"></div>
+
 
     <!-- Selection Phase -->
     <div id="selectionPhase" class="selection-phase hidden">
@@ -146,8 +158,17 @@
             <div class="triangle-loading">Your Story Loading</div>
         </div>
     </div>
-
-    <!-- Scripts -->
-    <script src="static/js/main.js"></script>
+    <div id="g_id_onload"
+     data-client_id="{{ google_client_id }}"
+     data-context="signin"
+     data-ux_mode="popup"
+     data-callback="handleGoogleSignIn"
+     data-auto_prompt="false">
+    </div>
+    <script>
+        window.GOOGLE_CLIENT_ID = "{{ google_client_id }}";
+    </script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="static/js/main.js" defer></script>
 </body>
 </html>
