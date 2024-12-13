@@ -1689,3 +1689,113 @@ h3, h4 {
     color: #ef4444;
     padding: 1rem;
 }
+
+/* Add these styles to style.css */
+
+.home-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px;
+    background: #2a2a3d;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 150;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.home-button:hover {
+    background: #3a3a4d;
+    transform: translateY(-2px);
+}
+
+.home-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.home-confirm-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+    opacity: 1;
+    visibility: visible;
+    transition: all 0.3s ease;
+}
+
+.home-confirm-modal.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.home-confirm-modal .modal-content {
+    background: linear-gradient(135deg, #1a1a2a 0%, #2a2a4a 100%);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.home-confirm-modal h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: #ffd700;
+    margin-bottom: 1rem;
+}
+
+.home-confirm-modal p {
+    color: #e2e8f0;
+    margin-bottom: 1.5rem;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.modal-actions button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.confirm-button {
+    background: #dc2626;
+    color: white;
+}
+
+.confirm-button:hover {
+    background: #b91c1c;
+    transform: translateY(-2px);
+}
+
+.cancel-button {
+    background: #4b5563;
+    color: white;
+}
+
+.cancel-button:hover {
+    background: #374151;
+    transform: translateY(-2px);
+}
