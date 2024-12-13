@@ -34,6 +34,10 @@ app.config['SESSION_COOKIE_SECURE'] = True  # Set to True in production
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
 
+if os.environ.get('RAILWAY_ENVIRONMENT'):
+    app.config['SERVER_NAME'] = 'victory.up.railway.app'
+    app.config['PREFERRED_URL_SCHEME'] = 'https'
+
 load_dotenv()
 
 app.register_blueprint(auth)
@@ -662,7 +666,17 @@ def check_character_puzzle():
     except Exception as e:
         logging.error(f"Error checking character puzzles: {e}")
         return jsonify({'error': str(e)}), 500
-    
+
+if os.environ.get('RAILWAY_ENVIRONMENT'):
+    @app.after_request
+    def add_security_headers(response):
+        response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+        response.headers['Content-Security-Policy'] = "default-src 'self' https://accounts.google.com https://fonts.googleapis.com https://fonts.gstatic.com 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com"
+        response.headers['X-Content-Type-Options'] = 'nosniff'
+        response.headers['X-Frame-Options'] = 'DENY'
+        response.headers['X-XSS-Protection'] = '1; mode=block'
+        return response
+       
 if __name__ == '__main__':
     print("\n=== Game Ready to Start ===")
     print("\nAccess the game at http://localhost:5000")

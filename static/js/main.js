@@ -64,6 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+function getBaseUrl() {
+    return window.location.origin; 
+}
+
 // Landing Page Initialization
 function initializeLandingPage() {
     const initialStartBtn = document.getElementById('initialStartBtn');
@@ -781,7 +785,7 @@ function generateShareableLink() {
     };
     
     const encoded = btoa(JSON.stringify(shareData));
-    return `${window.location.origin}/victory/${encoded}`;
+    return `${getBaseUrl()}/victory/${encoded}`;
 }
 
 
@@ -1514,6 +1518,3 @@ document.addEventListener('DOMContentLoaded', initializeAuth);
 // Initialize when Google API loads
 window.onGoogleLibraryLoad = initializeAuth;
 
-function getBaseUrl() {
-    return window.location.origin; 
-}
