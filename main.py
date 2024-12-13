@@ -34,9 +34,9 @@ app.config['SESSION_COOKIE_SECURE'] = True  # Set to True in production
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
 
-if os.environ.get('RAILWAY_ENVIRONMENT'):
-    app.config['SERVER_NAME'] = 'victory.up.railway.app'
-    app.config['PREFERRED_URL_SCHEME'] = 'https'
+# if os.environ.get('RAILWAY_ENVIRONMENT'):
+#     app.config['SERVER_NAME'] = 'victory.up.railway.app'
+#     app.config['PREFERRED_URL_SCHEME'] = 'https'
 
 load_dotenv()
 
@@ -682,4 +682,7 @@ if __name__ == '__main__':
     print("\nAccess the game at http://localhost:5000")
     
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='127.0.0.1', debug=True, port=port)
+    if os.environ.get('RAILWAY_ENVIRONMENT'):
+        app.run(host='0.0.0.0', port=port)
+    else:
+        app.run(host='127.0.0.1', debug=True, port=port)
