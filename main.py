@@ -12,6 +12,8 @@ import random
 from typing import List, Dict
 from db.client import MongoDBClient
 import requests
+from auth.routes import auth
+from datetime import datetime, timedelta
 
 
 # Set up logging
@@ -26,7 +28,19 @@ app = Flask(__name__,
     template_folder='templates'
 )
 
+app.secret_key = os.getenv('FLASK_SECRET_KEY', 'dev')  # Change this in production
+
+app.config['SESSION_COOKIE_SECURE'] = True  # Set to True in production
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
+
+# if os.environ.get('RAILWAY_ENVIRONMENT'):
+#     app.config['SERVER_NAME'] = 'victory.up.railway.app'
+#     app.config['PREFERRED_URL_SCHEME'] = 'https'
+
 load_dotenv()
+
+app.register_blueprint(auth)
 
 def save_world(world, filename):
     """Save world data to a JSON file."""
@@ -253,7 +267,8 @@ def send_static(path):
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    google_client_id = os.getenv('GOOGLE_CLIENT_ID')
+    return render_template('index.html', google_client_id=google_client_id)
 
 @app.route('/world-info')
 def world_info():
@@ -652,9 +667,22 @@ def check_character_puzzle():
         logging.error(f"Error checking character puzzles: {e}")
         return jsonify({'error': str(e)}), 500
 
+if os.environ.get('RAILWAY_ENVIRONMENT'):
+    @app.after_request
+    def add_security_headers(response):
+        response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+        response.headers['Content-Security-Policy'] = "default-src 'self' https://accounts.google.com https://fonts.googleapis.com https://fonts.gstatic.com 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com"
+        response.headers['X-Content-Type-Options'] = 'nosniff'
+        response.headers['X-Frame-Options'] = 'DENY'
+        response.headers['X-XSS-Protection'] = '1; mode=block'
+        return response
+       
 if __name__ == '__main__':
     print("\n=== Game Ready to Start ===")
     print("\nAccess the game at http://localhost:5000")
     
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='127.0.0.1', debug=True, port=port)
+    if os.environ.get('RAILWAY_ENVIRONMENT'):
+        app.run(host='0.0.0.0', port=port)
+    else:
+        app.run(host='127.0.0.1', debug=True, port=port)

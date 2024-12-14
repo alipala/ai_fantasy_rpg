@@ -11,7 +11,17 @@ load_dotenv()
 
 class MongoDBClient:
     def __init__(self):
-        self.client = MongoClient(os.getenv('MONGODB_URI'))
+        # Update the connection logic
+        mongodb_uri = os.getenv('MONGODB_URI')
+        if os.environ.get('RAILWAY_ENVIRONMENT'):
+            # Use production MongoDB URI
+            if not mongodb_uri:
+                raise ValueError("MONGODB_URI must be set in production")
+        else:
+            # Use local MongoDB if no URI provided
+            mongodb_uri = mongodb_uri or 'mongodb://localhost:27017'
+        
+        self.client = MongoClient(mongodb_uri)
         self.db = self.client['fantasy_game']
         self.completion_images = self.db['completion_images']
         
