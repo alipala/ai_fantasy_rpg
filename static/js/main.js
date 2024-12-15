@@ -662,6 +662,12 @@ async function handlePuzzleCompletion(result) {
         const imageData = await imageResponse.json();
         
         if (imageData.success && imageData.completion_image) {
+            // Store victory in gallery
+            await storeVictory({
+                image_url: imageData.completion_image.url,
+                world_name: result.world.name,
+                character_name: result.character.name
+            });
             // Check if user is logged in
             const userResponse = await fetch('/auth/user');
             const user = await userResponse.json();
@@ -1448,12 +1454,20 @@ function updateAuthState(user) {
     if (existingMenu) existingMenu.remove();
     authContainer.innerHTML = '';
 
-    // Create user menu
+    // Create user menu with gallery button
     const userMenu = document.createElement('div');
     userMenu.className = 'user-menu';
     userMenu.innerHTML = `
         <img src="${user.picture}" alt="${user.name}" class="user-avatar">
         <div class="user-name">${user.name}</div>
+        <button class="gallery-button" onclick="openGallery()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            Gallery
+        </button>
         <button class="sign-out-button">Sign Out</button>
     `;
 
@@ -1461,6 +1475,33 @@ function updateAuthState(user) {
 
     // Add sign out handler with confirmation
     userMenu.querySelector('.sign-out-button').addEventListener('click', handleSignOut);
+}
+
+function openGallery() {
+    window.location.href = '/gallery';
+}
+
+// Function to store victory in user's gallery
+async function storeVictory(victoryData) {
+    try {
+        const response = await fetch('/add-victory', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(victoryData)
+        });
+        
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.error);
+        }
+        
+        return data;
+    } catch (error) {
+        console.error('Error storing victory:', error);
+        showToast('Failed to save to gallery');
+    }
 }
 
 async function handleSignOut() {
