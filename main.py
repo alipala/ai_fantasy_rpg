@@ -670,8 +670,15 @@ def check_character_puzzle():
 if os.environ.get('RAILWAY_ENVIRONMENT'):
     @app.after_request
     def add_security_headers(response):
-        response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
-        response.headers['Content-Security-Policy'] = "default-src 'self' https://accounts.google.com https://fonts.googleapis.com https://fonts.gstatic.com 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com"
+        response.headers['Content-Security-Policy'] = (
+            "default-src 'self' https://accounts.google.com https://*.google.com; "
+            "img-src 'self' data: https: blob:; "
+            "font-src 'self' data: https://fonts.googleapis.com https://fonts.gstatic.com; "
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com; "
+            "script-src 'self' 'unsafe-inline' https://accounts.google.com https://*.google.com; "
+            "frame-src 'self' https://accounts.google.com; "
+            "connect-src 'self' https://accounts.google.com"
+        )
         response.headers['X-Content-Type-Options'] = 'nosniff'
         response.headers['X-Frame-Options'] = 'DENY'
         response.headers['X-XSS-Protection'] = '1; mode=block'

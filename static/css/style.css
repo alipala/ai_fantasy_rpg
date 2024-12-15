@@ -2010,3 +2010,53 @@ h3, h4 {
     font-size: 0.9rem;
     font-family: 'Alegreya', serif;
 }
+
+/* Add to style.css */
+.gallery-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    margin-left: 0.5rem;
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 4px;
+    color: #ffd700;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.gallery-button:hover {
+    background: rgba(255, 215, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.gallery-button svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Add back button for gallery page */
+.gallery-back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #2a2a3d 0%, #1a1a2d 100%);
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    border-radius: 6px;
+    color: white;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 1001;
+}
+
+.gallery-back-button:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #3a3a4d 0%, #2a2a3d 100%);
+}

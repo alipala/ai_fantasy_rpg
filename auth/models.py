@@ -8,6 +8,7 @@ class UserModel:
     def __init__(self):
         self.client = MongoDBClient()
         self.users = self.client.db['users']
+        self.user_victories = self.client.db['user_victories']
         self.user_completions = self.client.db['user_completions']
         self._ensure_indexes()
     
@@ -23,6 +24,47 @@ class UserModel:
             ("created_at", ASCENDING)
         ])
 
+    def add_victory(self, user_id: str, victory_data: dict) -> bool:
+        """Store a victory record for user"""
+        try:
+            victory_record = {
+                "user_id": user_id,
+                "image_url": victory_data.get('image_url'),
+                "world_name": victory_data.get('world_name'),
+                "character_name": victory_data.get('character_name'),
+                "created_at": datetime.utcnow()
+            }
+            
+            # Use user_victories collection instead of victories
+            self.user_victories.insert_one(victory_record)
+            return True
+        except Exception as e:
+            print(f"Error storing victory: {e}")
+            return False
+    
+    def get_user_victories(self, user_id: str, page: int = 1, per_page: int = 9) -> dict:
+        """Get paginated victory records for user"""
+        try:
+            skip = (page - 1) * per_page
+            total = self.user_victories.count_documents({"user_id": user_id})
+            
+            victories = list(self.user_victories.find(
+                {"user_id": user_id}
+            ).sort("created_at", -1).skip(skip).limit(per_page))
+            
+            # Convert ObjectId to string for JSON serialization
+            for victory in victories:
+                victory['_id'] = str(victory['_id'])
+            
+            return {
+                "victories": victories,
+                "total": total,
+                "pages": (total + per_page - 1) // per_page
+            }
+        except Exception as e:
+            print(f"Error fetching victories: {e}")
+            return {"victories": [], "total": 0, "pages": 0}
+           
     def create_user(self, google_data: dict) -> str:
         """Create new user from Google OAuth data"""
         user = {

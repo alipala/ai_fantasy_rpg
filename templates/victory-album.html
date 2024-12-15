@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victory Album</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2d 0%, #2d2d4d 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .album-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: linear-gradient(135deg, #2a2a3d 0%, #1a1a2d 100%);
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #ffd700 0%, #c0962d 50%, #ffd700 100%) 1;
+            border-radius: 12px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+        }
+        .album-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: linear-gradient(135deg, #1a1a2d 0%, #2d2d4d 100%);
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #ffd700 0%, #c0962d 50%, #ffd700 100%) 1;
+            border-radius: 12px;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.1);
+        }
+
+        .album-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .album-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .album-subtitle {
+            font-family: 'Alegreya', serif;
+            font-size: 1.2rem;
+            color: #a8b3cf;
+        }
+
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        .victory-card {
+            position: relative;
+            background: linear-gradient(135deg, #2a2a3d 0%, #1a1a2d 100%);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .victory-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .victory-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .victory-card:hover .victory-image {
+            transform: scale(1.05);
+        }
+
+        .victory-info {
+            padding: 1.5rem;
+            background: linear-gradient(to top, #1a1a2d 0%, transparent 100%);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .victory-card:hover .victory-info {
+            transform: translateY(0);
+        }
+
+        .victory-world {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+        }
+
+        .victory-character {
+            font-family: 'Alegreya', serif;
+            font-size: 1rem;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .victory-date {
+            font-size: 0.9rem;
+            color: #a8b3cf;
+        }
+
+        .empty-album {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #a8b3cf;
+        }
+
+        .empty-album h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+
+        .empty-album p {
+            font-family: 'Alegreya', serif;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .album-pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .page-button {
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #2a2a3d 0%, #1a1a2d 100%);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 4px;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .page-button:hover {
+            background: linear-gradient(135deg, #3a3a4d 0%, #2a2a3d 100%);
+            border-color: rgba(255, 215, 0, 0.4);
+        }
+
+        .page-button.active {
+            background: linear-gradient(135deg, #ffd700 0%, #c0962d 100%);
+            color: #1a1a2d;
+        }
+        
+        .home-button {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.25rem;
+        background: linear-gradient(135deg, #2a2a3d 0%, #1a1a2d 100%);
+        border: 1px solid rgba(255, 215, 0, 0.15);
+        border-radius: 6px;
+        color: #ffffff;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Alegreya', serif;
+    }
+
+    .home-button:hover {
+        transform: translateY(-2px);
+        background: linear-gradient(135deg, #3a3a4d 0%, #2a2a3d 100%);
+        border-color: rgba(255, 215, 0, 0.3);
+    }
+
+    .home-button svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .image-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(8px);
+    }
+
+    .image-modal.visible {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .image-modal-content {
+        position: relative;
+        max-width: 90%;
+        max-height: 90vh;
+        transform: scale(0.95);
+        transition: transform 0.3s ease;
+    }
+
+    .image-modal.visible .image-modal-content {
+        transform: scale(1);
+    }
+
+    .modal-image {
+        max-width: 100%;
+        max-height: 90vh;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .close-modal {
+        position: absolute;
+        top: -40px;
+        right: -40px;
+        width: 36px;
+        height: 36px;
+        background: linear-gradient(135deg, #2a2a3d 0%, #1a1a2d 100%);
+        border: 1px solid rgba(255, 215, 0, 0.15);
+        border-radius: 50%;
+        color: #ffffff;
+        font-size: 24px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .close-modal:hover {
+        transform: rotate(90deg);
+        background: linear-gradient(135deg, #3a3a4d 0%, #2a2a3d 100%);
+        border-color: rgba(255, 215, 0, 0.3);
+    }
+
+    .modal-info {
+        position: absolute;
+        bottom: -60px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: #ffffff;
+    }
+
+    .modal-info .victory-world {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .modal-info .victory-character {
+        font-size: 1.2rem;
+        opacity: 0.8;
+    }
+
+    .victory-card {
+        cursor: pointer;
+    }
+    </style>
+</head>
+<body>
+    <div class="album-container">
+        <button onclick="window.location.href='/'" class="home-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            Return Home
+        </button>
+        <div class="album-header">
+            <h1 class="album-title">Victory Album</h1>
+            <p class="album-subtitle">Your legendary achievements across the realms</p>
+        </div>
+
+        <!-- Album Grid -->
+        <div class="album-grid">
+            {% if empty %}
+                <div class="empty-album">
+                    <h3>No Victories Yet</h3>
+                    <p>Complete your first quest to begin building your legendary album</p>
+                </div>
+            {% else %}
+                {% for victory in gallery_data.victories %}
+                <div class="victory-card" title="Click to view larger image">
+                    {% if victory.image_url %}
+                        <img src="{{ victory.image_url }}" alt="Victory in {{ victory.world_name }}" class="victory-image">
+                    {% else %}
+                        <img src="/api/placeholder/400/320" alt="Placeholder" class="victory-image">
+                    {% endif %}
+                    <div class="victory-info">
+                        <h3 class="victory-world">Victory in {{ victory.world_name }}</h3>
+                        <p class="victory-character">As {{ victory.character_name }}</p>
+                        <p class="victory-date">{{ victory.created_at.strftime('%B %d, %Y') }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-album" style="display: none;">
+            <h3>No Victories Yet</h3>
+            <p>Complete your first quest to begin building your legendary album</p>
+        </div>
+
+        <!-- Pagination -->
+        <!-- Pagination - only show if there are victories -->
+        {% if not empty and gallery_data.total > 0 %}
+        <div class="album-pagination">
+            {% if current_page > 1 %}
+                <a href="{{ url_for('auth.gallery', page=current_page-1) }}" class="page-button">Previous</a>
+            {% endif %}
+            
+            {% for p in range(1, gallery_data.pages + 1) %}
+                <a href="{{ url_for('auth.gallery', page=p) }}" 
+                class="page-button {% if p == current_page %}active{% endif %}">
+                {{ p }}
+                </a>
+            {% endfor %}
+            
+            {% if current_page < gallery_data.pages %}
+                <a href="{{ url_for('auth.gallery', page=current_page+1) }}" class="page-button">Next</a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+    <div class="image-modal" id="imageModal">
+        <div class="image-modal-content">
+            <button class="close-modal">&times;</button>
+            <img class="modal-image" src="" alt="">
+            <div class="modal-info">
+                <h3 class="victory-world"></h3>
+                <p class="victory-character"></p>
+            </div>
+        </div>
+    </div>
+</body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('imageModal');
+            const modalImage = modal.querySelector('.modal-image');
+            const modalWorld = modal.querySelector('.victory-world');
+            const modalCharacter = modal.querySelector('.victory-character');
+
+            // Get all victory cards
+            const victoryCards = document.querySelectorAll('.victory-card');
+
+            // Add click handlers to victory cards
+            victoryCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const image = card.querySelector('.victory-image');
+                    const worldText = card.querySelector('.victory-world').textContent;
+                    const characterText = card.querySelector('.victory-character').textContent;
+
+                    modalImage.src = image.src;
+                    modalImage.alt = image.alt;
+                    modalWorld.textContent = worldText;
+                    modalCharacter.textContent = characterText;
+
+                    // Show modal
+                    modal.classList.add('visible');
+                });
+            });
+
+            // Close modal on close button click
+            modal.querySelector('.close-modal').addEventListener('click', () => {
+                modal.classList.remove('visible');
+            });
+
+            // Close modal on background click
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('visible');
+                }
+            });
+
+            // Close modal on escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('visible')) {
+                    modal.classList.remove('visible');
+                }
+            });
+        });
+    </script>
+</html>
